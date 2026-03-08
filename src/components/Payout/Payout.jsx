@@ -36,7 +36,7 @@ import config from '../../config';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import LanguageSwitcher from '../LanguageSwitcher';
+import LanguageSwitcher from '../LanguageSwitcher.jsx';
 import TransactionsTable from './TransactionsTable.jsx'
 const Payout = () => {
   const theme = useTheme();

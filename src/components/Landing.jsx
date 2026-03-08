@@ -15,7 +15,7 @@ import {
   DialogContent,
   DialogActions
 } from '@mui/material';
-import TermsAndConditions from '../components/Auth/TermsAndConditions';
+import TermsAndConditions from './Auth/TermsAndConditions';
 
 import {
   CheckCircle,

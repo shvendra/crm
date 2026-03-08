@@ -11,7 +11,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
 import MapIcon from "@mui/icons-material/Map";
 
-import GoogleMapPicker from "../components/Job/googleMapApiPicker";
+import GoogleMapPicker from "./Job/googleMapApiPicker";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
