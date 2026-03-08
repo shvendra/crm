@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
+    base: '/app/',
+
     plugins: [
       react({
         jsxRuntime: 'automatic',
@@ -45,8 +47,8 @@ export default defineConfig(({ mode }) => {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
             'mui-core': ['@mui/material', '@emotion/react', '@emotion/styled'],
             'mui-icons': ['@mui/icons-material'],
-            'charts': ['chart.js', 'react-chartjs-2'],
-            'maps': ['leaflet', 'react-leaflet'],
+            charts: ['chart.js', 'react-chartjs-2'],
+            maps: ['leaflet', 'react-leaflet'],
           },
         },
       },
@@ -77,7 +79,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     },
-  base: '/app/',
+
     preview: {
       port: 4173,
       host: true,

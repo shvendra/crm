@@ -504,14 +504,14 @@ const Navbar = () => {
                 >
                   Home
                 </Button> */}
-                <Button
+                {/* <Button
                   sx={{ textTransform: "capitalize" }}
                   color="inherit"
                   component={Link}
                   to={"/blogs"}
                 >
                   Blogs
-                </Button>
+                </Button> */}
                 <Button
                   sx={{ textTransform: "capitalize" }}
                   color="inherit"
@@ -764,15 +764,15 @@ const Navbar = () => {
                 Home
               </Button> */}
 
-              <Button
+              {/* <Button
                 fullWidth
-                startIcon={<Article />} // 📌 use a blog/article icon
+                startIcon={<Article />} 
                 sx={menuButtonStyle}
                 component={Link}
                 to="/blogs"
               >
                 Blogs
-              </Button>
+              </Button> */}
 
               <Button
                 fullWidth
