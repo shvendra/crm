@@ -1,0 +1,151 @@
+[
+  {
+    "label": "Office Staff (Contract)",
+    "hindilabel": "कार्यालय कर्मचारी (कॉन्ट्रैक्ट)",
+    "marathilabel": "कार्यालय कर्मचारी (कॉन्ट्रॅक्ट)",
+    "gujaratilabel": "ઓફિસ સ્ટાફ (કોન્ટ્રાક્ટ)",
+    "value": "Office staff",
+    "subcategories": [
+      {
+        "label": "Receptionist",
+        "hindilabel": "रिसेप्शनिस्ट",
+        "marathilabel": "रिसेप्शनिस्ट",
+        "gujaratilabel": "રિસેપ્શનિસ્ટ",
+        "value": "receptionist"
+      },
+      {
+        "label": "Clerk / Data Entry Operator",
+        "hindilabel": "क्लर्क / डाटा एंट्री ऑपरेटर",
+        "marathilabel": "लिपिक / डेटा एन्ट्री ऑपरेटर",
+        "gujaratilabel": "ક્લાર્ક / ડેટા એન્ટ્રી ઓપરેટર",
+        "value": "clerk data entry"
+      },
+      {
+        "label": "Office Assistant / Peon",
+        "hindilabel": "ऑफिस सहायक / चपरासी",
+        "marathilabel": "ऑफिस सहाय्यक / पिऊन",
+        "gujaratilabel": "ઓફિસ સહાયક / પિયોન",
+        "value": "office assistant"
+      },
+      {
+        "label": "Accountant",
+        "hindilabel": "एकाउंटेंट",
+        "marathilabel": "अकाउंटंट",
+        "gujaratilabel": "એકાઉન્ટન્ટ",
+        "value": "accountant"
+      },
+      {
+        "label": "HR Executive",
+        "hindilabel": "एचआर एग्जीक्यूटिव",
+        "marathilabel": "एचआर एक्झिक्युटिव्ह",
+        "gujaratilabel": "એચઆર એક્ઝિક્યુટિવ",
+        "value": "hr executive"
+      },
+      {
+        "label": "Office Boy",
+        "hindilabel": "ऑफिस बॉय",
+        "marathilabel": "ऑफिस बॉय",
+        "gujaratilabel": "ઓફિસ બોય",
+        "value": "office boy"
+      },
+      {
+        "label": "Supervisor",
+        "hindilabel": "सुपरवाइज़र",
+        "marathilabel": "सुपरवायझर",
+        "gujaratilabel": "સુપરવાઈઝર",
+        "value": "supervisor"
+      },
+      {
+        "label": "Security Guard",
+        "hindilabel": "सिक्योरिटी गार्ड",
+        "marathilabel": "सिक्युरिटी गार्ड",
+        "gujaratilabel": "સિક્યોરિટી ગાર્ડ",
+        "value": "security guard"
+      },
+      {
+        "label": "Driver",
+        "hindilabel": "ड्राइवर",
+        "marathilabel": "ड्रायव्हर",
+        "gujaratilabel": "ડ્રાઇવર",
+        "value": "driver"
+      },
+      {
+        "label": "Housekeeping Staff",
+        "hindilabel": "हाउसकीपिंग स्टाफ",
+        "marathilabel": "हाऊसकीपिंग कर्मचारी",
+        "gujaratilabel": "હાઉસકીપિંગ સ્ટાફ",
+        "value": "housekeeping staff"
+      },
+      {
+        "label": "Office Manager",
+        "hindilabel": "ऑफिस मैनेजर",
+        "marathilabel": "ऑफिस मॅनेजर",
+        "gujaratilabel": "ઓફિસ મેનેજર",
+        "value": "office manager"
+      },
+      {
+        "label": "Personal Assistant",
+        "hindilabel": "पर्सनल असिस्टेंट",
+        "marathilabel": "पर्सनल असिस्टंट",
+        "gujaratilabel": "પર્સનલ આસિસ્ટન્ટ",
+        "value": "personal assistant"
+      },
+      {
+        "label": "Telephone Operator",
+        "hindilabel": "टेलीफोन ऑपरेटर",
+        "marathilabel": "टेलिफोन ऑपरेटर",
+        "gujaratilabel": "ટેલિફોન ઓપરેટર",
+        "value": "telephone operator"
+      },
+      {
+        "label": "IT Support Staff",
+        "hindilabel": "आईटी सपोर्ट स्टाफ",
+        "marathilabel": "आयटी सपोर्ट स्टाफ",
+        "gujaratilabel": "આઈટી સપોર્ટ સ્ટાફ",
+        "value": "it support staff"
+      },
+      {
+        "label": "Cashier",
+        "hindilabel": "कैशियर",
+        "marathilabel": "कॅशियर",
+        "gujaratilabel": "કેશિયર",
+        "value": "cashier"
+      },
+      {
+        "label": "Store Keeper",
+        "hindilabel": "स्टोर कीपर",
+        "marathilabel": "स्टोअर कीपर",
+        "gujaratilabel": "સ્ટોર કીપર",
+        "value": "store keeper"
+      },
+      {
+        "label": "Messenger / Runner",
+        "hindilabel": "मैसेंजर / रनर",
+        "marathilabel": "मेसेन्जर / रनर",
+        "gujaratilabel": "મેસેન્જર / રનર",
+        "value": "messenger runner"
+      },
+      {
+        "label": "Mailroom Assistant",
+        "hindilabel": "मेलरूम सहायक",
+        "marathilabel": "मेलरूम सहाय्यक",
+        "gujaratilabel": "મેઇલરૂમ સહાયક",
+        "value": "mailroom assistant"
+      },
+      {
+        "label": "Photocopy Machine Operator",
+        "hindilabel": "फोटोकॉपी मशीन ऑपरेटर",
+        "marathilabel": "फोटोकॉपी मशीन ऑपरेटर",
+        "gujaratilabel": "ફોટોકોપી મશીન ઓપરેટર",
+        "value": "photocopy machine operator"
+      },
+      {
+        "label": "Pantry Boy",
+        "hindilabel": "पैंट्री बॉय",
+        "marathilabel": "पँट्री बॉय",
+        "gujaratilabel": "પેન્ટ્રી બોય",
+        "value": "pantry boy"
+      }
+    ]
+  }
+]
