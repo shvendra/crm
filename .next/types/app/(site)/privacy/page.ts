@@ -1,4 +1,4 @@
-// File: /Users/sonu/Desktop/ ̑/frontend/web/src/app/(site)/privacy/page.tsx
+// File: /var/www/bookmyworkers/next-web/src/app/(site)/privacy/page.tsx
 import * as entry from '../../../../../src/app/(site)/privacy/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,1 +1,25 @@
-{"/api/auth/[...nextauth]/route":"/api/auth/[...nextauth]","/sitemap.xml/route":"/sitemap.xml","/robots.txt/route":"/robots.txt","/(site)/about/[slug]/page":"/about/[slug]","/(site)/blog/[slug]/page":"/blog/[slug]","/(site)/category/[slug]/page":"/category/[slug]","/(site)/events/[slug]/page":"/events/[slug]","/(site)/(auth)/signup/page":"/signup","/_not-found/page":"/_not-found","/(site)/(auth)/signin/page":"/signin","/(site)/blog/page":"/blog","/(site)/about/page":"/about","/(site)/blog/detail/page":"/blog/detail","/(site)/events/page":"/events","/(site)/category/page":"/category","/(site)/contact/page":"/contact","/(site)/pricing/page":"/pricing","/(site)/documentation/page":"/documentation","/(site)/terms/page":"/terms","/(site)/refund/page":"/refund","/(site)/privacy/page":"/privacy","/page":"/","/(site)/service/page":"/service"}
+{
+  "/_not-found/page": "/_not-found",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/(site)/blog/[slug]/page": "/blog/[slug]",
+  "/(site)/about/[slug]/page": "/about/[slug]",
+  "/(site)/category/[slug]/page": "/category/[slug]",
+  "/(site)/events/[slug]/page": "/events/[slug]",
+  "/(site)/about/page": "/about",
+  "/(site)/(auth)/signup/page": "/signup",
+  "/(site)/category/page": "/category",
+  "/(site)/contact/page": "/contact",
+  "/(site)/blog/page": "/blog",
+  "/(site)/documentation/page": "/documentation",
+  "/(site)/events/page": "/events",
+  "/(site)/pricing/page": "/pricing",
+  "/(site)/refund/page": "/refund",
+  "/(site)/privacy/page": "/privacy",
+  "/(site)/service/page": "/service",
+  "/(site)/terms/page": "/terms",
+  "/page": "/",
+  "/(site)/(auth)/signin/page": "/signin",
+  "/(site)/blog/detail/page": "/blog/detail"
+}
