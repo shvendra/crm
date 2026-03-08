@@ -1,0 +1,49 @@
+#root html:not(.no-js) [data-aos^='fade'][data-aos^='fade'] {
+  opacity: 1 !important;
+}
+
+[data-aos^='fade'] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.hero {
+  /* background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-color), transparent 95%) 25%,
+      color-mix(in srgb, var(--accent-color), transparent 98%) 50%,
+      transparent 100%
+    ); */
+  color: white;
+  background: rgb(0 13 37);
+}
+body {
+  background-color: var(--background-color);
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.whatsapp-icon {
+  color: #25d366; /* WhatsApp green */
+  animation: blink 1.2s infinite;
+  font-size: 1.2em;
+}
+
+.herosectiongrid {
+  /* background-color: color-mix(in srgb, var(--accent-color), transparent 92%) !important; */
+}
+
+[data-aos^='zoom'][data-aos^='zoom'] {
+  opacity: 1 !important;
+}
+[data-aos^='zoom'] {
+  opacity: 1 !important;
+  transform: none !important;
+}

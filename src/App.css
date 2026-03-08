@@ -1,0 +1,549 @@
+* {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+body {
+  /* overflow-x: hidden; */
+  /* background: #b3b2b1 !important; */
+}
+.MuiInputBase-root,
+.MuiSelect-select,
+.MuiOutlinedInput-input,
+.MuiOutlinedInput-input {
+  font-weight: 700 !important;
+  color: #1a76d2 !important;
+}
+
+.Toastify__toast--error .Toastify__toast-body {
+  font-weight: bold;
+  color: red;
+}
+
+
+.MuiInputLabel-root,
+.MuiFormLabel-root {
+  font-weight: 600 !important;
+  color: darkgray !important;
+}
+h1, h2, h3, h4, h6 {
+  color: #1a76d2 !important;
+  font-weight: bold !important;
+}
+strong {
+  color: #e4e8ec !important;
+}
+a {
+    font-weight: bolder !important;
+}
+.header {
+  display: flex;  /* Align items horizontally */
+  align-items: center;  /* Center vertically */
+  justify-content: center;  /* Align horizontally */
+  flex-direction: column; /* Stack the image and text vertically */
+  text-align: center;  /* Center text */
+  padding: 20px;
+  width: 100%;
+}
+
+.header img {
+  width: 100%; /* Make the image responsive */
+  max-width: 200px; /* Set a max width to avoid excessive enlargement */
+  height: auto; /* Maintain the aspect ratio */
+}
+
+.header h3 {
+  font-size: 2rem; /* Base font size for small screens */
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .header h3 {
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 400px) {
+  .header h3 {
+    font-size: 1.2rem; /* Further adjust font size for very small screens */
+  }
+}
+
+/* General Styles for All Input Fields */
+input, textarea, select {
+  font-family: 'Roboto', sans-serif; /* Clean and modern font */
+  font-size: 1rem;
+  padding: 12px 15px; /* Padding for better readability */
+  margin: 10px 0; /* Vertical spacing between elements */
+  border: 1px solid #ccc; /* Standard border */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  outline: none; /* Remove default outline */
+  width: 100%; /* Full width of the parent container */
+  box-sizing: border-box; /* Includes padding and border in element's total width/height */
+  transition: all 0.3s ease; /* Smooth transition for focus and hover states */
+  background-color: #f9f9f9; /* Light background for inputs */
+}
+
+/* Focus State for Inputs */
+/* input:focus, textarea:focus, select:focus {
+  border-color: #007BFF; 
+  background-color: #eaf4ff; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+} */
+
+#headerCloseIcon {
+  display: none !important;
+}
+/* Placeholder Text Styling */
+input::placeholder, textarea::placeholder {
+  color: #888; /* Subtle placeholder color */
+  font-style: italic;
+}
+.MuiSelect-select {
+  color: darkgray;
+  font-weight: 600;
+}
+/* Hover State for Inputs */
+/* input:hover, textarea:hover, select:hover {
+  border-color: #007BFF; 
+  background-color: #f1f8ff; 
+} */
+li {
+    font-weight: bolder !important ;
+    color: darkgray !important;
+    /* min-height: 33px !important; */
+}
+.no-bullets {
+  list-style: none; /* remove default bullets */
+  padding-left: 0;
+}
+
+.no-bullets li {
+  position: relative;
+  padding-left: 25px; /* space for tick */
+  margin-bottom: 2px; /* optional spacing */
+}
+
+.no-bullets li::before {
+  content: "✔";       /* the tick */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: green;       /* optional tick color */
+}
+
+
+/* input[type="text"], input[type="email"], input[type="number"], select {
+    padding-left: 10px;
+} */
+/* Textarea-specific Styles */
+textarea {
+  min-height: 100px; /* Give textareas a minimum height */
+  resize: vertical; /* Allow vertical resizing */
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #007BFF;
+  background-color: #eaf4ff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Select Input Styles (Dropdown) */
+select {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+select:focus {
+  border-color: #007BFF;
+  background-color: #eaf4ff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Icon in Input Field */
+/* input[type="text"], input[type="email"], input[type="number"], select {
+  padding-left: 35px;
+} */
+
+/* Label Styling (for all inputs) */
+label {
+  font-weight: bold;
+  color: #333; /* Dark label color for better contrast */
+  margin-bottom: 5px; /* Space between label and input */
+  display: block;
+}
+
+/* Error State (Optional: Display when there's an error) */
+input.error, textarea.error, select.error {
+  border-color: #ff4d4d; /* Red border on error */
+  background-color: #ffe6e6; /* Light red background */
+}
+
+input.error:focus, textarea.error:focus, select.error:focus {
+  border-color: #ff4d4d; /* Red border on focus error */
+  background-color: #ffe6e6;
+  box-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+}
+
+/* Style for Buttons (Optional: Submit or other buttons) */
+button {
+  padding: 12px 20px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for Links (optional) */
+a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Drawer Paper */
+/* .MuiDrawer-paper {
+  background-color: #ffffff;
+} */
+
+/* AppBar custom styling */
+.MuiAppBar-root {
+  background-color: #007BFF; /* Example color */
+}
+
+/* Hamburger Icon customization */
+.MuiIconButton-root {
+  color: white; /* Make hamburger icon white */
+}
+hr {
+  opacity: 1.5 !important;
+      border-bottom-width: 1px !important;
+      margin-bottom: 0px !important;
+}
+.css-izap9d-MuiTypography-root {
+  font-size: 13px !important; 
+}
+.css-151omy3 {
+  font-size: 14px !important; 
+}
+/* Ensure the html and body take up full height */
+html, body {
+  height: 100%;
+  margin: 0;  /* Remove margin to avoid issues */
+  padding: 0; /* Ensure no unwanted space */
+  overflow-x: auto; /* Avoid horizontal scroll */
+}
+.invitecard {
+  padding: 8px !important;
+}
+.profilehead {
+      background: #f4f5f8 !important;
+    padding: 4px 0px 4px 9px !important;
+}
+/* Ensure the main container takes up full height */
+.myJobs.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container stretches to full screen */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+
+.background-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;  /* Ensure the video stays behind the content */
+}
+
+#background-video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.css-6giu5p-MuiContainer-root {
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.language-btn {
+  font-size: 12px;         /* Smaller font size */
+  padding: 0px 3px;       /* Padding to make the button smaller */
+  border: 1px solid #ccc; /* Border around the button */
+  border-radius: 4px;      /* Rounded corners */
+  background-color: #1a76d2; /* Light background color */
+  cursor: pointer;        /* Pointer cursor on hover */
+}
+
+.language-btn:hover {
+  background-color: #ddd;  /* Change background on hover */
+}
+
+body, html {
+  overflow: auto !important;
+  position: static !important;
+}
+.backdrop {
+  background: rgba(0, 0, 0, 0.6); /* Still looks clean without filter */
+}
+
+.custom-card {
+  box-shadow: 3px 14px 30px 17px rgba(0.25, 0, 0, 0.25) !important;
+  border-radius: 8px !important; /* Optional: Adding rounded corners */
+}
+
+/* .custom-card:hover {
+  box-shadow: 24px 24px 40px rgba(0, 0, 0, 0.3) !important;
+} */
+
+.css-zioonp-MuiAlert-message {
+  overflow: unset !important;
+}
+
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root {
+  margin-left: 9px !important;
+  padding: 0px !important;
+}
+
+.custom-textfield input {
+  padding-left: 2px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  padding-right: 2px !important;
+}
+.css-jiabcu-MuiTableCell-root {
+  padding: 0px 1px !important;
+}
+.MuiBottomNavigationAction-label {
+  color: white !important;
+}
+.css-o0kdpv-MuiBottomNavigationAction-label {
+  color: white !important;
+  opacity: 1 !important;
+}
+.MuiBottomNavigationAction-label, .MuiBottomNavigationAction-iconOnly, .css-o1kdpv-MuiBottomNavigationAction-label {
+  color: white !important;
+}
+.css-xqxkju-MuiButtonBase-root-MuiBottomNavigationAction-root {
+  padding-top: 0px !important;
+}
+
+/* input:hover, textarea:hover, select:hover {
+  background-color: white !important;
+} */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  background-color: white !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+.css-o1kdpv-MuiBottomNavigationAction-label {
+  opacity: 1 !important;
+}
+@media (max-width: 600px) {
+  .css-1lt5qva-MuiCardContent-root, .uiCardContent-root {
+    padding-bottom: 4px !important;
+    
+  }
+  /* .dash-box {
+    padding-top: 3px !important;
+    margin-top: 3px !important;
+  } */
+ 
+  .dash-head {
+    margin-bottom: 0px !important;
+  }
+  .dash-card {
+    padding-top: 0px !important;
+  }
+  /* .background-video-container {
+    display: none !important;
+  } */
+}
+.dash-card-content {
+  padding: 5px !important;
+}
+.dash-card {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* 👈 smooth shadow all sides */
+  border-radius: 12px; /* Optional: rounded corners */
+  background-color: #fff;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  margin-top: 3px !important;
+}
+.background-image-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url("/home-slide-2.jpeg");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.custom-step-bar {
+  width: 50px !important;
+  height: 32% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.css-jiabcu-MuiTableCell-root {
+  text-align: center !important;
+}
+.css-g6bqb5-MuiTableCell-root {
+  text-align: center !important;
+}
+.css-1dc80h3-MuiTableCell-root {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+
+
+.blink-clickView {
+    display: inline-block;
+    padding: 0px 4px;
+    font-size: 13px;
+  background-color: #4caf50; /* MUI green[500] */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  animation: blinker 1.2s linear infinite;
+  color: white;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.css-1lekzkb {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+background: white;
+    padding: 7px;
+  border-radius: 6px; /* ✅ Added border radius */
+}
+
+.slick-slider,
+.slick-list,
+.slick-track {
+  overflow: hidden !important;
+}
+
+/* --- Premium Light Blue TablePagination Styles --- */
+.MuiTablePagination-root {
+  background-color: #e3f2fd; /* light-blue background */
+  padding: 8px 16px;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+/* Toolbar layout */
+.MuiTablePagination-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 8px;
+}
+
+/* Select and input custom widths */
+.MuiTablePagination-selectRoot {
+  min-width: 80px;
+}
+
+.MuiTablePagination-input {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Rows display text spacing */
+.MuiTablePagination-displayedRows {
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+/* Arrow icons color */
+.MuiTablePagination-actions button {
+  color: #1976d2; /* MUI primary blue */
+}
+
+/* Dropdown items font size */
+.MuiTablePagination-menuItem {
+  font-size: 0.9rem;
+}
+
+/* --- Responsive adjustments for mobile view --- */
+@media (max-width: 600px) {
+  .MuiTablePagination-root {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+  .MuiTablePagination-selectRoot,
+  .MuiTablePagination-input {
+    min-width: 60px;
+  }
+  .MuiTablePagination-toolbar {
+    justify-content: center;
+    gap: 8px;
+  }
+  .MuiTablePagination-displayedRows {
+    margin: 0;
+  }
+}
+@media (min-width: 1200px) {
+    .css-1oqqzyl-MuiContainer-root {
+        max-width: 100% !important;
+    }
+}
+@media (min-width: 1200px) {
+    .css-1qsxih2 {
+        max-width: 1200px !important;
+    }
+}
+.MuiAlert-message {
+  font-size: 12px !important;
+    font-weight: bolder !important;
+}
+
+.no-bullets {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
