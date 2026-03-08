@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close"; // Import Close icon
 import GroupsIcon from "@mui/icons-material/Groups";
 import PaymentIcon from "@mui/icons-material/Payment";
 import axios from "../../utils/axiosConfig";
-
+import ContactButtons from "./ContactButtons"; // Import the new ContactButtons component
 // import DiwaliPopup from "../Home/DiwaliPopup";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -1120,7 +1120,7 @@ const buildWhatsappMessage = (stream, lang = "en") => {
 const isPageLoading = requirementsLoading || agentsLoading;
 
   const getBestMatchingImage = (workType) => {
-    if (!workType) return "/General.jpg"; // fallback
+    if (!workType) return "/app/General.jpg"; // fallback
 
     // Normalize work type (lowercase, trim spaces, replace spaces/underscores)
     const normalizedType = workType
@@ -1142,7 +1142,7 @@ const isPageLoading = requirementsLoading || agentsLoading;
     });
 
     // Return exact match or fallback
-    return match || "/General.jpg";
+    return match || "/app/General.jpg";
   };
 
   if (!user) {
@@ -2506,9 +2506,10 @@ const isPageLoading = requirementsLoading || agentsLoading;
                   </CardContent>
                 </Card>
               </Grid>
-
-              {/* Active work stream */}
-              <Grid item sx={{ mb: 0 }} xs={12}>
+{currentReq.filter(
+  (stream) => stream?.isAgentAccepted !== "No"
+).length !== 0 ? (
+  <div>   <Grid item sx={{ mb: 0 }} xs={12}>
                 <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
                   <CardContent className="dash-card-content">
                     <Divider
@@ -2986,7 +2987,11 @@ const isPageLoading = requirementsLoading || agentsLoading;
                     </Grid>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Grid></div>
+) : null}
+
+              {/* Active work stream */}
+           
             </>
           )}
           {(user?.role === "Agent" || user?.role === "SelfWorker") && (
@@ -3210,7 +3215,12 @@ const isPageLoading = requirementsLoading || agentsLoading;
                     )}
                    <ServiceBoxGrid />
                     
-                    <Divider
+              {currentReq.filter(
+  (stream) =>
+    stream.status === "Assigned" &&
+    stream.assignedAgentId === user?._id
+).length !== 0 ? (
+  <div>   <Divider
                       sx={{
                         mb: 1,
                         borderColor: "#1876d2",
@@ -4236,7 +4246,10 @@ backgroundImage: {
                             );
                           })
                       )}
-                    </Grid>
+                    </Grid></div>
+) : null}
+
+
                   </CardContent>
                 </Card>
               </Grid>
@@ -4470,36 +4483,11 @@ backgroundImage: {
                                             alignItems="center"
                                             gap={1}
                                           >
-                                            <IconButton
-                                              color="success"
-                                              component="a"
-                                             href={`https://wa.me/+91${stream.employerPhone}?text=${encodeURIComponent(
-                                                buildWhatsappMessage(stream, currentLang)
-                                              )}`}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              sx={{ p: 0, m: 0, minWidth: 32 }}
-                                            >
-                                              <WhatsAppIcon
-                                                fontSize="small"
-                                                sx={{ color: "#25D366" }}
-                                              />
-                                            </IconButton>
-
-                                            <IconButton
-                                              color="primary"
-                                              component="a"
-                                              href={`tel:${stream.employerPhone}`}
-                                              sx={{
-                                                p: 0,
-                                                m: 0,
-                                                minWidth: 32,
-                                                color: "#90caf9",
-                                              }}
-                                            >
-                                              <CallIcon fontSize="small" />
-                                            </IconButton>
-
+ <ContactButtons
+        stream={stream}
+        currentLang={currentLang}
+        isVerified={user?.veryfiedBage} // true or false
+      />
                                             <IconButton
                                               onClick={() =>
                                                 handleLocationClick(

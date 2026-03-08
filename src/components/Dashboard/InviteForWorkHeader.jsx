@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   Typography,
@@ -6,19 +6,35 @@ import {
   InputAdornment,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { toast } from "react-hot-toast";
+import { Context } from "../../main";
 
 const InviteForWorkHeader = ({ t, onSearch }) => {
   const [searchValue, setSearchValue] = useState('');
+  const { isAuthorized, user, setUser } = useContext(Context);
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchValue(value);
+const handleSearchChange = (e) => {
+  const value = e.target.value;
 
-    // optional callback for filtering / API call
-    if (onSearch) {
-      onSearch(value);
-    }
-  };
+  // Check verification before allowing search
+  if (!user?.veryfiedBage) {
+    // Show a polite message (toast, alert, or dialog)
+toast.error(
+  t('verificationRequired') ||
+    "Access denied: You are not verified. Please obtain a Verified Badge first to unlock search features. Verification ensures trust and safety for all users."
+);
+
+    return; // stop execution
+  }
+
+  setSearchValue(value);
+
+  // optional callback for filtering / API call
+  if (onSearch) {
+    onSearch(value);
+  }
+};
+
 
   return (
     <Box

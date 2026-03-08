@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     },
-
+  base: '/app/',
     preview: {
       port: 4173,
       host: true,

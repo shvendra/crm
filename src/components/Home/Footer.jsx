@@ -59,7 +59,7 @@ const Footer = ({ onFooterMenuClick }) => {
                       }}
                     >
                       <img
-                        src="/logo.jpg"
+                        src="/app/logo.jpg"
                         alt="BookMyWorker"
                         style={{ height: 54, width: 48 }}
                       />

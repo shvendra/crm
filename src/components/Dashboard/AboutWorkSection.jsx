@@ -127,13 +127,17 @@ const AboutWorkSection = ({ stream, t }) => {
               >
                 <AccessTimeIcon fontSize="small" color="action" />
                 <Typography variant="body2">
-                  <strong>{t('dateOfWork')}:</strong>{' '}
-                  {stream.inTime && stream.outTime
+<Typography component="span" fontWeight="bold" color="black">
+  {t('dateOfWork')}:
+</Typography>{' '}                  {stream.inTime && stream.outTime
                     ? `${getCustomTimeLabel(stream.inTime)} - ${getCustomTimeLabel(stream.outTime)}`
                     : t('generalTime')}
                 </Typography>
               </Box>
-              <strong>{translateFromJson(stream?.subCategory, i18n.language)} </strong> <br />
+              <Typography component="span" fontWeight="bold" color="black">
+ {translateFromJson(stream?.workType, i18n.language)} {translateFromJson(stream?.subCategory, i18n.language)}
+</Typography>{' '}
+<br />
               {stream.remarks}
             </DialogContent>
 

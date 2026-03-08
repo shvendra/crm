@@ -18,9 +18,9 @@ const LogoLoader = () => {
           borderRadius: "50%",
           border: "6px solid transparent",
           borderTopColor: "#1976d2",
-          borderRightColor: "#ff9800",
-          borderBottomColor: "#4caf50",
-          borderLeftColor: "#f44336",
+          borderRightColor: "#0750bc",
+          borderBottomColor: "#4984f1",
+          borderLeftColor: "#0b7bb4",
           animation: "rotateBorder 1.5s linear infinite",
           display: "flex",
           alignItems: "center",
@@ -28,7 +28,7 @@ const LogoLoader = () => {
         }}
       >
         <img
-          src="/assets/img/logo.png"
+          src="/app/assets/img/logo.png"
           alt="Company Logo"
           style={{
             width: "60px",

@@ -66,12 +66,12 @@ const Header = () => {
           }}
         >
           <img
-            src="/logo.jpg"
+            src="/app/logo.jpg"
             alt="BookMyWorker"
             style={{ height: 54, width: 48 }}
           />
 
-          <Box sx={{ lineHeight: 1 }}>
+          {/* <Box sx={{ lineHeight: 1 }}>
             <Box sx={{ fontWeight: "bolder" }}>BookMyWorker</Box>
             <Box
               sx={{
@@ -82,7 +82,7 @@ const Header = () => {
             >
               Trusted workforce solutions in india
             </Box>
-          </Box>
+          </Box> */}
         </Typography>
 
         {/* Desktop Menu */}

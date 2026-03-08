@@ -25,7 +25,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PathLocationModal from "./pathLocationModel"; // Make sure path/case is correct
-
+import ContactButtons from "./ContactButtons";
 import GroupsIcon from "@mui/icons-material/Groups";
 // 🔹 import all sub-components you already use
 import InviteForWorkHeader from "./InviteForWorkHeader";
@@ -341,7 +341,7 @@ useEffect(() => {
     });
 
     // Return exact match or fallback
-    return match || "/General.jpg";
+    return match || "/app/General.jpg";
   };
   // 🚀 Initial load
   useEffect(() => {
@@ -635,35 +635,11 @@ useEffect(() => {
                                             alignItems="center"
                                             gap={1}
                                           >
-                                            <IconButton
-                                              color="success"
-                                              component="a"
-                                             href={`https://wa.me/+91${stream.employerPhone}?text=${encodeURIComponent(
-                                                buildWhatsappMessage(stream, currentLang)
-                                              )}`}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              sx={{ p: 0, m: 0, minWidth: 32 }}
-                                            >
-                                              <WhatsAppIcon
-                                                fontSize="small"
-                                                sx={{ color: "#25D366" }}
-                                              />
-                                            </IconButton>
-
-                                            <IconButton
-                                              color="primary"
-                                              component="a"
-                                              href={`tel:${stream.employerPhone}`}
-                                              sx={{
-                                                p: 0,
-                                                m: 0,
-                                                minWidth: 32,
-                                                color: "#90caf9",
-                                              }}
-                                            >
-                                              <CallIcon fontSize="small" />
-                                            </IconButton>
+                                          <ContactButtons
+                                                 stream={stream}
+                                                 currentLang={currentLang}
+                                                 isVerified={user.isVerified} // true or false
+                                               />
 
                                             <IconButton
                                               onClick={() =>

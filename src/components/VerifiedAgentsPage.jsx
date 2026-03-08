@@ -22,7 +22,7 @@ import { Context } from "../main";
 import RatingStars from "./RatingStars";
 import WORKER_CATEGORIES from "../categories.json";
 import FilterListIcon from "@mui/icons-material/FilterList";
-
+import PricingBanner from "./PricingBanner";  
 const PAGE_LIMIT = 25;
 // const WORKER_TYPES = [
 //   "Construction Worker",
@@ -126,7 +126,7 @@ const VerifiedAgentsPage = ({ users = {} }) => {
     const last2 = str.slice(-2);
     return `********${last2}`;
   };
-
+const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts <= 0);
   const handleViewNumber = async (agentId) => {
     if (isSubscriptionExpired) {
       toast.error("Your plan has expired. Please renew to view more contacts.");
@@ -148,11 +148,26 @@ const VerifiedAgentsPage = ({ users = {} }) => {
         toast.error("Unable to fetch number");
       }
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to unlock number");
-    } finally {
-      setLoadingNumber((prev) => ({ ...prev, [agentId]: false }));
+  console.error(err);
+  let message = "Failed to unlock number. Please try again.";
+
+  if (err.response?.data?.message) {
+    if (err.response.data.message === "Contact limit exhausted") {
+      setIsLimitExhausted(true);
+      message =
+        "Your contact limit has been exhausted. Please take a top‑up plan to unlock more contacts. This ensures uninterrupted access while maintaining trust and safety for all users.";
+      toast.error(message);
+      navigate("/pricing"); // 👈 redirect user to pricing page
+      return; // stop further execution
+    } else {
+      message = err.response.data.message;
     }
+  }
+
+  toast.error(message);
+} finally {
+  setLoadingNumber((prev) => ({ ...prev, [agentId]: false }));
+}
   };
 
   const fetchUserRemarks = async () => {
@@ -437,19 +452,18 @@ const VerifiedAgentsPage = ({ users = {} }) => {
               </Typography>
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Button
-                  size="small"
-                  variant="text"
-                  onClick={clearAllFilters}
-                  sx={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    textTransform: "none",
-                    color: "text.secondary",
-                  }}
-                >
-                  Clear Filters
-                </Button>
+                 <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  borderRadius: 2,
+                  fontWeight: 700,
+                  textTransform: "none",
+                }}
+                onClick={applyFilters}
+              >
+                Apply
+              </Button>
 
                 {isMobile && (
                   <Box
@@ -659,12 +673,11 @@ const VerifiedAgentsPage = ({ users = {} }) => {
               <Button
                 variant="contained"
                 fullWidth
-                size="large"
+                size="small"
                 sx={{
                   borderRadius: 2,
                   fontWeight: 700,
                   textTransform: "none",
-                  height: 44,
                 }}
                 onClick={applyFilters}
               >
@@ -685,6 +698,12 @@ const VerifiedAgentsPage = ({ users = {} }) => {
             pr: 0.5,
           }}
         >
+          {isLimitExhausted && (
+  <div>
+    <PricingBanner userRole={user?.userRole} />
+  </div>
+)}
+
           {loading ? (
             <Box
               sx={{
