@@ -14,7 +14,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useTranslation } from "react-i18next";
 import { Context } from '../main';
 import axios from "axios";
-import SubscriptionPatti from './Dashboard/SubscriptionPatti';
+import SubscriptionPatti from '../components/Dashboard/SubscriptionPatti';
 
 import { toast } from "react-toastify";
 import config from "../config"; // adjust path if needed

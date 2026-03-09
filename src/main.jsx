@@ -2,6 +2,7 @@ import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import './i18n'; // Initialize i18n
 import { registerSW } from './utils/swRegistration';
+import { BrowserRouter } from "react-router-dom";
 
 export const Context = createContext({
   isAuthorized: false,
