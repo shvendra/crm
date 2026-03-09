@@ -1,0 +1,1 @@
+import{j as n}from"./mui-core-Ch2atUiS.js";import{L as s}from"./react-vendor-CN1NTQaZ.js";const o=()=>n.jsx(n.Fragment,{children:n.jsx("section",{className:"page notfound",children:n.jsxs("div",{className:"content",children:[n.jsx("img",{src:"/app/notfound.png",alt:"notfound"}),n.jsx(s,{to:"/landing",children:"RETURN TO HOME PAGE"})]})})});export{o as default};

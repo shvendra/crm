@@ -1,0 +1,1 @@
+import{a as e}from"./react-vendor-CN1NTQaZ.js";const a=()=>{const[a,s]=e.useState(!1),[t,n]=e.useState(""),[o,r]=e.useState(null);return{isOpen:a,message:t,requestConfirm:e=>(n(e),s(!0),new Promise(e=>{r(()=>e)})),handleDialogConfirm:()=>{s(!1),o&&o(!0)},handleDialogCancel:()=>{s(!1),o&&o(!1)}}};export{a as u};
