@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    base: '/app/',
+    base: '/app',
     plugins: [
       react({
         jsxRuntime: 'automatic',
