@@ -22,6 +22,7 @@ import { Context } from "../../main";
 
 // Initialize socket connection
 const socket = io(config.API_BASE_URL, {
+  path: "/app/socket.io", // <--- THIS IS THE KEY FIX
   withCredentials: true,
   transports: ["websocket", "polling"], // ✅ MATCH BACKEND
 });
