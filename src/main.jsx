@@ -13,7 +13,9 @@ import AppWrapper from './AppWrapper.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AppWrapper />
+    <BrowserRouter basename="/app">
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
