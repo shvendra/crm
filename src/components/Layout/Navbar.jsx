@@ -174,8 +174,10 @@ const getGreeting = () => {
 
   <Stack direction="column" spacing={0} sx={{ lineHeight: 1 }}>
     <Box sx={{ fontWeight: "bold", fontSize: "0.95rem" }}>
-      {(user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)) || "BookMyWorker"}
-    </Box>
+  Hello, {user?.name 
+    ? (user.name.split(" ")[0].charAt(0).toUpperCase() + user.name.split(" ")[0].slice(1)) 
+    : "BookMyWorker"}
+</Box>
     <Box sx={{ fontSize: "0.75rem", fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>
       {getGreeting()}
     </Box>
