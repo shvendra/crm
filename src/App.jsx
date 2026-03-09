@@ -356,7 +356,7 @@ const AppContent = () => {
               />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/" element={<Home />} /> */}
+              <Route path="/" element={<Landing />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/health-monitor" element={<HealthMonitor />} />
               <Route path="/blog/:id" element={<SingleBlog />} />

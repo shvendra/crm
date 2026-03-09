@@ -133,7 +133,12 @@ const Navbar = () => {
       navigateTo("/landing", { replace: true });
     }
   };
-
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning";
+  if (hour < 18) return "Good Afternoon";
+  return "Good Evening";
+};
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
@@ -163,24 +168,37 @@ const Navbar = () => {
               color: "white",
             }}
           >
-            <img
-              src="/app/logo.jpg"
-              alt="BookMyWorker"
-              style={{ height: 54, width: 48 }}
-            />
+            {isAuthorized && (
+              <>    <Avatar
+                  src={
+                    user?.profilePhoto
+                      ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
+                          /([^:]\/)\/+/g,
+                          "$1",
+                        )
+                      : ""
+                  }
+                  alt={user?.name || "Profile"}
+                  sx={{ width: 32, height: 32 }}
+                /></>)}
 
-            {/* <Box sx={{ lineHeight: 1 }}>
-              <Box sx={{ fontWeight: "bolder" }}>BookMyWorker</Box>
-              <Box
-                sx={{
-                  fontSize: 9,
-                  fontWeight: "bolder",
-                  color: "rgba(255,255,255,0.8)",
-                }}
-              >
-                Trusted workforce solutions in india
-              </Box>
-            </Box> */}
+            <Box sx={{ lineHeight: 1, ml: 1 }}>
+<Box sx={{ 
+  fontWeight: "bolder", 
+  fontSize: "0.7rem", 
+  lineHeight: 1.2 
+}}>
+  {user?.name || "BookMyWorker"}
+</Box>            <Box
+  sx={{
+    fontSize: 9,
+    fontWeight: "bolder",
+    color: "rgba(255,255,255,0.8)",
+  }}
+>
+  {getGreeting()}
+</Box>
+            </Box>
           </Typography>
 
           {/* Mobile View: Hamburger Menu & Profile */}
@@ -217,18 +235,7 @@ const Navbar = () => {
                 </Select>
 
                 {/* Avatar */}
-                <Avatar
-                  src={
-                    user?.profilePhoto
-                      ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
-                          /([^:]\/)\/+/g,
-                          "$1",
-                        )
-                      : ""
-                  }
-                  alt={user?.name || "Profile"}
-                  sx={{ width: 32, height: 32 }}
-                />
+              
               </>
             )}
             <IconButton
