@@ -18,6 +18,7 @@ import {
   Drawer,
   IconButton,
   Box,
+  Stack,
   BottomNavigation,
   BottomNavigationAction,
   Avatar,
@@ -160,46 +161,26 @@ const getGreeting = () => {
         <Toolbar sx={{ pl: 0 }}>
           {/* Brand Name */}
           <Typography
-            variant="h5"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexGrow: 1,
-              color: "white",
-            }}
-          >
-            {isAuthorized && (
-              <>    <Avatar
-                  src={
-                    user?.profilePhoto
-                      ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
-                          /([^:]\/)\/+/g,
-                          "$1",
-                        )
-                      : ""
-                  }
-                  alt={user?.name || "Profile"}
-                  sx={{ width: 32, height: 32 }}
-                /></>)}
-
-            <Box sx={{ lineHeight: 1, ml: 1 }}>
-<Box sx={{ 
-  fontWeight: "bolder", 
-  fontSize: "0.7rem", 
-  lineHeight: 1.2 
-}}>
-  {user?.name || "BookMyWorker"}
-</Box>            <Box
-  sx={{
-    fontSize: 9,
-    fontWeight: "bolder",
-    color: "rgba(255,255,255,0.8)",
-  }}
+  variant="h5"
+  sx={{ display: "flex", alignItems: "center", flexGrow: 1, color: "white", marginLeft: 1 }}
 >
-  {getGreeting()}
-</Box>
-            </Box>
-          </Typography>
+  {isAuthorized && (
+    <Avatar
+      src={user?.profilePhoto ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(/([^:]\/)\/+/g, "$1") : ""}
+      alt={user?.name || "Profile"}
+      sx={{ width: 32, height: 32, mr: 1 }} // mr: 1.5 adds standard 12px spacing
+    />
+  )}
+
+  <Stack direction="column" spacing={0} sx={{ lineHeight: 1 }}>
+    <Box sx={{ fontWeight: "bold", fontSize: "0.95rem" }}>
+      {(user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)) || "BookMyWorker"}
+    </Box>
+    <Box sx={{ fontSize: "0.75rem", fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>
+      {getGreeting()}
+    </Box>
+  </Stack>
+</Typography>
 
           {/* Mobile View: Hamburger Menu & Profile */}
           <Box
