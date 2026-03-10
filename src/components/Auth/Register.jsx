@@ -216,6 +216,32 @@ const Register = () => {
     setEmailError(validateEmail(value));
   };
 
+   const createLead = async ({ role, name, phone }) => {
+  try {
+    const res = await fetch(`${config.API_BASE_URL}/api/v1/user/lead-register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        role,
+        name,
+        phone,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Lead registration failed");
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const handleVerifyPhone = async () => {
   console.log("API:", config.API_BASE_URL);
 
@@ -232,6 +258,11 @@ const handleVerifyPhone = async () => {
   }
 
   try {
+    await createLead({
+  role: selectedUserType || "Unknown",
+  name,
+  phone,
+});
     // STEP 1: Start session
     const sessionRes = await fetch(
       `${config.API_BASE_URL}/api/v1/session/start`
@@ -451,151 +482,225 @@ const handleVerifyPhone = async () => {
       i18n.changeLanguage("en");
     }
   }, [isWebView, i18n]);
-  return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          bgcolor: "#f5f5f5",
-          mb: 4,
-        }}
-      >
-        {/* Header */}
-        <AppBar
-          position="static"
-          elevation={0}
-          sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
-        >
-          <Toolbar sx={{ justifyContent: "space-between", py: 1 }}>
-            {/* Left side - BookMyWorker title with back button if on step 2 */}
+
+  const authFieldSx = {
+  mb: 1.5,
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    backgroundColor: "#fafafa",
+minHeight: { xs: 46, md: 48 },
+    "& fieldset": {
+      borderColor: "#d9dee7",
+    },
+    "&:hover fieldset": {
+      borderColor: "#b8c0cc",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#2bb7bb",
+      borderWidth: "1px",
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "#98a2b3",
+  },
+};
+
+const authSelectSx = {
+  borderRadius: "10px",
+  backgroundColor: "#fafafa",
+  minHeight: 48,
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#d9dee7",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#b8c0cc",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#2bb7bb",
+    borderWidth: "1px",
+  },
+};
+
+const roleCardSx = (selected, accent = "#2bb7bb") => ({
+  mb: 1,
+  p: 1.4,
+  cursor: "pointer",
+  bgcolor: selected ? "#f0fbfb" : "#fff",
+  borderRadius: "12px",
+  boxShadow: "none",
+  border: selected ? `1px solid ${accent}` : "1px solid #e6eaf0",
+  transition: "all 0.25s ease",
+  "&:hover": {
+    transform: "translateY(-1px)",
+    boxShadow: "0 8px 24px rgba(16,24,40,0.08)",
+    borderColor: accent,
+  },
+});
+return (
+  <>
+  <Box
+  sx={{
+    // minHeight: "100vh",
+    width: "100%",
+    bgcolor: { xs: "#fff", md: "#f2f4f7" },
+    display: "flex",
+    flexDirection: "column", // important
+    alignItems: "center",
+    justifyContent: { xs: "flex-start", md: "center" },
+    px: { xs: 0, md: 2 },
+    py: { xs: 0, md: 1 },
+  }}
+>
+  <Box
+    sx={{
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      mb: { xs: 0, md: 2 },
+    }}
+  >
+    <JobBanner isWebView={isWebView} />
+  </Box>
+
+<Container
+  maxWidth="sm"
+  disableGutters
+  sx={{
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    mt: 0
+  }}
+>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: { xs: "100%", md: 460 },
+        bgcolor: "#fff",
+        borderRadius: { xs: 0, md: "14px" },
+        boxShadow: { xs: "none", md: "0 10px 40px rgba(16,24,40,0.08)" },
+        px: { xs: 2, sm: 3.5 },
+        py: { xs: 2.5, sm: 3.5 },
+        minHeight: { xs: "100vh", md: "auto" },
+        position: "relative",
+      }}
+    >
+          {/* top utility row */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1.5,
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               {step === 1 ? (
                 <IconButton
                   onClick={() => navigate("/landing")}
-                  sx={{ color: "#1976d2", mr: 1 }}
+                  sx={{ color: "#344054", p: 0.8 }}
                 >
                   <ArrowBack />
                 </IconButton>
               ) : step === 2 ? (
                 <IconButton
                   onClick={handleBackStep}
-                  sx={{ color: "#1976d2", mr: 1 }}
+                  sx={{ color: "#344054", p: 0.8 }}
                 >
                   <ArrowBack />
                 </IconButton>
               ) : null}
             </Box>
 
-            {/* Right side - Language switcher */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {step === 1 && <LanguageSwitcher />}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               {step === 2 && (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography variant="body2" sx={{ color: "#666" }}>
-                    Step 2/2
-                  </Typography>
-                  <LanguageSwitcher />
-                </Box>
+                <Typography sx={{ fontSize: 12, color: "#667085", fontWeight: 600 }}>
+                  Step 2/2
+                </Typography>
               )}
+              <LanguageSwitcher />
             </Box>
-          </Toolbar>
-        </AppBar>
-<JobBanner isWebView={isWebView} />
-        <Container
-          maxWidth="sm"
-          sx={{ flex: 1, display: "flex", flexDirection: "column", py: 1 }}
-        >
-       
+          </Box>
+
+          {/* logo / brand */}
+          <Box sx={{ textAlign: "center", mb: 3 }}>
+            <Box
+              component="img"
+              src="/app/logo.svg"
+              alt="BookMyWorker"
+              sx={{
+                height: 56,
+                objectFit: "contain",
+                mx: "auto",
+                mb: 1.2,
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: 26,
+                fontWeight: 800,
+                color: "#101828",
+                lineHeight: 1.2,
+              }}
+            >
+              {step === 1 ? t("selectRole") : t("enterYourDetails")}
+            </Typography>
+            <Typography
+              sx={{
+                mt: 0.8,
+                fontSize: 14,
+                color: "#667085",
+                maxWidth: 340,
+                mx: "auto",
+              }}
+            >
+              {step === 1 ? t("chooseCategory") : t("fillBasicInfo")}
+            </Typography>
+          </Box>
+
           <form
             onSubmit={handleRegister}
-              id="employerRegistrationForm"
+            id="employerRegistrationForm"
             autoComplete="off"
-            style={{ flex: 1, display: "flex", flexDirection: "column" }}
+            style={{ display: "flex", flexDirection: "column" }}
           >
             {step === 1 && (
-              <Box
-                sx={{
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  pt: 1,
-                }}
-              >
+             <Box
+  sx={{
+    width: "100%",
+    maxWidth: { xs: "100%", md: 460 },
+    bgcolor: "#fff",
+    borderRadius: { xs: 0, md: "14px" }, // no rounded corners on phone
+    boxShadow: { xs: "none", md: "0 10px 40px rgba(16,24,40,0.08)" },
+    px: { xs: 2, sm: 3.5 },
+    py: { xs: 2.5, sm: 3.5 },
+    minHeight: { xs: "100vh", md: "auto" }, // full screen mobile
+    position: "relative",
+  }}
+>
                 {isWebView && (
                   <>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        mb: 1,
-                        color: "#333",
-                      }}
-                    >
-                      {t("selectRole")}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{ textAlign: "center", mb: 1, color: "#666" }}
-                    >
-                      {t("chooseCategory")}
-                    </Typography>
-                  </>
-                )}
-                {isWebView && (
-                  <>
-                    {/* Job Seeker Card */}
                     <Card
                       onClick={() => setSelectedUserType("Job Seeker")}
-                      sx={{
-                        mb: 1,
-                        p: 1,
-                        cursor: "pointer",
-                        bgcolor:
-                          selectedUserType === "Job Seeker"
-                            ? "#1976d2"
-                            : "white",
-                        borderRadius: 3,
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-                        border:
-                          selectedUserType === "Job Seeker"
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                        "&:hover": {
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                          transform: "translateY(-2px)",
-                        },
-                        transition: "all 0.3s ease",
-                      }}
+                      sx={roleCardSx(selectedUserType === "Job Seeker")}
                     >
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         <Badge
                           sx={{
-                            fontSize: 40,
-                            mr: 2,
+                            fontSize: 34,
+                            mr: 1.5,
                             color:
                               selectedUserType === "Job Seeker"
-                                ? "#FF9800"
-                                : "#1976d2", // Orange when selected, blue when not
+                                ? "#2bb7bb"
+                                : "#475467",
                           }}
                         />
                         <Box>
                           <Typography
-                            variant="h6"
                             sx={{
-                              fontWeight: "bold",
-                              color:
-                                selectedUserType === "Job Seeker"
-                                  ? "white !important"
-                                  : "#333 !important",
-                              textShadow:
-                                selectedUserType === "Job Seeker"
-                                  ? "0 1px 2px rgba(0,0,0,0.3)"
-                                  : "none",
+                              fontWeight: 700,
+                              fontSize: "1rem",
+                              color: "#101828",
                             }}
                           >
                             {t("jobSeeker")} ({t("individualWorker")})
@@ -604,37 +709,33 @@ const handleVerifyPhone = async () => {
                       </Box>
                     </Card>
 
-                    {/* Job Seeker Type Options */}
-                    <Collapse
-                      in={selectedUserType === "Job Seeker"}
-                      timeout={500}
-                    >
+                    <Collapse in={selectedUserType === "Job Seeker"} timeout={300}>
                       <Box
                         sx={{
-                          mb: 3,
-                          p: 1,
-                          bgcolor: "rgba(25, 118, 210, 0.02)",
-                          borderRadius: 3,
-                          border: "1px solid rgba(25, 118, 210, 0.1)",
-                          boxShadow: "0 2px 8px rgba(25, 118, 210, 0.05)",
+                          mb: 2,
+                          p: 1.2,
+                          borderRadius: "12px",
+                          bgcolor: "#fcfcfd",
+                          border: "1px solid #eaecf0",
                         }}
                       >
                         <Typography
-                          variant="subtitle1"
                           sx={{
-                            fontWeight: 600,
-                            color: "#1976d2",
-                            fontSize: "1rem",
+                            fontWeight: 700,
+                            color: "#344054",
+                            fontSize: "0.92rem",
                             textAlign: "center",
+                            mb: 1,
                           }}
                         >
                           {t("selectOneOrMoreOptions")}
                         </Typography>
+
                         <Box
                           sx={{
                             display: "grid",
                             gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                            gap: 0.3,
+                            gap: 0.8,
                           }}
                         >
                           <FormControlLabel
@@ -648,44 +749,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("skilledWorker")}
                             sx={{
-                              bgcolor: employerType.skilledWorker
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.skilledWorker
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.skilledWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.skilledWorker
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -697,44 +782,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("unskilledWorker")}
                             sx={{
-                              bgcolor: employerType.unskilledWorker
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.unskilledWorker
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.unskilledWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.unskilledWorker
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -746,44 +815,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("domesticWorker")}
                             sx={{
-                              bgcolor: employerType.domesticWorker
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.domesticWorker
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.domesticWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.domesticWorker
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -795,41 +848,24 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("industrialWorker")}
                             sx={{
-                              bgcolor: employerType.industrialWorker
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.industrialWorker
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.industrialWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.industrialWorker
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
@@ -837,51 +873,23 @@ const handleVerifyPhone = async () => {
                       </Box>
                     </Collapse>
 
-                    {/* Agent Card */}
                     <Card
                       onClick={() => setSelectedUserType("Agent")}
-                      sx={{
-                        mb: 1,
-                        p: 1,
-                        cursor: "pointer",
-                        bgcolor:
-                          selectedUserType === "Agent" ? "#1976d2" : "white",
-                        borderRadius: 3,
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-                        border:
-                          selectedUserType === "Agent"
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                        "&:hover": {
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                          transform: "translateY(-2px)",
-                        },
-                        transition: "all 0.3s ease",
-                      }}
+                      sx={roleCardSx(selectedUserType === "Agent")}
                     >
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         <Person
                           sx={{
-                            fontSize: 40,
-                            mr: 2,
-                            color:
-                              selectedUserType === "Agent"
-                                ? "#4CAF50"
-                                : "#1976d2", // Green when selected, blue when not
+                            fontSize: 34,
+                            mr: 1.5,
+                            color: selectedUserType === "Agent" ? "#2bb7bb" : "#475467",
                           }}
                         />
                         <Typography
-                          variant="h6"
                           sx={{
-                            fontWeight: "bold",
-                            color:
-                              selectedUserType === "Agent"
-                                ? "white !important"
-                                : "#333 !important",
-                            textShadow:
-                              selectedUserType === "Agent"
-                                ? "0 1px 2px rgba(0,0,0,0.3)"
-                                : "none",
+                            fontWeight: 700,
+                            fontSize: "1rem",
+                            color: "#101828",
                           }}
                         >
                           {t("agent")}
@@ -889,34 +897,33 @@ const handleVerifyPhone = async () => {
                       </Box>
                     </Card>
 
-                    {/* Agent Type Options */}
-                    <Collapse in={selectedUserType === "Agent"} timeout={500}>
+                    <Collapse in={selectedUserType === "Agent"} timeout={300}>
                       <Box
                         sx={{
-                          mb: 3,
-                          p: 1,
-                          bgcolor: "rgba(25, 118, 210, 0.02)",
-                          borderRadius: 3,
-                          border: "1px solid rgba(25, 118, 210, 0.1)",
-                          boxShadow: "0 2px 8px rgba(25, 118, 210, 0.05)",
+                          mb: 2,
+                          p: 1.2,
+                          borderRadius: "12px",
+                          bgcolor: "#fcfcfd",
+                          border: "1px solid #eaecf0",
                         }}
                       >
                         <Typography
-                          variant="subtitle1"
                           sx={{
-                            fontWeight: 600,
-                            color: "#1976d2",
-                            fontSize: "1rem",
+                            fontWeight: 700,
+                            color: "#344054",
+                            fontSize: "0.92rem",
                             textAlign: "center",
+                            mb: 1,
                           }}
                         >
                           {t("selectOneOrMoreOptions")}
                         </Typography>
+
                         <Box
                           sx={{
                             display: "grid",
                             gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                            gap: 0.3,
+                            gap: 0.8,
                           }}
                         >
                           <FormControlLabel
@@ -930,44 +937,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("groupLabourSupplier")}
                             sx={{
-                              bgcolor: employerType.groupLabourSupplier
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.groupLabourSupplier
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.groupLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.groupLabourSupplier
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -979,44 +970,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("skilledLabourSupplier")}
                             sx={{
-                              bgcolor: employerType.skilledLabourSupplier
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.skilledLabourSupplier
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.skilledLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.skilledLabourSupplier
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -1028,44 +1003,28 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("unskilledLabourSupplier")}
                             sx={{
-                              bgcolor: employerType.unskilledLabourSupplier
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.unskilledLabourSupplier
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.unskilledLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.unskilledLabourSupplier
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
+
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -1077,41 +1036,24 @@ const handleVerifyPhone = async () => {
                                   }))
                                 }
                                 sx={{
-                                  color: "#1976d2",
-                                  "&.Mui-checked": {
-                                    color: "#1976d2",
-                                  },
-                                  "& .MuiSvgIcon-root": {
-                                    fontSize: 20,
-                                  },
+                                  color: "#2bb7bb",
+                                  "&.Mui-checked": { color: "#2bb7bb" },
                                 }}
                               />
                             }
                             label={t("contractLabourSupplier")}
                             sx={{
-                              bgcolor: employerType.contractLabourSupplier
-                                ? "rgba(25, 118, 210, 0.08)"
-                                : "white",
-                              borderRadius: 2,
-                              px: 2,
-                              py: 1,
-                              mx: 0,
+                              m: 0,
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: "10px",
                               border: employerType.contractLabourSupplier
-                                ? "2px solid #1976d2"
-                                : "1px solid #e0e0e0",
-                              transition: "all 0.2s ease",
-                              "&:hover": {
-                                bgcolor: "rgba(25, 118, 210, 0.04)",
-                                borderColor: "#1976d2",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                              },
+                                ? "1px solid #2bb7bb"
+                                : "1px solid #eaecf0",
+                              bgcolor: employerType.contractLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
-                                fontSize: "0.95rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 500,
-                                color: employerType.contractLabourSupplier
-                                  ? "#1976d2"
-                                  : "#333",
                               },
                             }}
                           />
@@ -1120,94 +1062,63 @@ const handleVerifyPhone = async () => {
                     </Collapse>
                   </>
                 )}
-                {/* Employer Card */}
+
                 {!isWebView && (
                   <>
                     <Card
                       onClick={() => setSelectedUserType("Employer")}
-                      sx={{
-                        mb: 1,
-                        p: 1,
-                        cursor: "pointer",
-                        bgcolor:
-                          selectedUserType === "Employer" ? "#1976d2" : "white",
-                        borderRadius: 3,
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-                        border:
-                          selectedUserType === "Employer"
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                        "&:hover": {
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                          transform: "translateY(-2px)",
-                        },
-                        transition: "all 0.3s ease",
-                      }}
+                      sx={roleCardSx(selectedUserType === "Employer")}
                     >
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         <Business
                           sx={{
-                            fontSize: 40,
-                            mr: 2,
-                            mt: 0.5,
+                            fontSize: 34,
+                            mr: 1.5,
                             color:
-                              selectedUserType === "Employer"
-                                ? "#FFD700"
-                                : "#1976d2", // Gold when selected, blue when not
+                              selectedUserType === "Employer" ? "#2bb7bb" : "#475467",
                           }}
                         />
-                        <Box>
-                          <Typography
-                            variant="h6"
-                            sx={{
-                              fontWeight: "bold",
-                              color:
-                                selectedUserType === "Employer"
-                                  ? "white !important"
-                                  : "#333 !important",
-                              textShadow:
-                                selectedUserType === "Employer"
-                                  ? "0 1px 2px rgba(0,0,0,0.3)"
-                                  : "none",
-                            }}
-                          >
-                            {t("employerLabel")}
-                          </Typography>
-                        </Box>
+                        <Typography
+                          sx={{
+                            fontWeight: 700,
+                            fontSize: "1rem",
+                            color: "#101828",
+                          }}
+                        >
+                          {t("employerLabel")}
+                        </Typography>
                       </Box>
                     </Card>
                   </>
                 )}
 
-                {/* Employer Type Options */}
-                <Collapse in={selectedUserType === "Employer"} timeout={500}>
+                <Collapse in={selectedUserType === "Employer"} timeout={300}>
                   <Box
                     sx={{
-                      mb: 3,
-                      p: 1,
-                      bgcolor: "rgba(25, 118, 210, 0.02)",
-                      borderRadius: 3,
-                      border: "1px solid rgba(25, 118, 210, 0.1)",
-                      boxShadow: "0 2px 8px rgba(25, 118, 210, 0.05)",
+                      mb: 2,
+                      p: 1.2,
+                      borderRadius: "12px",
+                      bgcolor: "#fcfcfd",
+                      border: "1px solid #eaecf0",
                     }}
                   >
                     <Typography
-                      variant="subtitle1"
                       sx={{
-                        // mb: 2.5,
-                        fontWeight: 600,
-                        color: "#1976d2",
-                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: "#344054",
+                        fontSize: "0.92rem",
                         textAlign: "center",
+                        mb: 1,
                       }}
                     >
                       {t("selectOneOrMoreOptions")}
                     </Typography>
+
                     <Box
                       sx={{
                         display: "grid",
                         gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                        gap: 0.3,
+                        gap: 0.8,
                       }}
                     >
                       <FormControlLabel
@@ -1221,42 +1132,28 @@ const handleVerifyPhone = async () => {
                               }))
                             }
                             sx={{
-                              color: "#1976d2",
-                              "&.Mui-checked": {
-                                color: "#1976d2",
-                              },
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 20,
-                              },
+                              color: "#2bb7bb",
+                              "&.Mui-checked": { color: "#2bb7bb" },
                             }}
                           />
                         }
                         label={t("individual")}
                         sx={{
-                          bgcolor: employerType.individual
-                            ? "rgba(25, 118, 210, 0.08)"
-                            : "white",
-                          borderRadius: 2,
-                          px: 2,
-                          py: 1,
-                          mx: 0,
+                          m: 0,
+                          px: 1.2,
+                          py: 0.5,
+                          borderRadius: "10px",
                           border: employerType.individual
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                          transition: "all 0.2s ease",
-                          "&:hover": {
-                            bgcolor: "rgba(25, 118, 210, 0.04)",
-                            borderColor: "#1976d2",
-                            transform: "translateY(-1px)",
-                            boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                          },
+                            ? "1px solid #2bb7bb"
+                            : "1px solid #eaecf0",
+                          bgcolor: employerType.individual ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
-                            fontSize: "0.95rem",
+                            fontSize: "0.9rem",
                             fontWeight: 500,
-                            color: employerType.individual ? "#1976d2" : "#333",
                           },
                         }}
                       />
+
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -1268,42 +1165,28 @@ const handleVerifyPhone = async () => {
                               }))
                             }
                             sx={{
-                              color: "#1976d2",
-                              "&.Mui-checked": {
-                                color: "#1976d2",
-                              },
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 20,
-                              },
+                              color: "#2bb7bb",
+                              "&.Mui-checked": { color: "#2bb7bb" },
                             }}
                           />
                         }
                         label={t("contractor")}
                         sx={{
-                          bgcolor: employerType.contractor
-                            ? "rgba(25, 118, 210, 0.08)"
-                            : "white",
-                          borderRadius: 2,
-                          px: 2,
-                          py: 1,
-                          mx: 0,
+                          m: 0,
+                          px: 1.2,
+                          py: 0.5,
+                          borderRadius: "10px",
                           border: employerType.contractor
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                          transition: "all 0.2s ease",
-                          "&:hover": {
-                            bgcolor: "rgba(25, 118, 210, 0.04)",
-                            borderColor: "#1976d2",
-                            transform: "translateY(-1px)",
-                            boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                          },
+                            ? "1px solid #2bb7bb"
+                            : "1px solid #eaecf0",
+                          bgcolor: employerType.contractor ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
-                            fontSize: "0.95rem",
+                            fontSize: "0.9rem",
                             fontWeight: 500,
-                            color: employerType.contractor ? "#1976d2" : "#333",
                           },
                         }}
                       />
+
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -1315,42 +1198,28 @@ const handleVerifyPhone = async () => {
                               }))
                             }
                             sx={{
-                              color: "#1976d2",
-                              "&.Mui-checked": {
-                                color: "#1976d2",
-                              },
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 20,
-                              },
+                              color: "#2bb7bb",
+                              "&.Mui-checked": { color: "#2bb7bb" },
                             }}
                           />
                         }
                         label={t("agency")}
                         sx={{
-                          bgcolor: employerType.agency
-                            ? "rgba(25, 118, 210, 0.08)"
-                            : "white",
-                          borderRadius: 2,
-                          px: 2,
-                          py: 1,
-                          mx: 0,
+                          m: 0,
+                          px: 1.2,
+                          py: 0.5,
+                          borderRadius: "10px",
                           border: employerType.agency
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                          transition: "all 0.2s ease",
-                          "&:hover": {
-                            bgcolor: "rgba(25, 118, 210, 0.04)",
-                            borderColor: "#1976d2",
-                            transform: "translateY(-1px)",
-                            boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                          },
+                            ? "1px solid #2bb7bb"
+                            : "1px solid #eaecf0",
+                          bgcolor: employerType.agency ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
-                            fontSize: "0.95rem",
+                            fontSize: "0.9rem",
                             fontWeight: 500,
-                            color: employerType.agency ? "#1976d2" : "#333",
                           },
                         }}
                       />
+
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -1362,39 +1231,24 @@ const handleVerifyPhone = async () => {
                               }))
                             }
                             sx={{
-                              color: "#1976d2",
-                              "&.Mui-checked": {
-                                color: "#1976d2",
-                              },
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 20,
-                              },
+                              color: "#2bb7bb",
+                              "&.Mui-checked": { color: "#2bb7bb" },
                             }}
                           />
                         }
                         label={t("companyFactoryOwner")}
                         sx={{
-                          bgcolor: employerType.industry
-                            ? "rgba(25, 118, 210, 0.08)"
-                            : "white",
-                          borderRadius: 2,
-                          px: 2,
-                          py: 1,
-                          mx: 0,
+                          m: 0,
+                          px: 1.2,
+                          py: 0.5,
+                          borderRadius: "10px",
                           border: employerType.industry
-                            ? "2px solid #1976d2"
-                            : "1px solid #e0e0e0",
-                          transition: "all 0.2s ease",
-                          "&:hover": {
-                            bgcolor: "rgba(25, 118, 210, 0.04)",
-                            borderColor: "#1976d2",
-                            transform: "translateY(-1px)",
-                            boxShadow: "0 2px 8px rgba(25, 118, 210, 0.15)",
-                          },
+                            ? "1px solid #2bb7bb"
+                            : "1px solid #eaecf0",
+                          bgcolor: employerType.industry ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
-                            fontSize: "0.95rem",
+                            fontSize: "0.9rem",
                             fontWeight: 500,
-                            color: employerType.industry ? "#1976d2" : "#333",
                           },
                         }}
                       />
@@ -1402,7 +1256,6 @@ const handleVerifyPhone = async () => {
                   </Box>
                 </Collapse>
 
-                {/* Next Button */}
                 <Button
                   onClick={() => {
                     if (!selectedUserType) {
@@ -1410,9 +1263,9 @@ const handleVerifyPhone = async () => {
                       return;
                     }
 
-                    // Check if at least one subcategory is selected
                     const hasSubcategorySelected =
                       Object.values(employerType).some(Boolean);
+
                     if (!hasSubcategorySelected) {
                       const roleTypeMap = {
                         Employer: t("employerSubcategoryRequired"),
@@ -1420,8 +1273,7 @@ const handleVerifyPhone = async () => {
                         "Job Seeker": t("workerSubcategoryRequired"),
                       };
                       toast.error(
-                        roleTypeMap[selectedUserType] ||
-                          t("subcategoryRequired"),
+                        roleTypeMap[selectedUserType] || t("subcategoryRequired")
                       );
                       return;
                     }
@@ -1429,76 +1281,55 @@ const handleVerifyPhone = async () => {
                     setRole(
                       selectedUserType === "Job Seeker"
                         ? "SelfWorker"
-                        : selectedUserType,
+                        : selectedUserType
                     );
                     setStep(2);
                   }}
                   variant="contained"
                   fullWidth
-                  sx={{
-                    // py: 2,
-                    borderRadius: 3,
-                    fontSize: "1.1rem",
-                    fontWeight: "bold",
-                    bgcolor: "#1976d2",
-                    mb: 2,
-                    "&:hover": {
-                      bgcolor: "#1565c0",
-                    },
-                  }}
+               sx={{
+  height: 48,
+  borderRadius: "10px",
+  fontSize: "1rem",
+  fontWeight: 700,
+  textTransform: "none",
+  bgcolor: "#2bb7bb",
+}}
                 >
                   {t("next")}
                 </Button>
 
-                <Box sx={{ textAlign: "center" }}>
-                  <Typography variant="body2" sx={{ color: "#666" }}>
+                <Box sx={{ textAlign: "center", mt: 2 }}>
+                  <Typography sx={{ color: "#475467", fontSize: 14 }}>
                     {t("alreadyHaveAccount")}{" "}
                     <Link
                       to="/login"
-                      style={{ color: "#1976d2", textDecoration: "none" }}
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                      }}
                     >
                       {t("login")}
                     </Link>
                   </Typography>
                 </Box>
 
-                {/* Support Contact */}
-                <Box
-                  sx={{
-                    textAlign: "center",
-                    mt: 4,
-                    maxWidth: "320px",
-                    mx: "auto",
-                  }}
-                >
+                <Box sx={{ textAlign: "center", mt: 3 }}>
                   <Typography
-                    variant="body2"
                     sx={{
-                      color: "#333",
-                      fontSize: "0.85rem",
-                      fontWeight: 500,
-                      mb: 1.5,
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    If you face any issues while using the application, feel
-                    free to reach out:
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#666",
+                      color: "#667085",
                       fontSize: "0.8rem",
-                      lineHeight: 1.5,
+                      lineHeight: 1.6,
                     }}
                   >
                     Phone:{" "}
-                    <span style={{ color: "#1976d2", fontWeight: "bold" }}>
+                    <span style={{ color: "#2bb7bb", fontWeight: 700 }}>
                       +91 7389791873
                     </span>
                     <br />
                     Email:{" "}
-                    <span style={{ color: "#1976d2", fontWeight: "bold" }}>
+                    <span style={{ color: "#2bb7bb", fontWeight: 700 }}>
                       support@bookmyworkers.com
                     </span>
                   </Typography>
@@ -1507,28 +1338,7 @@ const handleVerifyPhone = async () => {
             )}
 
             {step === 2 && (
-              <Box sx={{ flex: 1, py: 2 }}>
-             <Typography
-  variant="h4"
-  sx={{
-    fontWeight: "bold",
-    textAlign: "center",
-    mb: 1,
-    color: "#333",
-    fontSize: "1.6rem", // ⬅️ slightly smaller than default h4
-  }}
->
-  {t("enterYourDetails")}
-</Typography>
-
-                <Typography
-                  variant="body1"
-                  sx={{ textAlign: "center", mb: 2, color: "#666" }}
-                >
-                  {t("fillBasicInfo")}
-                </Typography>
-
-                {/* Full Name */}
+              <Box>
                 <TextField
                   label={t("name")}
                   type="text"
@@ -1543,17 +1353,10 @@ const handleVerifyPhone = async () => {
                   fullWidth
                   variant="outlined"
                   required
-                  sx={{
-                    mb: 1,
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    },
-                  }}
+                  sx={authFieldSx}
                 />
 
-                {/* Mobile Number */}
-                <Box sx={{ position: "relative", mb: 1 }}>
+                <Box sx={{ position: "relative", mb: 1.5 }}>
                   <TextField
                     label={t("phone")}
                     type="tel"
@@ -1576,16 +1379,9 @@ const handleVerifyPhone = async () => {
                     required
                     error={showOtpField && !isOtpVerified}
                     helperText={
-                      showOtpField && !isOtpVerified
-                        ? t("verifyPhoneNumber")
-                        : ""
+                      showOtpField && !isOtpVerified ? t("verifyPhoneNumber") : ""
                     }
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: 2,
-                        backgroundColor: "#f8f9fa",
-                      },
-                    }}
+                    sx={authFieldSx}
                     InputProps={{
                       endAdornment: (
                         <Button
@@ -1599,9 +1395,11 @@ const handleVerifyPhone = async () => {
                           size="small"
                           sx={{
                             minWidth: "auto",
-                            px: 1,
+                            px: 1.2,
                             fontSize: "0.8rem",
-                            color: isOtpVerified ? "#4caf50" : "#1976d2",
+                            color: isOtpVerified ? "#12b76a" : "#2bb7bb",
+                            fontWeight: 700,
+                            textTransform: "none",
                           }}
                         >
                           {isOtpVerified
@@ -1615,7 +1413,6 @@ const handleVerifyPhone = async () => {
                   />
                 </Box>
 
-                {/* OTP Field */}
                 {showOtpField && (
                   <TextField
                     label={t("enterOTP")}
@@ -1636,17 +1433,10 @@ const handleVerifyPhone = async () => {
                           ? t("phoneVerifiedSuccess")
                           : t("enterOTPSentToPhone")
                     }
-                    sx={{
-                      mb: 1,
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: 2,
-                        backgroundColor: "#f8f9fa",
-                      },
-                    }}
+                    sx={authFieldSx}
                   />
                 )}
 
-                {/* Email Address - Only show for Employer role */}
                 {role === "Employer" && (
                   <TextField
                     label={t("email")}
@@ -1659,18 +1449,11 @@ const handleVerifyPhone = async () => {
                     variant="outlined"
                     error={!!emailError}
                     helperText={emailError}
-                    sx={{
-                      mb: 1,
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: 2,
-                        backgroundColor: "#f8f9fa",
-                      },
-                    }}
+                    sx={authFieldSx}
                   />
                 )}
 
-                {/* State Dropdown */}
-                <FormControl fullWidth sx={{ mb: 1 }}>
+                <FormControl fullWidth sx={{ mb: 1.5 }}>
                   <InputLabel>{t("state")}</InputLabel>
                   <Select
                     value={state}
@@ -1678,10 +1461,7 @@ const handleVerifyPhone = async () => {
                     onChange={handleStateChange}
                     required
                     label={t("state")}
-                    sx={{
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    }}
+                    sx={authSelectSx}
                   >
                     <MenuItem value="">{t("selectState")}</MenuItem>
                     {Object.keys(stateDistrictTehsil).map((stateName) => (
@@ -1692,8 +1472,7 @@ const handleVerifyPhone = async () => {
                   </Select>
                 </FormControl>
 
-                {/* City/District Dropdown */}
-                <FormControl fullWidth sx={{ mb: 1 }} disabled={!state}>
+                <FormControl fullWidth sx={{ mb: 1.5 }} disabled={!state}>
                   <InputLabel>{t("cityDistrict")}</InputLabel>
                   <Select
                     value={district}
@@ -1701,10 +1480,7 @@ const handleVerifyPhone = async () => {
                     onChange={handleDistrictChange}
                     required
                     label={t("cityDistrict")}
-                    sx={{
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    }}
+                    sx={authSelectSx}
                   >
                     <MenuItem value="">{t("selectDistrict")}</MenuItem>
                     {state &&
@@ -1713,24 +1489,20 @@ const handleVerifyPhone = async () => {
                           <MenuItem key={districtName} value={districtName}>
                             {districtName}
                           </MenuItem>
-                        ),
+                        )
                       )}
                   </Select>
                 </FormControl>
 
-                {/* Tehsil/Taluka */}
-                <FormControl fullWidth sx={{ mb: 1 }} disabled={!district}>
+                <FormControl fullWidth sx={{ mb: 1.5 }} disabled={!district}>
                   <InputLabel>{t("tahsilTaluka")}</InputLabel>
                   <Select
-                  size="small"
+                    size="small"
                     value={tehsil}
                     onChange={handleTehsilChange}
                     required
                     label={t("tahsilTaluka")}
-                    sx={{
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    }}
+                    sx={authSelectSx}
                   >
                     <MenuItem value="">{t("selectTehsil")}</MenuItem>
                     {state &&
@@ -1740,12 +1512,11 @@ const handleVerifyPhone = async () => {
                           <MenuItem key={tehsilName} value={tehsilName}>
                             {tehsilName}
                           </MenuItem>
-                        ),
+                        )
                       )}
                   </Select>
                 </FormControl>
 
-                {/* Password */}
                 <TextField
                   label={t("password")}
                   type={showPassword ? "text" : "password"}
@@ -1759,25 +1530,15 @@ const handleVerifyPhone = async () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                        >
+                        <IconButton onClick={handleClickShowPassword} edge="end">
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
-                  sx={{
-                    mb: 1,
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    },
-                  }}
+                  sx={authFieldSx}
                 />
 
-                {/* Confirm Password */}
                 <TextField
                   label={t("confirmPassword")}
                   type="password"
@@ -1796,15 +1557,9 @@ const handleVerifyPhone = async () => {
                       ? t("passwordsNotMatch")
                       : ""
                   }
-                  sx={{
-                    mb: 1,
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    },
-                  }}
+                  sx={authFieldSx}
                 />
-                {/* Referred By */}
+
                 <TextField
                   label={t("referredBy")}
                   type="text"
@@ -1824,16 +1579,9 @@ const handleVerifyPhone = async () => {
                       ? t("enterValid10DigitPhone")
                       : ""
                   }
-                  sx={{
-                    mb: 3,
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: 2,
-                      backgroundColor: "#f8f9fa",
-                    },
-                  }}
+                  sx={{ ...authFieldSx, mb: 2 }}
                 />
 
-                {/* Register Button */}
                 <Button
                   type="submit"
                   size="small"
@@ -1847,45 +1595,50 @@ const handleVerifyPhone = async () => {
                     password !== confirmPassword
                   }
                   sx={{
-                    // py: 2,
-                    borderRadius: 3,
-                    fontSize: "1.1rem",
-                    fontWeight: "bold",
-                    bgcolor: "#1976d2",
-                    // mb: 3,
+                    height: 46,
+                    borderRadius: "10px",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    textTransform: "none",
+                    bgcolor: "#2bb7bb",
+                    boxShadow: "none",
                     "&:hover": {
-                      bgcolor: "#1565c0",
+                      bgcolor: "#24a3a7",
+                      boxShadow: "none",
                     },
                     "&:disabled": {
-                      bgcolor: "#ccc",
+                      bgcolor: "#d0d5dd",
+                      color: "#fff",
                     },
                   }}
                 >
                   {t("registerNow")}
                 </Button>
 
-                {/* Already have account */}
-                <Box sx={{ textAlign: "center" }}>
-                  <Typography variant="body2" sx={{ color: "#666" }}>
+                <Box sx={{ textAlign: "center", mt: 2 }}>
+                  <Typography sx={{ color: "#475467", fontSize: 14 }}>
                     {t("alreadyHaveAccount")}{" "}
                     <Link
                       to="/login"
-                      style={{ color: "#1976d2", textDecoration: "none" }}
+                      style={{
+                        color: "#101828",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                      }}
                     >
                       {t("login")}
                     </Link>
                   </Typography>
                 </Box>
 
-                {/* Terms and Privacy */}
-                <Box sx={{ textAlign: "center" }}>
-                  <Typography variant="caption" sx={{ color: "#999" }}>
+                <Box sx={{ textAlign: "center", mt: 2 }}>
+                  <Typography sx={{ color: "#667085", fontSize: 12 }}>
                     {t("byRegistering")}{" "}
                     <span
                       style={{
-                        color: "#1976d2",
+                        color: "#2bb7bb",
                         cursor: "pointer",
-                        textDecoration: "underline",
+                        fontWeight: 600,
                       }}
                       onClick={() => setOpen(true)}
                     >
@@ -1896,7 +1649,7 @@ const handleVerifyPhone = async () => {
               </Box>
             )}
           </form>
-          {/* Loader Overlay */}
+
           {disabled && (
             <Box
               sx={{
@@ -1906,15 +1659,15 @@ const handleVerifyPhone = async () => {
                 alignItems: "center",
                 justifyContent: "center",
                 backdropFilter: "blur(4px)",
-                backgroundColor: "rgba(255, 255, 255, 0.4)",
-                borderRadius: "8px",
+                backgroundColor: "rgba(255,255,255,0.55)",
+                borderRadius: "14px",
                 zIndex: 10,
               }}
             >
-              <CircularProgress color="primary" size={50} thickness={4} />
+              <CircularProgress color="primary" size={46} thickness={4} />
             </Box>
           )}
-          {/* Terms and Conditions Dialog */}
+
           <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
             <DialogContent>
               <TermsAndConditions role={role} />
@@ -1923,19 +1676,16 @@ const handleVerifyPhone = async () => {
               <Button onClick={handleClose} color="inherit">
                 Decline
               </Button>
-              <Button
-                onClick={handleAccept}
-                variant="contained"
-                color="primary"
-              >
+              <Button onClick={handleAccept} variant="contained" color="primary">
                 Accept
               </Button>
             </DialogActions>
           </Dialog>
-        </Container>
-      </Box>
-    </>
-  );
+        </Box>
+      </Container>
+    </Box>
+  </>
+);
 };
 
 export default Register;

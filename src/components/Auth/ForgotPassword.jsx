@@ -12,8 +12,6 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  AppBar,
-  Toolbar,
   FormControl,
   InputLabel,
   Select,
@@ -21,7 +19,7 @@ import {
 } from '@mui/material';
 import toast from 'react-hot-toast';
 import config from '../../config';
-import { Visibility, VisibilityOff, ArrowBack, Business } from '@mui/icons-material';
+import { Visibility, VisibilityOff, ArrowBack } from '@mui/icons-material';
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
@@ -40,7 +38,7 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (isAuthorized) navigate('/dashboard');
-  }, [isAuthorized]);
+  }, [isAuthorized, navigate]);
 
   useEffect(() => {
     let timer;
@@ -50,18 +48,6 @@ const ForgotPassword = () => {
     return () => clearTimeout(timer);
   }, [otpTimer]);
 
-  const imageList = ['/slide-log.jpg', '/slide-log-2.jpg'];
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 1500,
-    arrows: false,
-  };
-
   const handleSendOtp = async () => {
     if (!email || !role) {
       toast.error('Please fill in all fields');
@@ -70,22 +56,22 @@ const ForgotPassword = () => {
 
     try {
       setOtpTimer(60);
-    // Step 1: Get temporary session token
-    const sessionRes = await fetch(`${config.API_BASE_URL}/api/v1/session/start`);
-    const { sessionToken } = await sessionRes.json();
+      const sessionRes = await fetch(`${config.API_BASE_URL}/api/v1/session/start`);
+      const { sessionToken } = await sessionRes.json();
 
       const res = await fetch(`${config.API_BASE_URL}/api/v1/otp/send-otp`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'x-session-token': sessionToken,
-  },
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-session-token': sessionToken,
+        },
         body: JSON.stringify({
           email: email.includes('@') ? email : undefined,
           phone: email.includes('@') ? undefined : email,
           role: role,
         }),
       });
+
       const data = await res.json();
       if (res?.ok) {
         toast.success('OTP sent successfully!');
@@ -174,63 +160,73 @@ const ForgotPassword = () => {
     }
   };
 
+  const authFieldSx = {
+    mb: 1.8,
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '10px',
+      backgroundColor: '#fafafa',
+      minHeight: { xs: 46, md: 48 },
+      '& fieldset': {
+        borderColor: '#d9dee7',
+      },
+      '&:hover fieldset': {
+        borderColor: '#b8c0cc',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#2bb7bb',
+        borderWidth: '1px',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#98a2b3',
+    },
+  };
+
+  const authSelectSx = {
+    borderRadius: '10px',
+    backgroundColor: '#fafafa',
+    minHeight: 48,
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#d9dee7',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#b8c0cc',
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#2bb7bb',
+      borderWidth: '1px',
+    },
+  };
+
+  const renderStepTitle = () => {
+    if (step === 'enterEmail') return 'Forgot Password?';
+    if (step === 'verifyOtp') return 'Verify OTP';
+    if (step === 'resetPassword') return 'Reset Password';
+    return '';
+  };
+
+  const renderStepSubtitle = () => {
+    if (step === 'enterEmail') return 'Enter your email or mobile number to reset';
+    if (step === 'verifyOtp') {
+      return `Enter the 6-digit code sent to your ${email.includes('@') ? 'email' : 'mobile'}`;
+    }
+    if (step === 'resetPassword') return 'Enter your new password';
+    return '';
+  };
+
   const renderStep = () => {
     switch (step) {
       case 'enterEmail':
         return (
           <>
-            {/* Header */}
-
-            <Box sx={{ textAlign: 'center', mb: 4 }}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 'bold',
-                  color: '#333',
-                  mb: 1,
-                  fontSize: { xs: '2rem', md: '3rem' },
-                }}
-              >
-                Forgot Password?
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: '#666',
-                  fontWeight: 'normal',
-                  fontSize: { xs: '1rem', md: '1.25rem' },
-                }}
-              >
-                Enter your email or mobile number to reset
-              </Typography>
-            </Box>
-
-            {/* Role Selection */}
-            <FormControl
-              fullWidth
-              required
-              sx={{
-                mb: 3,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  backgroundColor: '#fff',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#666',
-                },
-              }}
-            >
+            <FormControl fullWidth required sx={{ mb: 1.8 }}>
               <InputLabel>Select Your Role</InputLabel>
-              <Select value={role} onChange={e => setRole(e.target.value)} label="Select Your Role">
+              <Select
+                value={role}
+                onChange={e => setRole(e.target.value)}
+                label="Select Your Role"
+                sx={authSelectSx}
+              >
                 <MenuItem value="Agent">Agent (Worker Supplier)</MenuItem>
                 <MenuItem value="SelfWorker">Self Worker (Individual)</MenuItem>
                 <MenuItem value="Employer">Employer (Work Provider)</MenuItem>
@@ -245,25 +241,7 @@ const ForgotPassword = () => {
               onChange={e => setEmail(e.target.value)}
               variant="outlined"
               required
-              sx={{
-                mb: 4,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  backgroundColor: '#fff',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#666',
-                },
-              }}
+              sx={{ ...authFieldSx, mb: 2.2 }}
             />
 
             <Button
@@ -272,15 +250,20 @@ const ForgotPassword = () => {
               variant="contained"
               disabled={otpTimer > 0}
               sx={{
-                py: 2,
-                borderRadius: 4,
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                bgcolor: '#1976d2',
-                mb: 3,
+                height: 46,
+                borderRadius: '10px',
+                fontSize: '1rem',
+                fontWeight: 700,
                 textTransform: 'none',
+                bgcolor: '#2bb7bb',
+                boxShadow: 'none',
                 '&:hover': {
-                  bgcolor: '#1565c0',
+                  bgcolor: '#24a3a7',
+                  boxShadow: 'none',
+                },
+                '&:disabled': {
+                  bgcolor: '#d0d5dd',
+                  color: '#fff',
                 },
               }}
             >
@@ -292,30 +275,6 @@ const ForgotPassword = () => {
       case 'verifyOtp':
         return (
           <>
-            <Box sx={{ textAlign: 'center', mb: 4 }}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 'bold',
-                  color: '#333',
-                  mb: 1,
-                  fontSize: { xs: '2rem', md: '3rem' },
-                }}
-              >
-                Verify OTP
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: '#666',
-                  fontWeight: 'normal',
-                  fontSize: { xs: '1rem', md: '1.25rem' },
-                }}
-              >
-                Enter the 6-digit code sent to your {email.includes('@') ? 'email' : 'mobile'}
-              </Typography>
-            </Box>
-
             <TextField
               fullWidth
               label="Enter OTP"
@@ -325,40 +284,23 @@ const ForgotPassword = () => {
               variant="outlined"
               required
               inputProps={{ maxLength: 6 }}
-              sx={{
-                mb: 2,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  backgroundColor: '#fff',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#666',
-                },
-              }}
+              sx={{ ...authFieldSx, mb: 1.2 }}
             />
 
             {otpTimer > 0 ? (
-              <Typography align="center" sx={{ mb: 4, color: 'text.secondary' }}>
+              <Typography align="center" sx={{ mb: 2.2, color: '#667085', fontSize: 14 }}>
                 Resend OTP in {otpTimer}s
               </Typography>
             ) : (
-              <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Box sx={{ textAlign: 'center', mb: 2.2 }}>
                 <Link
                   component="button"
                   onClick={handleSendOtp}
                   sx={{
-                    color: '#1976d2',
+                    color: '#2bb7bb',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
+                    fontWeight: 600,
                     '&:hover': {
                       textDecoration: 'underline',
                     },
@@ -374,15 +316,16 @@ const ForgotPassword = () => {
               fullWidth
               variant="contained"
               sx={{
-                py: 2,
-                borderRadius: 4,
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                bgcolor: '#1976d2',
-                mb: 3,
+                height: 46,
+                borderRadius: '10px',
+                fontSize: '1rem',
+                fontWeight: 700,
                 textTransform: 'none',
+                bgcolor: '#2bb7bb',
+                boxShadow: 'none',
                 '&:hover': {
-                  bgcolor: '#1565c0',
+                  bgcolor: '#24a3a7',
+                  boxShadow: 'none',
                 },
               }}
             >
@@ -394,30 +337,6 @@ const ForgotPassword = () => {
       case 'resetPassword':
         return (
           <>
-            <Box sx={{ textAlign: 'center', mb: 4 }}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 'bold',
-                  color: '#333',
-                  mb: 1,
-                  fontSize: { xs: '2rem', md: '3rem' },
-                }}
-              >
-                Reset Password
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: '#666',
-                  fontWeight: 'normal',
-                  fontSize: { xs: '1rem', md: '1.25rem' },
-                }}
-              >
-                Enter your new password
-              </Typography>
-            </Box>
-
             <TextField
               fullWidth
               label="New Password"
@@ -427,32 +346,14 @@ const ForgotPassword = () => {
               onChange={e => setPassword(e.target.value)}
               variant="outlined"
               required
-              sx={{
-                mb: 3,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  backgroundColor: '#fff',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#666',
-                },
-              }}
+              sx={authFieldSx}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
-                      sx={{ color: '#666' }}
+                      sx={{ color: '#667085' }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -470,32 +371,14 @@ const ForgotPassword = () => {
               onChange={e => setConfirmPassword(e.target.value)}
               variant="outlined"
               required
-              sx={{
-                mb: 4,
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  backgroundColor: '#fff',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#666',
-                },
-              }}
+              sx={{ ...authFieldSx, mb: 2.2 }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       edge="end"
-                      sx={{ color: '#666' }}
+                      sx={{ color: '#667085' }}
                     >
                       {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -509,15 +392,16 @@ const ForgotPassword = () => {
               fullWidth
               variant="contained"
               sx={{
-                py: 2,
-                borderRadius: 4,
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                bgcolor: '#1976d2',
-                mb: 3,
+                height: 46,
+                borderRadius: '10px',
+                fontSize: '1rem',
+                fontWeight: 700,
                 textTransform: 'none',
+                bgcolor: '#2bb7bb',
+                boxShadow: 'none',
                 '&:hover': {
-                  bgcolor: '#1565c0',
+                  bgcolor: '#24a3a7',
+                  boxShadow: 'none',
                 },
               }}
             >
@@ -534,102 +418,140 @@ const ForgotPassword = () => {
   return (
     <Box
       sx={{
-        width: '100%',
         minHeight: '100vh',
+        width: '100%',
+        bgcolor: { xs: '#fff', md: '#f2f4f7' },
         display: 'flex',
-        flexDirection: 'column',
-        bgcolor: '#f5f5f5',
+        alignItems: { xs: 'flex-start', md: 'center' },
+        justifyContent: 'center',
+        px: { xs: 0, md: 2 },
+        py: { xs: 0, md: 4 },
       }}
     >
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{ bgcolor: 'white', borderBottom: '1px solid #e0e0e0' }}
-      >
-        <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton onClick={() => navigate('/landing')} sx={{ color: '#1976d2', mr: 1 }}>
-              <ArrowBack />
-            </IconButton>
-            {/* <Business sx={{ color: '#1976d2', mr: 1 }} />
-            <Typography variant="h6" sx={{ color: 'black', fontWeight: 'bold' }}>
-              Book<span style={{ color: '#1976d2' }}>My</span>Worker
-            </Typography> */}
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <LanguageSwitcher />
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      {/* Main Content */}
       <Container
         maxWidth="sm"
+        disableGutters
         sx={{
-          flex: 1,
+          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'center',
-          py: 4,
         }}
       >
         <Box
           sx={{
             width: '100%',
-            maxWidth: 400,
-            mx: 'auto',
+            maxWidth: { xs: '100%', md: 460 },
+            bgcolor: '#fff',
+            borderRadius: { xs: 0, md: '14px' },
+            boxShadow: { xs: 'none', md: '0 10px 40px rgba(16,24,40,0.08)' },
+            px: { xs: 2, sm: 3.5 },
+            py: { xs: 2.5, sm: 3.5 },
+            minHeight: { xs: '100vh', md: 'auto' },
+            position: 'relative',
           }}
         >
-          {renderStep()}
-
-          {/* Back to Login Link */}
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="body2" sx={{ color: '#666' }}>
-              Remember your password?{' '}
-              <Link
-                component={Link}
-                to="/login"
-                sx={{
-                  color: '#1976d2',
-                  textDecoration: 'none',
-                  fontWeight: 'bold',
-                  '&:hover': {
-                    textDecoration: 'underline',
-                  },
-                }}
-              >
-                Login Now
-              </Link>
-            </Typography>
-          </Box>
-        </Box>
-        <Box sx={{ textAlign: 'center', mt: 1, maxWidth: '320px', mx: 'auto' }}>
-          <Typography
-            variant="body2"
+          {/* top row */}
+          <Box
             sx={{
-              color: '#333',
-              fontSize: '0.85rem',
-              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               mb: 1.5,
-              lineHeight: 1.4,
             }}
           >
-            If you face any issues while using the application, feel free to reach out:
-          </Typography>
-         <Typography
-                variant="body2"
-                sx={{
-                  color: '#666',
-                  fontSize: '0.8rem',
-                  lineHeight: 1.5,
-                }}
-              >
-                Phone:  <span style={{ color: '#1976d2', fontWeight: 'bold'}}>+91 7389791873</span>
-                <br />
-                Email: <span style={{ color: '#1976d2', fontWeight: 'bold'}}>support@bookmyworkers.com</span>
+            <IconButton
+              onClick={() => navigate('/landing')}
+              sx={{ color: '#344054', p: 0.8 }}
+            >
+              <ArrowBack />
+            </IconButton>
+
+            <LanguageSwitcher />
+          </Box>
+
+          {/* logo / heading */}
+          <Box sx={{ textAlign: 'center', mb: { xs: 2.5, md: 3 } }}>
+            <Box
+              component="img"
+              src="/app/logo.svg"
+              alt="BookMyWorker"
+              sx={{
+                height: 56,
+                objectFit: 'contain',
+                mx: 'auto',
+                mb: 1.2,
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: { xs: 28, md: 30 },
+                fontWeight: 800,
+                color: '#101828',
+                lineHeight: 1.2,
+                mb: 0.8,
+              }}
+            >
+              {renderStepTitle()}
+            </Typography>
+            <Typography
+              sx={{
+                color: '#667085',
+                fontSize: 14,
+                maxWidth: 320,
+                mx: 'auto',
+              }}
+            >
+              {renderStepSubtitle()}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: 400,
+              mx: 'auto',
+            }}
+          >
+            {renderStep()}
+
+            <Box sx={{ textAlign: 'center', mt: 2.2 }}>
+              <Typography sx={{ color: '#475467', fontSize: 14 }}>
+                Remember your password?{' '}
+                <Link
+                  to="/login"
+                  style={{
+                    color: '#101828',
+                    textDecoration: 'none',
+                    fontWeight: 700,
+                  }}
+                >
+                  Login Now
+                </Link>
               </Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ textAlign: 'center', mt: 3 }}>
+            <Typography
+              sx={{
+                color: '#667085',
+                fontSize: '0.8rem',
+                lineHeight: 1.6,
+              }}
+            >
+              If you face any issues while using the application, feel free to reach out:
+              <br />
+              Phone:{' '}
+              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+                +91 7389791873
+              </span>
+              <br />
+              Email:{' '}
+              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+                support@bookmyworkers.com
+              </span>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </Box>

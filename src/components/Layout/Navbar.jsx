@@ -176,7 +176,7 @@ const getGreeting = () => {
     <Box sx={{ fontWeight: "bold", fontSize: "0.95rem" }}>
   Hello, {user?.name 
     ? (user.name.split(" ")[0].charAt(0).toUpperCase() + user.name.split(" ")[0].slice(1)) 
-    : "BookMyWorker"}
+    : "Guest"}
 </Box>
     <Box sx={{ fontSize: "0.75rem", fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>
       {getGreeting()}
