@@ -50,8 +50,10 @@ const AdminLogin = () => {
       const res = await axios.get(`${config.API_BASE_URL}/api/v1/admin/captcha`, {
         withCredentials: true,
       });
-      setCaptchaImage(res.data.image);
-      setIsCaptchaVerified(false);
+      // setCaptchaImage(res.data.image);
+      console.log(res);
+setCaptchaImage(res.data.captchaImage);
+setIsCaptchaVerified(false);
       setCaptchaInput('');
     } catch {
       toast.error('Failed to load CAPTCHA');
