@@ -45,18 +45,24 @@ const AdminLogin = () => {
   const didCallCaptcha = useRef(false);
 
   // Fetch captcha from backend
-  const getCaptcha = async () => {
-    try {
-      const res = await axios.get(`${config.API_BASE_URL}/api/v1/admin/captcha`, {
-        withCredentials: true,
-      });
-      setCaptchaImage(res.data.image);
-      setIsCaptchaVerified(false);
-      setCaptchaInput('');
-    } catch {
-      toast.error('Failed to load CAPTCHA');
-    }
-  };
+const getCaptcha = async () => {
+  try {
+    const res = await fetch(`${config.API_BASE_URL}/api/v1/admin/captcha`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+    console.log("captcha api response:", data);
+
+    setCaptchaImage(data.image);
+    setIsCaptchaVerified(false);
+    setCaptchaInput("");
+  } catch (error) {
+    console.error("captcha load error:", error);
+    toast.error("Failed to load CAPTCHA");
+  }
+};
 
   useEffect(() => {
     if (!didCallCaptcha.current) {
