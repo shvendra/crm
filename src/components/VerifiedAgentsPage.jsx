@@ -74,6 +74,7 @@ const VerifiedAgentsPage = ({ users = {} }) => {
     user?.isSubscribed &&
     user?.subscriptionExpery &&
     new Date(user.subscriptionExpery).getTime() <= Date.now();
+    const isExpired = new Date(user?.subscriptionExpiry).getTime() <= Date.now();
 
   const getAge = (dob) => {
     if (dob == null || dob === "") return "";
@@ -699,8 +700,7 @@ const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts
             pr: 0.5,
           }}
         >
-          {isLimitExhausted && (
-  <div>
+{isLimitExhausted && !isExpired && (  <div>
     <PricingBanner userRole={user?.userRole} />
   </div>
 )}

@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { Context } from '../main';
 import axios from "axios";
 import SubscriptionPatti from '../components/Dashboard/SubscriptionPatti';
-
+import PricingBanner from './PricingBanner';
 import { toast } from "react-toastify";
 import config from "../config"; // adjust path if needed
 const EMPLOYER_PRIORITY = ["industry", "agency", "contractor", "individual"];
@@ -131,6 +131,7 @@ const GST_RATE = config.GST_CHARGES; // example: 0.18
   // Determine highest employer type
   const highestType = getHighestEmployerType(user?.employerType);
   const pricingLabel = EMPLOYER_LABELS[highestType];
+const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts <= 0);
 
   // Build dynamic plans
   const plans = buildPlans(user?.employerType);
@@ -190,6 +191,7 @@ const handlePayment = async (plan) => {
       //   navigateTo("/Dashboard");
       // }
     }, [isAuthorized, navigateTo]);
+    const isExpired = new Date(user?.subscriptionExpiry).getTime() <= Date.now();
   return (
     <Box sx={{ p: 2, maxWidth: 1200, mx: "auto" }}>
       {/* Header */}
@@ -252,7 +254,10 @@ const handlePayment = async (plan) => {
           <SubscriptionPatti expiry={user.subscriptionExpery} />
         )}   
       </Box>
-
+{isLimitExhausted && !isExpired && (  <div>
+    <PricingBanner userRole={user?.userRole} />
+  </div>
+)}
       {/* Plans */}
       <Grid container spacing={3}>
       
