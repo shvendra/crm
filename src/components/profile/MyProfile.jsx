@@ -464,50 +464,56 @@ return (
           }}
         >
           {/* Profile Header */}
-          <Box
-            className="profilehead"
-            sx={{
-              position: "relative",
-              zIndex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: { xs: "flex-start", sm: "center" },
-              flexDirection: { xs: "column", sm: "row" },
-              gap: 1.2,
-              mb: 2,
-              px: 1.5,
-              py: 1.3,
-              borderRadius: 3,
-              background: "linear-gradient(180deg, #f8fbff 0%, #f2f6fc 100%)",
-              border: "1px solid #edf2f7",
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 800,
-                color: "#2563eb",
-                fontSize: { xs: "1rem", md: "1.2rem" },
-              }}
-            >
-              {t("ProfileInfo")}
-            </Typography>
+         <Box
+  className="profilehead"
+  sx={{
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row", // Always row
+    flexWrap: "nowrap",   // Prevent wrapping
+    gap: 1,
+    mb: 2,
+    px: 1.5,
+    py: 1.3,
+    borderRadius: 3,
+    background: "linear-gradient(180deg, #f8fbff 0%, #f2f6fc 100%)",
+    border: "1px solid #edf2f7",
+  }}
+>
+  {/* Left Title */}
+  <Typography
+    variant="h6"
+    sx={{
+      fontWeight: 800,
+      color: "#2563eb",
+      fontSize: { xs: "0.95rem", sm: "1rem", md: "1.2rem" },
+      whiteSpace: "nowrap",
+    }}
+  >
+    {t("ProfileInfo")}
+  </Typography>
 
-            <Typography
-              sx={{
-                fontWeight: 800,
-                color: user?.bmwId ? "#15803d" : "#475467",
-                fontSize: "0.95rem",
-                background: "#ffffff",
-                borderRadius: "999px",
-                px: 1.6,
-                py: 0.6,
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              ID : {user?.bmwId || "Not Assigned"}
-            </Typography>
-          </Box>
+  {/* Right ID */}
+  <Typography
+    sx={{
+      fontWeight: 800,
+      color: user?.bmwId ? "#15803d" : "#475467",
+      fontSize: { xs: "0.8rem", sm: "0.9rem" },
+      background: "#ffffff",
+      borderRadius: "999px",
+      px: 1.5,
+      py: 0.5,
+      border: "1px solid #e5e7eb",
+      whiteSpace: "nowrap",
+      flexShrink: 0,
+    }}
+  >
+    ID : {user?.bmwId || "Not Assigned"}
+  </Typography>
+</Box>
 
           {/* Profile Panel */}
           <Box sx={{ position: "relative", zIndex: 1 }}>

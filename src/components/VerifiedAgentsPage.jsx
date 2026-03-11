@@ -836,6 +836,12 @@ return (
               : [];
 
             return (
+              <Box sx={{
+                 borderRadius: "18px",
+                  backgroundColor: "#fff",
+                  border: "1px solid #e8edf5",
+              }}>
+          
               <Box
                 key={agent._id}
                 sx={{
@@ -843,13 +849,12 @@ return (
                   gap: 2,
                   p: { xs: 1.5, md: 2 },
                   mb: 1.5,
-                  borderRadius: "18px",
-                  backgroundColor: "#fff",
-                  border: "1px solid #e8edf5",
+                 
                   boxShadow: "0 4px 18px rgba(15,23,42,0.05)",
                   flexDirection: { xs: "column", sm: "row" },
                 }}
               >
+                
                 {/* Avatar / meta */}
                 <Box
                   sx={{
@@ -1102,6 +1107,47 @@ return (
                     </Box>
                   )}
                 </Box>
+          
+              </Box>
+                    {agent?.role === "Agent" && (
+<Box
+  sx={{
+    mb: 1.5,
+    p: 1.6,
+    borderRadius: 3,
+    background: "linear-gradient(135deg,#eef2ff,#f8fafc)",
+    border: "1px solid #c7d2fe",
+    boxShadow: "0 4px 12px rgba(79,70,229,0.08)",
+  }}
+>
+  <Typography
+    sx={{
+      fontWeight: 700,
+      fontSize: "0.95rem",
+      color: "#3730a3",
+      display: "flex",
+      alignItems: "center",
+      gap: 0.6,
+    }}
+  >
+    👥 Agent-Managed Worker Groups Available
+  </Typography>
+
+  <Typography
+    sx={{
+      fontSize: "0.8rem",
+      color: "#4b5563",
+      mt: 0.4,
+      lineHeight: 1.5,
+    }}
+  >
+    Ideal for <b>companies, contractors, and agencies</b> looking to hire 
+    <b> multiple skilled or unskilled workers quickly</b>.  
+    These workers are organized and coordinated by experienced agents, ensuring 
+    <b> faster deployment, reliable workforce management, and smoother operations</b>.
+  </Typography>
+</Box>
+)}
               </Box>
             );
           })
