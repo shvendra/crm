@@ -200,25 +200,26 @@ const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts
   useEffect(() => {
     if (isAuthorized) fetchUserRemarks();
   }, [isAuthorized]);
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+useEffect(() => {
+  const container = scrollContainerRef.current;
+  if (!container) return;
 
-    const handleScroll = () => {
-      if (
-        container.scrollTop + container.clientHeight >=
-        container.scrollHeight - 100
-      ) {
-        if (!loadingMore && !loading && agents.length < total) {
-          setPage((prev) => prev + 1);
-        }
-      }
-    };
+  const handleScroll = () => {
+    const isNearBottom =
+      container.scrollTop + container.clientHeight >=
+      container.scrollHeight - 100;
 
-    container.addEventListener("scroll", handleScroll);
+    if (isNearBottom && !loading && !loadingMore && agents.length < total) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [loading, loadingMore, agents, total]);
+  container.addEventListener("scroll", handleScroll);
+
+  return () => {
+    container.removeEventListener("scroll", handleScroll);
+  };
+}, [loading, loadingMore, agents.length, total]);
   const clearAllFilters = () => {
     setState("");
     setDistrict("");
@@ -337,17 +338,23 @@ const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-  useEffect(() => {
-    fetchAgents(true);
-  }, []);
+
 
   useEffect(() => {
     if (!isAuthorized) navigate("/landing");
   }, [isAuthorized, navigate]);
 
+
   useEffect(() => {
+  fetchAgents(true);
+}, []);
+
+useEffect(() => {
+  if (page > 1) {
     fetchAgents();
-  }, [page]);
+  }
+}, [page]);
+
 
 return (
   <Box
@@ -771,15 +778,16 @@ return (
       )}
 
       {/* Agents List */}
-      <Box
-        ref={scrollContainerRef}
-        sx={{
-          flex: 1,
-          maxHeight: isMobile ? "unset" : "calc(100vh - 120px)",
-          overflowY: isMobile ? "visible" : "auto",
-          pr: { xs: 0, md: 0.5 },
-        }}
-      >
+<Box
+  ref={scrollContainerRef}
+  sx={{
+    flex: 1,
+    height: isMobile ? "calc(100vh - 140px)" : "calc(100vh - 120px)",
+    overflowY: "auto",
+    pr: { xs: 0, md: 0.5 },
+  }}
+>
+
         {isLimitExhausted && !isExpired && (
           <Box sx={{ mb: 1.5 }}>
             <PricingBanner userRole={user?.userRole} />
@@ -834,322 +842,404 @@ return (
                     : item
                 )
               : [];
+return (
+  <Box
+    sx={{
+      borderRadius: "18px",
+      backgroundColor: "#fff",
+      border: "1px solid #e8edf5",
+      overflow: "hidden",
+      mb: 1.5,
+    }}
+  >
+    <Box
+      key={agent._id}
+      sx={{
+        display: "flex",
+        gap: 2,
+        p: { xs: 1.5, md: 2 },
+        boxShadow: "0 4px 18px rgba(15,23,42,0.05)",
+        flexDirection: "row",
+        alignItems: "flex-start",
+      }}
+    >
+      {/* Left side: profile + info below photo */}
+      <Box
+        sx={{
+          width: { xs: 90, sm: 110, md: 120 },
+          minWidth: { xs: 90, sm: 110, md: 120 },
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          flexShrink: 0,
+        }}
+      >
+        <Avatar
+          src={
+            agent?.profilePhoto
+              ? `${config.FILE_BASE_URL}/${agent.profilePhoto}`.replace(
+                  /([^:]\/)\/+/g,
+                  "$1"
+                )
+              : "/usericon.png"
+          }
+          sx={{
+            width: { xs: 64, sm: 72, md: 78 },
+            height: { xs: 64, sm: 72, md: 78 },
+            border: agent?.veryfiedBage
+              ? "2px solid #4f46e5"
+              : "2px solid #c7d2fe",
+          }}
+        />
 
-            return (
-              <Box sx={{
-                 borderRadius: "18px",
-                  backgroundColor: "#fff",
-                  border: "1px solid #e8edf5",
-              }}>
-          
-              <Box
-                key={agent._id}
+        <Box
+          sx={{
+            mt: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 0.35,
+            alignItems: "center",
+          }}
+        >
+          {!!agent?.gender && (
+            <Typography
+              sx={{
+                fontSize: "0.72rem",
+                color: "#64748b",
+                lineHeight: 1.2,
+                fontWeight: 500,
+              }}
+            >
+              {agent.gender}
+            </Typography>
+          )}
+
+          {!!agent?.dob && (
+            <Typography
+              sx={{
+                fontSize: "0.72rem",
+                color: "#64748b",
+                lineHeight: 1.2,
+                fontWeight: 500,
+              }}
+            >
+              {getAge(agent.dob)} yrs
+            </Typography>
+          )}
+
+          {agent?.workExperience !== undefined && (
+            <Typography
+              sx={{
+                fontSize: "0.72rem",
+                color: "#64748b",
+                lineHeight: 1.2,
+                fontWeight: 500,
+              }}
+            >
+              {Number(agent.workExperience) > 0
+                ? Number(agent.workExperience)
+                : 3}{" "}
+              yrs exp
+            </Typography>
+          )}
+        </Box>
+      </Box>
+
+      {/* Right side: name, rating, location, work type, buttons, dropdown */}
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Name + rating */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.8,
+            flexWrap: "wrap",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: { xs: "1rem", md: "1.15rem" },
+              fontWeight: 700,
+              color: "#1f2a44",
+              lineHeight: 1.2,
+            }}
+          >
+            {formatName(agent?.name)}
+          </Typography>
+
+          <RatingStars rating={agent?.rating} size={14} />
+        </Box>
+
+        {/* Location */}
+        <Typography
+          sx={{
+            fontSize: "0.86rem",
+            color: "#64748b",
+            mt: 0.5,
+          }}
+        >
+          📍 {agent.district}, {agent.state}
+        </Typography>
+
+        {/* Work type / role / area */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1,
+            mt: 1.2,
+          }}
+        >
+          <Chip
+            label={agent?.role === "Agent" ? "Agent Managed" : "Worker"}
+            size="small"
+            sx={{
+              backgroundColor: "#eef2ff",
+              color: "#3b82f6",
+              fontWeight: 700,
+              borderRadius: "999px",
+            }}
+          />
+
+          <Chip
+            label={formatAreas(areas) || "Any Work"}
+            size="small"
+            sx={{
+              backgroundColor: "#eef2f7",
+              color: "#4b5563",
+              fontWeight: 600,
+              maxWidth: "100%",
+              height: "auto",
+              "& .MuiChip-label": {
+                whiteSpace: "normal",
+                display: "block",
+                py: 0.5,
+                lineHeight: 1.35,
+              },
+            }}
+          />
+        </Box>
+
+        {/* Action buttons */}
+        <Box
+          sx={{
+            mt: 1.6,
+            display: "flex",
+            gap: 1,
+            flexWrap: "wrap",
+          }}
+        >
+          {unlockedPhones[agent._id] ? (
+            <>
+              <Button
+                size="small"
+                variant="contained"
+                href={`tel:${unlockedPhones[agent._id]}`}
                 sx={{
-                  display: "flex",
-                  gap: 2,
-                  p: { xs: 1.5, md: 2 },
-                  mb: 1.5,
-                 
-                  boxShadow: "0 4px 18px rgba(15,23,42,0.05)",
-                  flexDirection: { xs: "column", sm: "row" },
+                  textTransform: "none",
+                  borderRadius: 2.5,
+                  px: 2,
+                  fontWeight: 700,
+                  backgroundColor: "#4f46e5",
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "#4338ca",
+                    boxShadow: "none",
+                  },
                 }}
               >
-                
-                {/* Avatar / meta */}
-                <Box
-                  sx={{
-                    minWidth: { xs: "100%", sm: 92 },
-                    display: "flex",
-                    flexDirection: { xs: "row", sm: "column" },
-                    alignItems: "center",
-                    gap: 1.2,
-                  }}
-                >
-                  <Avatar
-                    src={
-                      agent?.profilePhoto
-                        ? `${config.FILE_BASE_URL}/${agent.profilePhoto}`.replace(
-                            /([^:]\/)\/+/g,
-                            "$1"
-                          )
-                        : "/usericon.png"
-                    }
-                    sx={{
-                      width: 72,
-                      height: 72,
-                      border: agent?.veryfiedBage
-                        ? "2px solid #4f46e5"
-                        : "2px solid #c7d2fe",
-                    }}
-                  />
+                View Contact
+              </Button>
 
-                  <Typography
-                    sx={{
-                      fontSize: "0.75rem",
-                      color: "#64748b",
-                      textAlign: { xs: "left", sm: "center" },
-                    }}
-                  >
-                    {agent?.dob ? `${getAge(agent.dob)} yrs` : ""}
-                    {agent?.gender ? ` • ${agent.gender}` : ""}
-                  </Typography>
-                </Box>
+              <Button
+                size="small"
+                variant="contained"
+                href={`https://wa.me/91${unlockedPhones[agent._id]}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: 2.5,
+                  px: 2,
+                  fontWeight: 700,
+                  backgroundColor: "#16a34a",
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "#15803d",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                WhatsApp
+              </Button>
+            </>
+          ) : user?.isSubscribed ? (
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => handleViewNumber(agent._id)}
+              sx={{
+                textTransform: "none",
+                borderRadius: 2.5,
+                px: 2,
+                fontWeight: 700,
+                backgroundColor: "#4f46e5",
+                boxShadow: "none",
+                "&:hover": {
+                  backgroundColor: "#4338ca",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              View Contact
+            </Button>
+          ) : (
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => handleUnlock(agent._id)}
+              sx={{
+                textTransform: "none",
+                borderRadius: 2.5,
+                px: 2,
+                fontWeight: 700,
+                backgroundColor: "#64748b",
+                boxShadow: "none",
+                "&:hover": {
+                  backgroundColor: "#475569",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              Unlock to Connect
+            </Button>
+          )}
+        </Box>
 
-                {/* Main content */}
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    sx={{
-                      fontSize: { xs: "1rem", md: "1.15rem" },
-                      fontWeight: 700,
-                      color: "#1f2a44",
-                      lineHeight: 1.2,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 0.8,
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    {formatName(agent?.name)}
-                    <RatingStars rating={agent?.rating} size={14} />
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "0.86rem",
-                      color: "#64748b",
-                      mt: 0.4,
-                    }}
-                  >
-                    📍 {agent.district}, {agent.state}
-                  </Typography>
-
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 1.2 }}>
-                    <Chip
-                      label={agent?.role === "Agent" ? "Worker" : "Worker"}
-                      size="small"
+        {/* Call outcome dropdown */}
+        {user?.isSubscribed && (
+          <Box
+            sx={{
+              mt: 1.5,
+              width: "100%",
+              maxWidth: { xs: "100%", sm: 260 },
+            }}
+          >
+            <Select
+              size="small"
+              fullWidth
+              displayEmpty
+              value={callStatus[agent._id] || ""}
+              disabled={savingStatus[agent._id]}
+              onChange={(e) => saveCallStatus(agent._id, e.target.value)}
+              sx={{
+                borderRadius: 2,
+                backgroundColor: "#fafbff",
+                fontSize: "0.82rem",
+              }}
+              renderValue={(selected) => {
+                if (!selected) {
+                  return (
+                    <Typography
                       sx={{
-                        backgroundColor: "#eef2ff",
-                        color: "#3b82f6",
-                        fontWeight: 700,
-                        borderRadius: "999px",
-                      }}
-                    />
-                    <Chip
-                      label={formatAreas(areas) || "Any Work"}
-                      size="small"
-                      sx={{
-                        backgroundColor: "#eef2f7",
-                        color: "#4b5563",
+                        fontSize: "0.78rem",
                         fontWeight: 600,
-                        maxWidth: "100%",
-                        height: "auto",
-                        "& .MuiChip-label": {
-                          whiteSpace: "normal",
-                          display: "block",
-                          py: 0.4,
-                        },
+                        color: "#64748b",
                       }}
-                    />
-                  </Box>
+                    >
+                      Call Outcome
+                    </Typography>
+                  );
+                }
+                return selected
+                  .replaceAll("_", " ")
+                  .replace(/\b\w/g, (c) => c.toUpperCase());
+              }}
+            >
+              <MenuItem disabled value="">
+                Call Outcome
+              </MenuItem>
+              <MenuItem value="not_picked">📵 Not Picked</MenuItem>
+              <MenuItem value="switched_off">🔕 Switched Off</MenuItem>
+              <MenuItem value="call_later">⏳ Call Later</MenuItem>
+              <MenuItem value="not_interested">❌ Not Interested</MenuItem>
+              <MenuItem value="wrong_number">☎️ Wrong Number</MenuItem>
+              <MenuItem value="relevant">✅ Relevant</MenuItem>
+            </Select>
 
-                  <Box
-                    sx={{
-                      mt: 1.6,
-                      display: "flex",
-                      gap: 1,
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    {unlockedPhones[agent._id] ? (
-                      <>
-                        <Button
-                          size="small"
-                          variant="contained"
-                          href={`tel:${unlockedPhones[agent._id]}`}
-                          sx={{
-                            textTransform: "none",
-                            borderRadius: 2.5,
-                            px: 2,
-                            fontWeight: 700,
-                            backgroundColor: "#4f46e5",
-                            boxShadow: "none",
-                            "&:hover": {
-                              backgroundColor: "#4338ca",
-                              boxShadow: "none",
-                            },
-                          }}
-                        >
-                          View Contact
-                        </Button>
+            {savingStatus[agent._id] && (
+              <Typography
+                sx={{
+                  fontSize: "0.7rem",
+                  color: "#6b7280",
+                  mt: 0.5,
+                }}
+              >
+                Saving call status...
+              </Typography>
+            )}
+          </Box>
+        )}
+      </Box>
+    </Box>
 
-                        <Button
-                          size="small"
-                          variant="contained"
-                          href={`https://wa.me/91${unlockedPhones[agent._id]}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{
-                            textTransform: "none",
-                            borderRadius: 2.5,
-                            px: 2,
-                            fontWeight: 700,
-                            backgroundColor: "#16a34a",
-                            boxShadow: "none",
-                            "&:hover": {
-                              backgroundColor: "#15803d",
-                              boxShadow: "none",
-                            },
-                          }}
-                        >
-                          WhatsApp
-                        </Button>
-                      </>
-                    ) : user?.isSubscribed ? (
-                      <Button
-                        size="small"
-                        variant="contained"
-                        onClick={() => handleViewNumber(agent._id)}
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: 2.5,
-                          px: 2,
-                          fontWeight: 700,
-                          backgroundColor: "#4f46e5",
-                          boxShadow: "none",
-                          "&:hover": {
-                            backgroundColor: "#4338ca",
-                            boxShadow: "none",
-                          },
-                        }}
-                      >
-                        View Contact
-                      </Button>
-                    ) : (
-                      <Button
-                        size="small"
-                        variant="contained"
-                        onClick={() => handleUnlock(agent._id)}
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: 2.5,
-                          px: 2,
-                          fontWeight: 700,
-                          backgroundColor: "#64748b",
-                          boxShadow: "none",
-                          "&:hover": {
-                            backgroundColor: "#475569",
-                            boxShadow: "none",
-                          },
-                        }}
-                      >
-                        Unlock to Connect
-                      </Button>
-                    )}
-                  </Box>
+    {/* Bottom full-width agent managed section */}
+    {agent?.role === "Agent" && (
+      <Box
+        sx={{
+          px: { xs: 1.5, md: 2 },
+          pb: 1.6,
+        }}
+      >
+        <Box
+          sx={{
+            p: 1.6,
+            borderRadius: 3,
+            background: "linear-gradient(135deg,#eef2ff,#f8fafc)",
+            border: "1px solid #c7d2fe",
+            boxShadow: "0 4px 12px rgba(79,70,229,0.08)",
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: "0.95rem",
+              color: "#3730a3",
+              display: "flex",
+              alignItems: "center",
+              gap: 0.6,
+            }}
+          >
+            👥 Agent-Managed Worker Groups Available
+          </Typography>
 
-                  {user?.isSubscribed && (
-                    <Box sx={{ mt: 1.5, maxWidth: 240 }}>
-                      <Select
-                        size="small"
-                        fullWidth
-                        displayEmpty
-                        value={callStatus[agent._id] || ""}
-                        disabled={savingStatus[agent._id]}
-                        onChange={(e) =>
-                          saveCallStatus(agent._id, e.target.value)
-                        }
-                        sx={{
-                          borderRadius: 2,
-                          backgroundColor: "#fafbff",
-                          fontSize: "0.82rem",
-                        }}
-                        renderValue={(selected) => {
-                          if (!selected) {
-                            return (
-                              <Typography
-                                sx={{
-                                  fontSize: "0.78rem",
-                                  fontWeight: 600,
-                                  color: "#64748b",
-                                }}
-                              >
-                                Call Outcome
-                              </Typography>
-                            );
-                          }
-                          return selected
-                            .replaceAll("_", " ")
-                            .replace(/\b\w/g, (c) => c.toUpperCase());
-                        }}
-                      >
-                        <MenuItem disabled value="">
-                          Call Outcome
-                        </MenuItem>
-                        <MenuItem value="not_picked">📵 Not Picked</MenuItem>
-                        <MenuItem value="switched_off">🔕 Switched Off</MenuItem>
-                        <MenuItem value="call_later">⏳ Call Later</MenuItem>
-                        <MenuItem value="not_interested">❌ Not Interested</MenuItem>
-                        <MenuItem value="wrong_number">☎️ Wrong Number</MenuItem>
-                        <MenuItem value="relevant">✅ Relevant</MenuItem>
-                      </Select>
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              color: "#4b5563",
+              mt: 0.4,
+              lineHeight: 1.5,
+            }}
+          >
+            Ideal for <b>companies, contractors, and agencies</b> looking to hire
+            <b> multiple skilled or unskilled workers quickly</b>. These workers
+            are organized and coordinated by experienced agents, ensuring
+            <b> faster deployment, reliable workforce management, and smoother operations</b>.
+          </Typography>
+        </Box>
+      </Box>
+    )}
+  </Box>
+);
 
-                      {savingStatus[agent._id] && (
-                        <Typography
-                          sx={{
-                            fontSize: "0.7rem",
-                            color: "#6b7280",
-                            mt: 0.5,
-                          }}
-                        >
-                          Saving call status...
-                        </Typography>
-                      )}
-                    </Box>
-                  )}
-                </Box>
-          
-              </Box>
-                    {agent?.role === "Agent" && (
-<Box
-  sx={{
-    mb: 1.5,
-    p: 1.6,
-    borderRadius: 3,
-    background: "linear-gradient(135deg,#eef2ff,#f8fafc)",
-    border: "1px solid #c7d2fe",
-    boxShadow: "0 4px 12px rgba(79,70,229,0.08)",
-  }}
->
-  <Typography
-    sx={{
-      fontWeight: 700,
-      fontSize: "0.95rem",
-      color: "#3730a3",
-      display: "flex",
-      alignItems: "center",
-      gap: 0.6,
-    }}
-  >
-    👥 Agent-Managed Worker Groups Available
-  </Typography>
-
-  <Typography
-    sx={{
-      fontSize: "0.8rem",
-      color: "#4b5563",
-      mt: 0.4,
-      lineHeight: 1.5,
-    }}
-  >
-    Ideal for <b>companies, contractors, and agencies</b> looking to hire 
-    <b> multiple skilled or unskilled workers quickly</b>.  
-    These workers are organized and coordinated by experienced agents, ensuring 
-    <b> faster deployment, reliable workforce management, and smoother operations</b>.
-  </Typography>
-</Box>
-)}
-              </Box>
-            );
           })
         )}
 
