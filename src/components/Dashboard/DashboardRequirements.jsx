@@ -394,7 +394,6 @@ useEffect(() => {
 
               </Box>
       <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
-        <CardContent className="dash-card-content">
           {/* <Divider sx={{ borderColor: "#1876d2", borderBottomWidth: 5 }} /> */}
 
           {/* <InviteForWorkHeader
@@ -421,7 +420,7 @@ useEffect(() => {
                 <Grid item sx={{ mb: 5 }} xs={12}>
                   {/* Opportunity for work */}
                   <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
-                    <CardContent className="dash-card-content">
+                    <CardContent sx={{ p: "7px"}}>
                       {/* <Divider
                         sx={{
                           borderColor: "#1876d2",
@@ -638,7 +637,7 @@ useEffect(() => {
                                           <ContactButtons
                                                  stream={stream}
                                                  currentLang={currentLang}
-                                                 isVerified={user.isVerified} // true or false
+                                                 isVerified={user.veryfiedBage} // true or false
                                                />
 
                                             <IconButton
@@ -970,7 +969,7 @@ useEffect(() => {
   </Box>
 )}
 
-        </CardContent>
+       
       </Card>
         <PathLocationModal
                 open={modalOpen}

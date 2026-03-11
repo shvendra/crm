@@ -4,6 +4,7 @@ import CallIcon from "@mui/icons-material/Call";
 import { toast } from "react-hot-toast";
 import { Context } from "../../main";
 import React, { useContext, useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const whatsappTemplates = {
   en: ({ name, phone, workType, subCategory, ern }) =>
@@ -35,6 +36,8 @@ ERN क्रमांक: ${ern}`,
 ERN નંબર: ${ern}`,
 };
 export default function ContactButtons({ stream, currentLang, isVerified }) {
+    const { t, i18n } = useTranslation();
+  
   const handleRestrictedAction = () => {
 toast.error(
   t('verificationRequired') ||

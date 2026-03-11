@@ -349,767 +349,773 @@ const [isLimitExhausted, setIsLimitExhausted] = useState(user?.remainingContacts
     fetchAgents();
   }, [page]);
 
-  return (
-    <Box sx={{ pl: 1, pr: 1, pt: 2, mx: "auto" }}>
-      {/* Header */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 1.5,
-          mb: 2,
-        }}
-      >
-        <Box
-          onClick={() => navigate(-1)}
-          sx={{
-            width: 36,
-            height: 36,
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "background-color 0.2s ease",
-            "&:hover": { backgroundColor: "#f1f1f1" },
-          }}
-        >
-          <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
-        </Box>
-        <Box>
-          <Typography fontSize={16} fontWeight={700}>
-            Verified Workers & Agents
-          </Typography>
-          <Typography fontSize={12} color="text.secondary">
-            Trusted verified workers
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Main Content */}
-      <Box
-        sx={{
-          display: isMobile ? "block" : "flex",
-          gap: 2,
-          mb: 1,
-        }}
-      >
-        {/* Mobile Filter Toggle */}
-        {isMobile && !showFiltersMobile && (
-          <Box
-            sx={{
-              position: "fixed",
-              top: 80,
-              right: 16,
-              zIndex: 999,
-              cursor: "pointer",
-              backgroundColor: "#fff",
-              p: 1,
-              borderRadius: 1,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-            }}
-            onClick={() => setShowFiltersMobile(true)}
-          >
-            <FilterListIcon />
-          </Box>
-        )}
-
-        {/* Filters Panel */}
-        {(!isMobile || showFiltersMobile) && (
-          <Box
-            sx={{
-              width: isMobile ? "100%" : 300,
-              height: isMobile ? "calc(100vh - 60px)" : "auto",
-              p: 2,
-              borderRadius: isMobile ? "16px 16px 0 0" : 2,
-              backgroundColor: "#ffffff",
-              boxShadow: "0 6px 24px rgba(0,0,0,0.12)",
-              position: isMobile ? "fixed" : "relative",
-              top: isMobile ? 60 : "auto",
-              left: 0,
-              zIndex: 1,
-              maxHeight: "calc(100vh - 120px)",
-              overflowY: "auto",
-            }}
-          >
-            {/* HEADER */}
-            {/* HEADER */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mb: 1.5,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                  color: "text.primary",
-                }}
-              >
-                Filter Workers
-              </Typography>
-
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                 <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                  borderRadius: 2,
-                  fontWeight: 700,
-                  textTransform: "none",
-                }}
-                onClick={applyFilters}
-              >
-                Apply
-              </Button>
-              
-
-                {isMobile && (
-                  <Box
-                    onClick={() => setShowFiltersMobile(false)}
-                    sx={{
-                      cursor: "pointer",
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: "50%",
-                      fontSize: "0.9rem",
-                      backgroundColor: "#f5f5f5",
-                    }}
-                  >
-                    ✕
-                  </Box>
-                )}
-              </Box>
-            </Box>
-
-            {/* CLEAR ALL (TOP) */}
-            {/* <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
-    <Button
-      size="small"
-      variant="text"
-      onClick={clearAllFilters}
+return (
+  <Box
+    sx={{
+      px: { xs: 1.5, md: 2 },
+      pt: 2,
+      pb: 2,
+      mx: "auto",
+      backgroundColor: "#f4f6fb",
+      minHeight: "100vh",
+    }}
+  >
+    {/* Header */}
+    <Box
       sx={{
-        fontSize: "0.7rem",
-        fontWeight: 700,
-        textTransform: "none",
+        display: "flex",
+        alignItems: "center",
+        gap: 1.5,
+        mb: 2,
       }}
     >
-      Clear All
-    </Button>
-  </Box> */}
+      <Box
+        onClick={() => navigate(-1)}
+        sx={{
+          width: 38,
+          height: 38,
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          transition: "0.2s ease",
+          backgroundColor: "#fff",
+          border: "1px solid #e6eaf2",
+          "&:hover": { backgroundColor: "#f7f8fc" },
+        }}
+      >
+        <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
+      </Box>
 
-            {/* LOCATION */}
-            <Typography sx={sectionTitle}>Location</Typography>
+      <Box>
+        <Typography fontSize={18} fontWeight={700} color="#1f2a44">
+          Verified Workers & Agents
+        </Typography>
+        <Typography fontSize={12} color="#6b7280">
+          Search trusted skilled and unskilled workers across locations
+        </Typography>
+      </Box>
+    </Box>
 
-            <Select
-              size="small"
-              fullWidth
-              value={state}
-              displayEmpty
-              onChange={(e) => {
-                setState(e.target.value);
-                setDistrict("");
-                setTehsil("");
-              }}
-            >
-              <MenuItem value="">Select State</MenuItem>
-              {stateOptions.map((st) => (
-                <MenuItem key={st} value={st}>
-                  {st}
-                </MenuItem>
-              ))}
-            </Select>
+    {/* Main Content */}
+    <Box
+      sx={{
+        display: isMobile ? "block" : "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "280px minmax(0,1fr)",
+        gap: 2,
+        alignItems: "start",
+      }}
+    >
+      {/* Mobile Filter Toggle */}
+      {isMobile && !showFiltersMobile && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 84,
+            right: 14,
+            zIndex: 1200,
+            cursor: "pointer",
+            backgroundColor: "#fff",
+            p: 1,
+            borderRadius: "10px",
+            border: "1px solid #e5e7eb",
+            boxShadow: "0 8px 24px rgba(15,23,42,0.14)",
+          }}
+          onClick={() => setShowFiltersMobile(true)}
+        >
+          <FilterListIcon sx={{ color: "#374151" }} />
+        </Box>
+      )}
 
-            <Select
-              size="small"
-              fullWidth
-              value={district}
-              displayEmpty
-              disabled={!state}
-              sx={{ mt: 1 }}
-              onChange={(e) => {
-                setDistrict(e.target.value);
-                setTehsil("");
-              }}
-            >
-              <MenuItem value="">Select District</MenuItem>
-              {districtOptions.map((d) => (
-                <MenuItem key={d} value={d}>
-                  {d}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Select
-              size="small"
-              fullWidth
-              value={tehsil}
-              displayEmpty
-              disabled={!district}
-              sx={{ mt: 1 }}
-              onChange={(e) => setTehsil(e.target.value)}
-            >
-              <MenuItem value="">Select Tehsil / Block</MenuItem>
-              {tehsilOptions.map((t) => (
-                <MenuItem key={t} value={t}>
-                  {t}
-                </MenuItem>
-              ))}
-            </Select>
-
-            {/* AGE RANGE */}
-            <Typography sx={sectionTitle}>Age Range</Typography>
-
-            <Box sx={{ display: "flex", gap: 1 }}>
-              <TextField
-                size="small"
-                type="number"
-                placeholder="Min"
-                value={ageRange[0]}
-                onChange={(e) =>
-                  setAgeRange([Number(e.target.value), ageRange[1]])
-                }
-              />
-              <TextField
-                size="small"
-                type="number"
-                placeholder="Max"
-                value={ageRange[1]}
-                onChange={(e) =>
-                  setAgeRange([ageRange[0], Number(e.target.value)])
-                }
-              />
-            </Box>
-
-            {/* WORK CATEGORY */}
-            <Typography sx={sectionTitle}>Worker Category</Typography>
-
-            <Select
-              size="small"
-              fullWidth
-              value={workerType}
-              displayEmpty
-              onChange={(e) => setWorkerType(e.target.value)}
-            >
-              <MenuItem value="">All Categories</MenuItem>
-              {WORKER_CATEGORIES.map((cat) => (
-                <MenuItem key={cat.value} value={cat.value}>
-                  {cat.label}
-                </MenuItem>
-              ))}
-            </Select>
-
-            {/* GENDER */}
-            <Typography sx={sectionTitle}>Gender</Typography>
-
-            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-              {["Male", "Female", "Other"].map((g) => (
-                <Chip
-                  key={g}
-                  label={g}
-                  clickable
-                  variant={gender === g ? "filled" : "outlined"}
-                  color={gender === g ? "primary" : "default"}
-                  onClick={() => setGender(gender === g ? "" : g)}
-                  sx={{ fontSize: "0.7rem" }}
-                />
-              ))}
-            </Box>
-
-            {/* WORKER TYPE */}
-            <Typography sx={sectionTitle}>Worker Type</Typography>
-
-            <Box sx={{ display: "flex", gap: 1 }}>
-              <Chip
-                label="Individual"
-                clickable
-                variant={workerGroup === "individual" ? "filled" : "outlined"}
-                color={workerGroup === "individual" ? "primary" : "default"}
-                onClick={() =>
-                  setWorkerGroup(
-                    workerGroup === "individual" ? "" : "individual",
-                  )
-                }
-              />
-              <Chip
-                label="Group / Agent"
-                clickable
-                variant={workerGroup === "group" ? "filled" : "outlined"}
-                color={workerGroup === "group" ? "primary" : "default"}
-                onClick={() =>
-                  setWorkerGroup(workerGroup === "group" ? "" : "group")
-                }
-              />
-            </Box>
-
-            {/* FOOTER ACTIONS */}
-            <Box
+      {/* Filters Panel */}
+      {(!isMobile || showFiltersMobile) && (
+        <Box
+          sx={{
+            width: "100%",
+            p: 2,
+            borderRadius: isMobile ? "18px 18px 0 0" : "18px",
+            backgroundColor: "#fff",
+            border: "1px solid #e8edf5",
+            boxShadow: "0 8px 28px rgba(15,23,42,0.06)",
+            position: isMobile ? "fixed" : "sticky",
+            top: isMobile ? 60 : 12,
+            left: 0,
+            zIndex: isMobile ? 1300 : 1,
+            height: isMobile ? "calc(100vh - 60px)" : "auto",
+            maxHeight: isMobile ? "calc(100vh - 60px)" : "calc(100vh - 120px)",
+            overflowY: "auto",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <Typography
               sx={{
-                position: "sticky",
-                bottom: 0,
-                mt: 1,
-                pt: 1,
-                mb: 2,
-                backgroundColor: "#fff",
-                display: "flex",
-                gap: 1,
+                fontWeight: 700,
+                fontSize: "1.1rem",
+                color: "#111827",
               }}
             >
+              Filters
+            </Typography>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Button
-                variant="outlined"
-                fullWidth
-                size="large"
+                onClick={clearAllFilters}
                 sx={{
-                  borderRadius: 2,
-                  fontWeight: 700,
+                  minWidth: "auto",
+                  px: 1,
+                  color: "#4f46e5",
+                  fontWeight: 600,
                   textTransform: "none",
                 }}
-                onClick={clearAllFilters}
               >
                 Clear
               </Button>
 
-              <Button
-                variant="contained"
-                fullWidth
-                size="small"
-                sx={{
-                  borderRadius: 2,
-                  fontWeight: 700,
-                  textTransform: "none",
-                }}
-                onClick={applyFilters}
-              >
-                Apply
-              </Button>
+              {isMobile && (
+                <Box
+                  onClick={() => setShowFiltersMobile(false)}
+                  sx={{
+                    cursor: "pointer",
+                    width: 30,
+                    height: 30,
+                    borderRadius: "50%",
+                    fontSize: "0.95rem",
+                    backgroundColor: "#f3f4f6",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#374151",
+                  }}
+                >
+                  ✕
+                </Box>
+              )}
             </Box>
           </Box>
-        )}
 
-        {/* Agents List */}
-        <Box
-          ref={scrollContainerRef}
-          sx={{
-            flex: 1,
-            maxHeight: "calc(100vh - 160px)",
-            overflowY: "auto",
-            mt: 1,
-            pr: 0.5,
-          }}
-        >
-{isLimitExhausted && !isExpired && (  <div>
-    <PricingBanner userRole={user?.userRole} />
-  </div>
-)}
-
-          {loading ? (
-            <Box
-              sx={{
-                height: "20vh",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1,
-              }}
-            >
-              <Typography fontSize={13} color="text.secondary">
-                Fetching best matches for you…
-              </Typography>
-              <CircularProgress size={40} />
-            </Box>
-          ) : agents.length === 0 ? (
-            <Typography
-              sx={{
-                textAlign: "center",
-                mt: 4,
-                fontSize: "1rem",
-                fontWeight: 600,
-                color: "text.secondary",
-              }}
-            >
-              ❌ No workers/agents available for the current combination of
-              filters
-            </Typography>
-          ) : (
-            agents.map((agent) => {
-              const areas = Array.isArray(agent?.areasOfWork)
-                ? agent.areasOfWork.flatMap((item) =>
-                    typeof item === "string" && item.startsWith("[")
-                      ? JSON.parse(item)
-                      : item,
-                  )
-                : [];
-
-             return (
-<Box
-  key={agent._id}
-  sx={{
-    display: "flex",
-    flexDirection: "column",
-    gap: 1.5,
-    p: 1.5,
-    pt: 2,
-    mb: "5px",
-    borderRadius: 2,
-    backgroundColor: "#fff",   // card background
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)", // card shadow
-    border: "1px solid #e0e0e0", // subtle border
-  }}
->
-    {/* ===== TOP ROW: Avatar + Main Details ===== */}
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 1.5,
-        alignItems: "flex-start",
-      }}
-    >
-      {/* ===== AVATAR COLUMN ===== */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          minWidth: 100,
-        }}
-      >
-        {/* Avatar + Verified Badge */}
-        {agent?.veryfiedBage ? (
-          <Box
-            sx={{
-              position: "relative",
-              p: 1,
-              borderRadius: "50%",
-              backdropFilter: "blur(12px)",
-              background: "rgba(255,255,255,0.25)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              boxShadow: "0 12px 30px rgba(0,0,0,0.25)",
-            }}
-          >
-            <Avatar
-              src={
-                agent?.profilePhoto
-                  ? `${config.FILE_BASE_URL}/${agent.profilePhoto}`.replace(/([^:]\/)\/+/g, "$1")
-                  : "/usericon.png"
-              }
-              sx={{ width: 80, height: 80, border: "3px solid #4caf50" }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                top: -8,
-                right: -10,
-                background: "linear-gradient(135deg, #43cea2, #185a9d)",
-                px: 1.2,
-                py: 0.4,
-                borderRadius: 12,
-                color: "#fff",
-                fontSize: 11,
-                fontWeight: 700,
-                boxShadow: "0 6px 14px rgba(0,0,0,0.3)",
-              }}
-            >
-              VERIFIED
-            </Box>
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: -2,
-                right: -2,
-                backgroundColor: "#4caf50",
-                borderRadius: "50%",
-                width: 28,
-                height: 28,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "2px solid white",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
-                color: "#fff",
-                fontSize: 16,
-                fontWeight: 700,
-              }}
-            >
-              ✔
-            </Box>
-          </Box>
-        ) : (
-          <Avatar
-            src={
-              agent?.profilePhoto
-                ? `${config.FILE_BASE_URL}/${agent.profilePhoto}`.replace(/([^:]\/)\/+/g, "$1")
-                : "/usericon.png"
-            }
-            sx={{ width: 80, height: 80, border: "2px solid #1976d2" }}
-          />
-        )}
-
-        {/* ===== DETAILS BELOW AVATAR ===== */}
-        <Box
-          sx={{
-            mt: 0.8,
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            gap: 0.3,
-          }}
-        >
-          {(agent?.dob || agent?.gender) && (
-            <Typography sx={{ fontSize: "0.65rem", color: "text.secondary", fontWeight: 600 }}>
-              {agent?.dob ? `${getAge(agent.dob)} yrs` : ""}
-              {agent?.dob && agent?.gender ? " • " : ""}
-              {agent?.gender || ""}
-            </Typography>
-          )}
-          {agent?.workExperience !== undefined && (
-            <Typography sx={{ fontSize: "0.65rem", color: "text.secondary", fontWeight: 600 }}>
-              {Number(agent.workExperience) > 0 ? Number(agent.workExperience) : 3} yrs exp
-            </Typography>
-          )}
-          {(agent?.fixedSalary > 0 || agent?.salaryFrom > 0) && (
-            <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: "#1b5e20" }}>
-              ₹
-              {agent?.fixedSalary > 0 ? agent.fixedSalary : `${agent.salaryFrom} - ${agent.salaryTo}`}
-              <span style={{ fontWeight: 500, color: "#2e7d32" }}> /day</span>
-            </Typography>
-          )}
-          {workerType && (
-            <Chip
-              label={workerType}
-              size="small"
-              variant="outlined"
-              sx={{
-                fontSize: "0.65rem",
-                mt: 0.3,
-                height: "auto",
-                "& .MuiChip-label": { whiteSpace: "normal", lineHeight: 1.3, padding: "2px 6px" },
-              }}
-            />
-          )}
-        </Box>
-      </Box>
-
-      {/* ===== MAIN DETAILS COLUMN ===== */}
-      <Box sx={{ flex: 1, mt: isMobile ? 1 : 0 }}>
-        {/* Name & Rating */}
-        <Typography sx={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary", display: "flex", flexWrap: "wrap", gap: 0.6, lineHeight: 1.2 }}>
-          {formatName(agent?.name)}
-          <RatingStars rating={agent?.rating} size={14} />
-        </Typography>
-
-        {/* Location */}
-        <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mt: 0.3 }}>
-          📍 {agent.district}, {agent.state}
-        </Typography>
-
-        {/* Area Chips */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mt: 1 }}>
-          <Chip
-            label={agent?.role === "Agent" ? "Skilled Worker • Agent Managed" : "Skilled Worker"}
-            size="small"
-            variant="outlined"
-            sx={{ fontSize: "0.68rem", height: 24, fontWeight: 600, borderColor: "#bbdefb", color: "#0d47a1" }}
-          />
-          <Chip
-            label={formatAreas(areas) || "Any Work"}
-            size="small"
-            variant="outlined"
-            sx={{
-              fontSize: "0.68rem",
-              fontWeight: 700,
-              minHeight: 24,
-              height: "auto",
-              alignItems: "flex-start",
-              "& .MuiChip-label": { whiteSpace: "normal", lineHeight: 1.35, padding: "6px 8px", wordBreak: "break-word" },
-            }}
-          />
-        </Box>
-
-        {/* Contact Info */}
-{/* Contact Info */}
-<Box sx={{ mt: 1.2 }}>
-  {unlockedPhones[agent._id] ? (
-    <Box sx={{ display: "flex", gap: 1 }}>
-      <Button
-        size="small"
-        variant="contained"
-        color="success"
-        href={`tel:${unlockedPhones[agent._id]}`}
-        sx={{
-          fontSize: "0.75rem",
-          fontWeight: 700,
-          color: "#fff",
-          textTransform: "none",
-          borderRadius: 2,
-        }}
-      >
-       📞 Call {unlockedPhones[agent._id]}
-      </Button>
-
-      <Button
-        size="small"
-        variant="contained"
-        href={`https://wa.me/91${unlockedPhones[agent._id]}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={{
-          fontSize: "0.75rem",
-          fontWeight: 700,
-          color: "#fff",
-          backgroundColor: "#25D366",
-          textTransform: "none",
-          borderRadius: 2,
-          "&:hover": {
-            backgroundColor: "#1ebe5d",
-          },
-        }}
-      >
-        💬 WhatsApp
-      </Button>
-    </Box>
-  ) : user?.isSubscribed ? (
-    <Button
-      size="small"
-      variant="contained"
-      color="primary"
-      onClick={() => handleViewNumber(agent._id)}
-      sx={{
-        fontSize: "0.75rem",
-        fontWeight: 700,
-        color: "#fff",
-        textTransform: "none",
-        borderRadius: 2,
-      }}
-    >
-      👁️ View Contact
-    </Button>
-  ) : (
-    <Button
-      size="small"
-      variant="contained"
-      color="inherit"
-      onClick={() => handleUnlock(agent._id)}
-      sx={{
-        fontSize: "0.75rem",
-        fontWeight: 600,
-        color: "#fff",
-        backgroundColor: "text.secondary",
-        textTransform: "none",
-        borderRadius: 2,
-        "&:hover": {
-          backgroundColor: "grey.700",
-        },
-      }}
-    >
-      🔒 {getRandom10DigitNumber()} — Unlock to Connect
-    </Button>
-  )}
-</Box>
-
-      </Box>
-    </Box>
-
-    {/* ===== FOOTER ===== */}
-    <Box sx={{ mt: 0, width: "100%" }}>
-      {/* Agent Group */}
-      {agent?.role === "Agent" && (
-        <Box sx={{ p: 1, borderRadius: 2, background: "linear-gradient(135deg, #e3f2fd, #bbdefb)", border: "1px solid #90caf9", mb: 1 }}>
-          <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#0d47a1" }}>👥 Group of Workers Available</Typography>
-          <Typography sx={{ fontSize: "0.72rem", color: "#1a237e", mt: 0.3 }}>Ideal for <b>Company</b>, <b>Contractor</b> & <b>Agency</b>.</Typography>
-          <Box sx={{ display: "flex", gap: 1, mt: 0.6, flexWrap: "wrap" }}>
-            <Chip size="small" label="✔ Bulk Hiring" sx={{ fontSize: "0.65rem", height: 22 }} />
-            <Chip size="small" label="✔ Managed Workforce" sx={{ fontSize: "0.65rem", height: 22 }} />
-            <Chip size="small" label="✔ Faster Deployment" sx={{ fontSize: "0.65rem", height: 22 }} />
-          </Box>
-        </Box>
-      )}
-
-      {/* Call Outcome */}
-      {user?.isSubscribed && (
-    <Box sx={{ mt: 0 }}>
-  <Select
-    size="small"
-    fullWidth
-    displayEmpty
-    value={callStatus[agent._id] || ""}
-    disabled={savingStatus[agent._id]}
-    onChange={(e) => saveCallStatus(agent._id, e.target.value)}
-    sx={{
-      fontSize: "0.78rem",
-      height: 34,
-      borderRadius: 1.5,
-    }}
-    renderValue={(selected) => {
-      if (!selected) {
-        return (
           <Typography
             sx={{
-              fontSize: "0.7rem",
-              fontWeight: 700,
-              color: "text.secondary",
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
             }}
           >
-            Call Outcome
+            Worker Category
           </Typography>
-        );
-      }
-      return selected
-        .replaceAll("_", " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-    }}
-  >
-    <MenuItem disabled value="">
-      Call Outcome
-    </MenuItem>
+          <Select
+            size="small"
+            fullWidth
+            value={workerType}
+            displayEmpty
+            onChange={(e) => setWorkerType(e.target.value)}
+            sx={{
+              borderRadius: 3,
+              backgroundColor: "#fafbff",
+              mb: 2,
+            }}
+          >
+            <MenuItem value="">All Categories</MenuItem>
+            {WORKER_CATEGORIES.map((cat) => (
+              <MenuItem key={cat.value} value={cat.value}>
+                {cat.label}
+              </MenuItem>
+            ))}
+          </Select>
 
-    <MenuItem value="not_picked">📵 Not Picked</MenuItem>
-    <MenuItem value="switched_off">🔕 Switched Off</MenuItem>
-    <MenuItem value="call_later">⏳ Call Later</MenuItem>
-    <MenuItem value="not_interested">❌ Not Interested</MenuItem>
-    <MenuItem value="wrong_number">☎️ Wrong Number</MenuItem>
-    <MenuItem value="relevant">✅ Relevant</MenuItem>
-  </Select>
+          <Typography
+            sx={{
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
+            }}
+          >
+            State
+          </Typography>
+          <Select
+            size="small"
+            fullWidth
+            value={state}
+            displayEmpty
+            onChange={(e) => {
+              setState(e.target.value);
+              setDistrict("");
+              setTehsil("");
+            }}
+            sx={{
+              borderRadius: 3,
+              backgroundColor: "#fafbff",
+              mb: 2,
+            }}
+          >
+            <MenuItem value="">Select State</MenuItem>
+            {stateOptions.map((st) => (
+              <MenuItem key={st} value={st}>
+                {st}
+              </MenuItem>
+            ))}
+          </Select>
 
-  {savingStatus[agent._id] && (
-    <Typography sx={{ fontSize: "0.65rem", color: "text.secondary", mt: 0.3 }}>
-      Saving call status…
-    </Typography>
-  )}
-</Box>
+          <Typography
+            sx={{
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
+            }}
+          >
+            District
+          </Typography>
+          <Select
+            size="small"
+            fullWidth
+            value={district}
+            displayEmpty
+            disabled={!state}
+            onChange={(e) => {
+              setDistrict(e.target.value);
+              setTehsil("");
+            }}
+            sx={{
+              borderRadius: 3,
+              backgroundColor: "#fafbff",
+              mb: 2,
+            }}
+          >
+            <MenuItem value="">Select District</MenuItem>
+            {districtOptions.map((d) => (
+              <MenuItem key={d} value={d}>
+                {d}
+              </MenuItem>
+            ))}
+          </Select>
 
+          <Typography
+            sx={{
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
+            }}
+          >
+            Gender
+          </Typography>
+          <Select
+            size="small"
+            fullWidth
+            value={gender}
+            displayEmpty
+            onChange={(e) => setGender(e.target.value)}
+            sx={{
+              borderRadius: 3,
+              backgroundColor: "#fafbff",
+              mb: 2,
+            }}
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+          </Select>
+
+          <Typography
+            sx={{
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
+            }}
+          >
+            Worker Type
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
+            <Chip
+              label="Individual"
+              clickable
+              onClick={() =>
+                setWorkerGroup(workerGroup === "individual" ? "" : "individual")
+              }
+              sx={{
+                borderRadius: "999px",
+                backgroundColor:
+                  workerGroup === "individual" ? "#4f46e5" : "#eef2f7",
+                color: workerGroup === "individual" ? "#fff" : "#4b5563",
+                fontWeight: 500,
+              }}
+            />
+            <Chip
+              label="Group / Agent"
+              clickable
+              onClick={() =>
+                setWorkerGroup(workerGroup === "group" ? "" : "group")
+              }
+              sx={{
+                borderRadius: "999px",
+                backgroundColor:
+                  workerGroup === "group" ? "#4f46e5" : "#eef2f7",
+                color: workerGroup === "group" ? "#fff" : "#4b5563",
+                fontWeight: 500,
+              }}
+            />
+          </Box>
+
+          <Typography
+            sx={{
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: "#374151",
+              mb: 1,
+            }}
+          >
+            Age Range
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+            <TextField
+              size="small"
+              type="number"
+              placeholder="Min"
+              value={ageRange[0]}
+              onChange={(e) =>
+                setAgeRange([Number(e.target.value), ageRange[1]])
+              }
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#fafbff",
+                },
+              }}
+            />
+            <TextField
+              size="small"
+              type="number"
+              placeholder="Max"
+              value={ageRange[1]}
+              onChange={(e) =>
+                setAgeRange([ageRange[0], Number(e.target.value)])
+              }
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#fafbff",
+                },
+              }}
+            />
+          </Box>
+
+          {/* Optional tehsil kept intact */}
+          {(districtOptions.length > 0 || tehsil) && (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "0.9rem",
+                  fontWeight: 600,
+                  color: "#374151",
+                  mb: 1,
+                }}
+              >
+                Tehsil / Block
+              </Typography>
+              <Select
+                size="small"
+                fullWidth
+                value={tehsil}
+                displayEmpty
+                disabled={!district}
+                onChange={(e) => setTehsil(e.target.value)}
+                sx={{
+                  borderRadius: 3,
+                  backgroundColor: "#fafbff",
+                  mb: 2,
+                }}
+              >
+                <MenuItem value="">Select Tehsil / Block</MenuItem>
+                {tehsilOptions.map((t) => (
+                  <MenuItem key={t} value={t}>
+                    {t}
+                  </MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
+
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={applyFilters}
+            sx={{
+              mt: 1,
+              borderRadius: 3,
+              height: 46,
+              fontWeight: 700,
+              textTransform: "none",
+              background: "linear-gradient(90deg, #4f46e5, #5b3df5)",
+              boxShadow: "none",
+              "&:hover": {
+                background: "linear-gradient(90deg, #4338ca, #4f46e5)",
+                boxShadow: "none",
+              },
+            }}
+          >
+            Apply Filters
+          </Button>
+        </Box>
       )}
+
+      {/* Agents List */}
+      <Box
+        ref={scrollContainerRef}
+        sx={{
+          flex: 1,
+          maxHeight: isMobile ? "unset" : "calc(100vh - 120px)",
+          overflowY: isMobile ? "visible" : "auto",
+          pr: { xs: 0, md: 0.5 },
+        }}
+      >
+        {isLimitExhausted && !isExpired && (
+          <Box sx={{ mb: 1.5 }}>
+            <PricingBanner userRole={user?.userRole} />
+          </Box>
+        )}
+
+        {loading ? (
+          <Box
+            sx={{
+              minHeight: "28vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1.5,
+              backgroundColor: "#fff",
+              borderRadius: 4,
+              border: "1px solid #e8edf5",
+            }}
+          >
+            <CircularProgress size={34} />
+            <Typography fontSize={13} color="#6b7280">
+              Fetching best matches for you...
+            </Typography>
+          </Box>
+        ) : agents.length === 0 ? (
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: 4,
+              border: "1px solid #e8edf5",
+              p: 4,
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                color: "#6b7280",
+              }}
+            >
+              No workers or agents found for the selected filters.
+            </Typography>
+          </Box>
+        ) : (
+          agents.map((agent) => {
+            const areas = Array.isArray(agent?.areasOfWork)
+              ? agent.areasOfWork.flatMap((item) =>
+                  typeof item === "string" && item.startsWith("[")
+                    ? JSON.parse(item)
+                    : item
+                )
+              : [];
+
+            return (
+              <Box
+                key={agent._id}
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  p: { xs: 1.5, md: 2 },
+                  mb: 1.5,
+                  borderRadius: "18px",
+                  backgroundColor: "#fff",
+                  border: "1px solid #e8edf5",
+                  boxShadow: "0 4px 18px rgba(15,23,42,0.05)",
+                  flexDirection: { xs: "column", sm: "row" },
+                }}
+              >
+                {/* Avatar / meta */}
+                <Box
+                  sx={{
+                    minWidth: { xs: "100%", sm: 92 },
+                    display: "flex",
+                    flexDirection: { xs: "row", sm: "column" },
+                    alignItems: "center",
+                    gap: 1.2,
+                  }}
+                >
+                  <Avatar
+                    src={
+                      agent?.profilePhoto
+                        ? `${config.FILE_BASE_URL}/${agent.profilePhoto}`.replace(
+                            /([^:]\/)\/+/g,
+                            "$1"
+                          )
+                        : "/usericon.png"
+                    }
+                    sx={{
+                      width: 72,
+                      height: 72,
+                      border: agent?.veryfiedBage
+                        ? "2px solid #4f46e5"
+                        : "2px solid #c7d2fe",
+                    }}
+                  />
+
+                  <Typography
+                    sx={{
+                      fontSize: "0.75rem",
+                      color: "#64748b",
+                      textAlign: { xs: "left", sm: "center" },
+                    }}
+                  >
+                    {agent?.dob ? `${getAge(agent.dob)} yrs` : ""}
+                    {agent?.gender ? ` • ${agent.gender}` : ""}
+                  </Typography>
+                </Box>
+
+                {/* Main content */}
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.15rem" },
+                      fontWeight: 700,
+                      color: "#1f2a44",
+                      lineHeight: 1.2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.8,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {formatName(agent?.name)}
+                    <RatingStars rating={agent?.rating} size={14} />
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: "0.86rem",
+                      color: "#64748b",
+                      mt: 0.4,
+                    }}
+                  >
+                    📍 {agent.district}, {agent.state}
+                  </Typography>
+
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 1.2 }}>
+                    <Chip
+                      label={agent?.role === "Agent" ? "Worker" : "Worker"}
+                      size="small"
+                      sx={{
+                        backgroundColor: "#eef2ff",
+                        color: "#3b82f6",
+                        fontWeight: 700,
+                        borderRadius: "999px",
+                      }}
+                    />
+                    <Chip
+                      label={formatAreas(areas) || "Any Work"}
+                      size="small"
+                      sx={{
+                        backgroundColor: "#eef2f7",
+                        color: "#4b5563",
+                        fontWeight: 600,
+                        maxWidth: "100%",
+                        height: "auto",
+                        "& .MuiChip-label": {
+                          whiteSpace: "normal",
+                          display: "block",
+                          py: 0.4,
+                        },
+                      }}
+                    />
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mt: 1.6,
+                      display: "flex",
+                      gap: 1,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {unlockedPhones[agent._id] ? (
+                      <>
+                        <Button
+                          size="small"
+                          variant="contained"
+                          href={`tel:${unlockedPhones[agent._id]}`}
+                          sx={{
+                            textTransform: "none",
+                            borderRadius: 2.5,
+                            px: 2,
+                            fontWeight: 700,
+                            backgroundColor: "#4f46e5",
+                            boxShadow: "none",
+                            "&:hover": {
+                              backgroundColor: "#4338ca",
+                              boxShadow: "none",
+                            },
+                          }}
+                        >
+                          View Contact
+                        </Button>
+
+                        <Button
+                          size="small"
+                          variant="contained"
+                          href={`https://wa.me/91${unlockedPhones[agent._id]}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            textTransform: "none",
+                            borderRadius: 2.5,
+                            px: 2,
+                            fontWeight: 700,
+                            backgroundColor: "#16a34a",
+                            boxShadow: "none",
+                            "&:hover": {
+                              backgroundColor: "#15803d",
+                              boxShadow: "none",
+                            },
+                          }}
+                        >
+                          WhatsApp
+                        </Button>
+                      </>
+                    ) : user?.isSubscribed ? (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => handleViewNumber(agent._id)}
+                        sx={{
+                          textTransform: "none",
+                          borderRadius: 2.5,
+                          px: 2,
+                          fontWeight: 700,
+                          backgroundColor: "#4f46e5",
+                          boxShadow: "none",
+                          "&:hover": {
+                            backgroundColor: "#4338ca",
+                            boxShadow: "none",
+                          },
+                        }}
+                      >
+                        View Contact
+                      </Button>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => handleUnlock(agent._id)}
+                        sx={{
+                          textTransform: "none",
+                          borderRadius: 2.5,
+                          px: 2,
+                          fontWeight: 700,
+                          backgroundColor: "#64748b",
+                          boxShadow: "none",
+                          "&:hover": {
+                            backgroundColor: "#475569",
+                            boxShadow: "none",
+                          },
+                        }}
+                      >
+                        Unlock to Connect
+                      </Button>
+                    )}
+                  </Box>
+
+                  {user?.isSubscribed && (
+                    <Box sx={{ mt: 1.5, maxWidth: 240 }}>
+                      <Select
+                        size="small"
+                        fullWidth
+                        displayEmpty
+                        value={callStatus[agent._id] || ""}
+                        disabled={savingStatus[agent._id]}
+                        onChange={(e) =>
+                          saveCallStatus(agent._id, e.target.value)
+                        }
+                        sx={{
+                          borderRadius: 2,
+                          backgroundColor: "#fafbff",
+                          fontSize: "0.82rem",
+                        }}
+                        renderValue={(selected) => {
+                          if (!selected) {
+                            return (
+                              <Typography
+                                sx={{
+                                  fontSize: "0.78rem",
+                                  fontWeight: 600,
+                                  color: "#64748b",
+                                }}
+                              >
+                                Call Outcome
+                              </Typography>
+                            );
+                          }
+                          return selected
+                            .replaceAll("_", " ")
+                            .replace(/\b\w/g, (c) => c.toUpperCase());
+                        }}
+                      >
+                        <MenuItem disabled value="">
+                          Call Outcome
+                        </MenuItem>
+                        <MenuItem value="not_picked">📵 Not Picked</MenuItem>
+                        <MenuItem value="switched_off">🔕 Switched Off</MenuItem>
+                        <MenuItem value="call_later">⏳ Call Later</MenuItem>
+                        <MenuItem value="not_interested">❌ Not Interested</MenuItem>
+                        <MenuItem value="wrong_number">☎️ Wrong Number</MenuItem>
+                        <MenuItem value="relevant">✅ Relevant</MenuItem>
+                      </Select>
+
+                      {savingStatus[agent._id] && (
+                        <Typography
+                          sx={{
+                            fontSize: "0.7rem",
+                            color: "#6b7280",
+                            mt: 0.5,
+                          }}
+                        >
+                          Saving call status...
+                        </Typography>
+                      )}
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            );
+          })
+        )}
+
+        {!loading && loadingMore && (
+          <Box sx={{ textAlign: "center", py: 2 }}>
+            <CircularProgress size={28} />
+          </Box>
+        )}
+      </Box>
     </Box>
   </Box>
 );
-
-            })
-          )}
-
-          {!loading && loadingMore && (
-            <Box sx={{ textAlign: "center", py: 2 }}>
-              <CircularProgress size={28} />
-            </Box>
-          )}
-
-          {/* {!loading && agents.length < total && (
-            <Button
-              fullWidth
-              variant="outlined"
-              sx={{ mt: 1, borderRadius: 2, mb: 15 }}
-              onClick={() => setPage((prev) => prev + 1)}
-            >
-              Load More
-            </Button>
-          )} */}
-        </Box>
-      </Box>
-    </Box>
-  );
 };
 
 export default VerifiedAgentsPage;

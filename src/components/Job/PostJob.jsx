@@ -9,6 +9,7 @@ import { MdCameraAlt } from "react-icons/md";
 import stateDistrict from "../../stateDistrict";
 import { useTranslation } from "react-i18next";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useNavigate } from 'react-router-dom';
 
 import {
   ListItemText,
@@ -56,6 +57,7 @@ const PostJob = () => {
   const [errors, setErrors] = useState({});
   const [tehsil, setTehsil] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigateTo = useNavigate();
 
   const { isAuthorized, user } = useContext(Context);
 
@@ -206,530 +208,653 @@ const PostJob = () => {
 
   if (!isAuthorized && !user) return <Navigate to="/login" />;
 
-  return (
-    <>
+return (
+  <>
+    {/* Header */}
+    <Box
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        backgroundColor: "rgba(245,247,251,0.92)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid #e8edf5",
+        borderRadius: 3,
+        px: 2,
+        py: 1.2,
+        mb: 3,
+        mx: 1,
+        mt: 1,
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           gap: 1.5,
-          p: 2,
-          mx: "auto",
         }}
       >
         <Box
           onClick={() => navigateTo(-1)}
           sx={{
-            width: 36,
-            height: 36,
+            width: 38,
+            height: 38,
             borderRadius: "50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            transition: "background-color 0.2s ease",
-            "&:hover": { backgroundColor: "#f1f1f1" },
+            backgroundColor: "#ffffff",
+            border: "1px solid #e5e7eb",
+            transition: "all 0.2s ease",
+            "&:hover": { backgroundColor: "#f8fafc" },
           }}
         >
-          <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
+          <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#1f2937" }} />
         </Box>
+
         <Box>
-          <Typography fontSize={16} fontWeight={700}>
+          <Typography fontSize={17} fontWeight={800} color="#1f2a44">
             {t("WorkerRRegistration")}
           </Typography>
 
-          <Typography fontSize={12} color="text.secondary">
+          <Typography fontSize={12} color="#6b7280">
             {t("WorkerRRegistration")}
           </Typography>
         </Box>
       </Box>
-      <Box
+    </Box>
+
+    {/* Form Wrapper */}
+    <Box
+      sx={{
+        maxWidth: "820px",
+        margin: "0 auto",
+        position: "relative",
+        overflow: "hidden",
+        mb: 4,
+        px: { xs: 1, sm: 1.5 },
+        "&::before": {
+          content: '"BookMyWorker"',
+          position: "absolute",
+          top: "48%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: { xs: "2.2rem", md: "4.8rem" },
+          fontWeight: 800,
+          color: "rgba(37, 99, 235, 0.04)",
+          zIndex: 0,
+          pointerEvents: "none",
+          whiteSpace: "nowrap",
+        },
+      }}
+    >
+      <Card
         sx={{
-          maxWidth: "700px",
-          margin: "0 auto",
           position: "relative",
-          overflow: "hidden",
-          // mt: '15px',
-          mb: 4,
-          "&::before": {
-            content: '"BookMyWorker"',
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            fontSize: { xs: "2rem", md: "4rem" },
-            fontWeight: 600,
-            color: "rgba(0, 0, 0, 0.04)",
-            zIndex: 0,
-            pointerEvents: "none",
-            whiteSpace: "nowrap",
-          },
+          zIndex: 1,
+          mb: 3,
+          px: { xs: 1, sm: 1.5, md: 2 },
+          py: 1.5,
+          bgcolor: "#ffffff",
+          border: "1px solid #e8edf5",
+          borderRadius: "20px",
+          boxShadow: "0 10px 30px rgba(15,23,42,0.06)",
         }}
       >
-        <Card
+        <Box
           sx={{
-            mt: 1,
-            mb: 3,
-            ml: { xs: 1, sm: 1, md: 1 },
-            mr: { xs: 1, sm: 1, md: 1 },
-            p: 1,
-            bgcolor: "white",
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: "12px",
+            textAlign: "center",
+            mb: 2.2,
+            mt: 0.5,
+            py: 1.2,
+            borderRadius: 3,
+            background: "linear-gradient(180deg, #f8fbff 0%, #f2f6fc 100%)",
+            border: "1px solid #edf2f7",
           }}
         >
           <Typography
             variant="h5"
-            textAlign="center"
             color="primary"
             sx={{
-              fontWeight: 600,
-              background: "#f4f5f8",
-              marginBottom: "5px",
-              marginTop: "-8px",
-              padding: "5px",
+              fontWeight: 800,
+              fontSize: { xs: "1.1rem", md: "1.4rem" },
             }}
           >
             {t("WorkerRRegistration")}
           </Typography>
+        </Box>
 
-          <form onSubmit={handleJobPost}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  label={`${t("WorkerName")} *`}
-                  fullWidth
+        <form onSubmit={handleJobPost}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={`${t("WorkerName")} *`}
+                fullWidth
+                size="small"
+                value={name}
+                onChange={(e) => {
+                  const input = e.target.value;
+                  if (/^[A-Za-z\s]*$/.test(input)) {
+                    setWorkerName(input);
+                  }
+                }}
+                error={!!errors.name}
+                helperText={errors.name}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={`${t("DateOfBirth")} *`}
+                type="number"
+                fullWidth
+                size="small"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                error={!!errors.dob}
+                helperText={errors.dob}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={`${t("MobileNumber")} *`}
+                fullWidth
+                type="tel"
+                value={mobile}
+                size="small"
+                onChange={(e) => {
+                  const input = e.target.value;
+                  if (/^\d*$/.test(input) && input.length <= 10) {
+                    setMobile(input);
+                  }
+                }}
+                onBlur={() => {
+                  if (mobile.length !== 10) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      mobile: "Mobile number must be 10 digits",
+                    }));
+                  } else {
+                    setErrors((prev) => ({ ...prev, mobile: "" }));
+                  }
+                }}
+                error={!!errors.mobile}
+                helperText={errors.mobile}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth error={!!errors.state}>
+                <InputLabel>{t("State")} *</InputLabel>
+                <Select
                   size="small"
-                  value={name}
+                  MenuProps={{ disablePortal: true }}
+                  value={state}
                   onChange={(e) => {
-                    const input = e.target.value;
-
-                    // ✅ Allow only letters & spaces (no numbers)
-                    if (/^[A-Za-z\s]*$/.test(input)) {
-                      setWorkerName(input);
-                    }
+                    setState(e.target.value);
+                    setCity("");
+                    setTehsil("");
                   }}
-                  error={!!errors.name}
-                  helperText={errors.name}
-                />
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  label={`${t("DateOfBirth")} *`}
-                  type="number"
-                  fullWidth
-                  size="small"
-                  value={dob}
-                  onChange={(e) => setDob(e.target.value)}
-                  error={!!errors.dob}
-                  helperText={errors.dob}
-                />
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  label={`${t("MobileNumber")} *`}
-                  fullWidth
-                  type="tel" // better for mobile keyboards
-                  value={mobile}
-                  size="small"
-                  onChange={(e) => {
-                    const input = e.target.value;
-
-                    // ✅ Allow only digits & limit to 10
-                    if (/^\d*$/.test(input) && input.length <= 10) {
-                      setMobile(input);
-                    }
+                  label={`${t("State")} *`}
+                  sx={{
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
                   }}
-                  onBlur={() => {
-                    // ✅ Trigger error if not 10 digits on blur
-                    if (mobile.length !== 10) {
-                      setErrors((prev) => ({
-                        ...prev,
-                        mobile: "Mobile number must be 10 digits",
-                      }));
-                    } else {
-                      setErrors((prev) => ({ ...prev, mobile: "" }));
-                    }
-                  }}
-                  error={!!errors.mobile}
-                  helperText={errors.mobile}
-                />
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <FormControl fullWidth error={!!errors.state}>
-                  <InputLabel>{t("State")} *</InputLabel>
-                  <Select
-                    size="small"
-                    MenuProps={{ disablePortal: true }}
-                    value={state}
-                    onChange={(e) => {
-                      setState(e.target.value);
-                      setCity("");
-                      setTehsil("");
-                    }}
-                    label={`${t("State")} *`}
-                  >
-                    {Object.keys(stateDistrict).map((stateName) => (
-                      <MenuItem key={stateName} value={stateName}>
-                        {stateName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {errors.state && (
-                    <Typography color="error" variant="caption">
-                      {errors.state}
-                    </Typography>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <FormControl
-                  fullWidth
-                  disabled={!state}
-                  error={!!errors.district}
                 >
-                  <InputLabel>{t("City")} *</InputLabel>
-                  <Select
-                    size="small"
-                    MenuProps={{ disablePortal: true }}
-                    value={district}
-                    onChange={(e) => {
-                      setCity(e.target.value);
-                      setTehsil("");
-                    }} // Corrected to set district
-                    label={`${t("City")} *`}
-                  >
-                    {state &&
-                      Object.keys(stateDistrict[state] || {}).map(
-                        (districtName) => (
-                          <MenuItem key={districtName} value={districtName}>
-                            {districtName}
-                          </MenuItem>
-                        ),
-                      )}
-                  </Select>
-                  {errors.district && (
-                    <Typography color="error" variant="caption">
-                      {errors.district}
-                    </Typography>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <FormControl
-                  fullWidth
-                  disabled={!district}
-                  error={!!errors.tehsil}
-                >
-                  <InputLabel id="tehsil-label">
-                    {t("BlockTehsil")} *
-                  </InputLabel>
-                  <Select
-                    size="small"
-                    labelId="tehsil-label"
-                    value={tehsil}
-                    onChange={(e) => handleTehsilChange(e)}
-                    required
-                    label={`${t("BlockTehsil")} *`}
-                  >
-                    <MenuItem value="">Select Block/Tehsil</MenuItem>
-                    {state &&
-                      district &&
-                      (stateDistrict[state]?.[district] || []).map(
-                        (tehsilName) => (
-                          <MenuItem key={tehsilName} value={tehsilName}>
-                            {tehsilName}
-                          </MenuItem>
-                        ),
-                      )}
-                  </Select>
-                  {errors.tehsil && (
-                    <Typography color="error" variant="caption">
-                      {errors.tehsil}
-                    </Typography>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  label={`${t("address")} *`}
-                  fullWidth
-                  size="small"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  // error={!!errors.address}
-                  helperText={errors.address}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  select
-                  label={`${t("workexperience")} *`}
-                  fullWidth
-                  size="small"
-                  value={workExperience}
-                  onChange={(e) => setWorkExperience(e.target.value)}
-                  error={!!errors.workExperience}
-                  helperText={errors.workExperience}
-                >
-                  {Array.from({ length: 36 }, (_, i) => (
-                    <MenuItem key={i} value={i}>
-                      {i} {i === 1 ? "Year" : "Years"}
+                  {Object.keys(stateDistrict).map((stateName) => (
+                    <MenuItem key={stateName} value={stateName}>
+                      {stateName}
                     </MenuItem>
                   ))}
-                </TextField>
-              </Grid>
+                </Select>
+                {errors.state && (
+                  <Typography color="error" variant="caption" sx={{ mt: 0.5 }}>
+                    {errors.state}
+                  </Typography>
+                )}
+              </FormControl>
+            </Grid>
 
-              {/* Work Type */}
-              <Grid item xs={6}>
-                <FormControl fullWidth error={!!errors.categories}>
-                  <InputLabel id="work-type-label">
-                    {t("WorkType")} *
-                  </InputLabel>
-                  <Select
-                    size="small"
-                    labelId="work-type-label"
-                    label={`${t("workType")} *`}
-                    multiple
-                    value={selectedCategories}
-                    onChange={handleChange}
-                    renderValue={(selected) =>
-                      selected.length === 0
-                        ? "Select Areas"
-                        : selected.join(", ")
-                    }
-                  >
-                    {/* Search Box */}
-                    <Box sx={{ padding: 1 }}>
-                      <TextField
-                        label={`${t("InterestOfWork")} *`}
-                        fullWidth
-                        size="small"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                      />
-                    </Box>
-
-                    {/* Sub Category List */}
-                    {filteredCategories.map((area) => (
-                      <MenuItem
-                        key={area.value}
-                        value={area.value}
-                        sx={{ paddingY: 0.5 }}
-                      >
-                        <Checkbox
-                          checked={selectedCategories.includes(area.value)}
-                          onChange={(e) => handleCheckboxChange(e, area.value)}
-                        />
-
-                        <ListItemText
-                          primary={
-                            i18n.language === "hi"
-                              ? area.hindilabel
-                              : i18n.language === "mr"
-                                ? area.marathilabel
-                                : i18n.language === "gu"
-                                  ? area.gujaratilabel
-                                  : area.label
-                          }
-                          secondary={area.parent} // OPTIONAL: shows Industrial / Construction
-                        />
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth disabled={!state} error={!!errors.district}>
+                <InputLabel>{t("City")} *</InputLabel>
+                <Select
+                  size="small"
+                  MenuProps={{ disablePortal: true }}
+                  value={district}
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                    setTehsil("");
+                  }}
+                  label={`${t("City")} *`}
+                  sx={{
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  }}
+                >
+                  {state &&
+                    Object.keys(stateDistrict[state] || {}).map((districtName) => (
+                      <MenuItem key={districtName} value={districtName}>
+                        {districtName}
                       </MenuItem>
                     ))}
-                  </Select>
+                </Select>
+                {errors.district && (
+                  <Typography color="error" variant="caption" sx={{ mt: 0.5 }}>
+                    {errors.district}
+                  </Typography>
+                )}
+              </FormControl>
+            </Grid>
 
-                  {/* Error Handling */}
-                  {errors.categories && (
-                    <Typography color="error" variant="caption">
-                      {errors.categories}
-                    </Typography>
-                  )}
-                </FormControl>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth disabled={!district} error={!!errors.tehsil}>
+                <InputLabel id="tehsil-label">{t("BlockTehsil")} *</InputLabel>
+                <Select
+                  size="small"
+                  labelId="tehsil-label"
+                  value={tehsil}
+                  onChange={(e) => handleTehsilChange(e)}
+                  required
+                  label={`${t("BlockTehsil")} *`}
+                  sx={{
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  }}
+                >
+                  <MenuItem value="">Select Block/Tehsil</MenuItem>
+                  {state &&
+                    district &&
+                    (stateDistrict[state]?.[district] || []).map((tehsilName) => (
+                      <MenuItem key={tehsilName} value={tehsilName}>
+                        {tehsilName}
+                      </MenuItem>
+                    ))}
+                </Select>
+                {errors.tehsil && (
+                  <Typography color="error" variant="caption" sx={{ mt: 0.5 }}>
+                    {errors.tehsil}
+                  </Typography>
+                )}
+              </FormControl>
+            </Grid>
 
-              {/* Salary Section */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel>{t("WagesType")} *</InputLabel>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={`${t("address")} *`}
+                fullWidth
+                size="small"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                helperText={errors.address}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
 
-                  <Select
-                    size="small"
-                    MenuProps={{ disablePortal: true }}
-                    value={salaryType}
-                    onChange={(e) => setSalaryType(e.target.value)}
-                    label={`${t("WagesType")} *`}
-                  >
-                    <MenuItem value="Fixed">{t("salaryFixedPerDay")}</MenuItem>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                select
+                label={`${t("workexperience")} *`}
+                fullWidth
+                size="small"
+                value={workExperience}
+                onChange={(e) => setWorkExperience(e.target.value)}
+                error={!!errors.workExperience}
+                helperText={errors.workExperience}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              >
+                {Array.from({ length: 36 }, (_, i) => (
+                  <MenuItem key={i} value={i}>
+                    {i} {i === 1 ? "Year" : "Years"}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
 
-                    <MenuItem value="Ranged">
-                      {t("salaryRangedPerday")}
+            <Grid item xs={12}>
+              <FormControl fullWidth error={!!errors.categories}>
+                <InputLabel id="work-type-label">{t("WorkType")} *</InputLabel>
+                <Select
+                  size="small"
+                  labelId="work-type-label"
+                  label={`${t("workType")} *`}
+                  multiple
+                  value={selectedCategories}
+                  onChange={handleChange}
+                  renderValue={(selected) =>
+                    selected.length === 0 ? "Select Areas" : selected.join(", ")
+                  }
+                  sx={{
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  }}
+                >
+                  <Box sx={{ padding: 1 }}>
+                    <TextField
+                      label={`${t("InterestOfWork")} *`}
+                      fullWidth
+                      size="small"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
+                  </Box>
+
+                  {filteredCategories.map((area) => (
+                    <MenuItem
+                      key={area.value}
+                      value={area.value}
+                      sx={{ paddingY: 0.5 }}
+                    >
+                      <Checkbox
+                        checked={selectedCategories.includes(area.value)}
+                        onChange={(e) => handleCheckboxChange(e, area.value)}
+                      />
+
+                      <ListItemText
+                        primary={
+                          i18n.language === "hi"
+                            ? area.hindilabel
+                            : i18n.language === "mr"
+                              ? area.marathilabel
+                              : i18n.language === "gu"
+                                ? area.gujaratilabel
+                                : area.label
+                        }
+                        secondary={area.parent}
+                      />
                     </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+                  ))}
+                </Select>
 
-              <Grid item xs={12} sm={6}>
-                <FormControl error={!!errors.gender}>
-                 
+                {errors.categories && (
+                  <Typography color="error" variant="caption" sx={{ mt: 0.5 }}>
+                    {errors.categories}
+                  </Typography>
+                )}
+              </FormControl>
+            </Grid>
 
-                  <RadioGroup
-                    row
-                    aria-labelledby="gender-label"
-                    value={gender}
-                    onChange={(e) => {
-                      setGender(e.target.value);
-                      setErrors((prev) => ({ ...prev, gender: "" })); // clear error on change
-                    }}
-                  >
-                    <FormControlLabel
-                      value="Male"
-                      control={<Radio size="small" />}
-                      label={t("male")}
-                    />
-                    <FormControlLabel
-                      value="Female"
-                      control={<Radio size="small" />}
-                      label={t("female")}
-                    />
-                    <FormControlLabel
-                      value="Other"
-                      control={<Radio size="small" />}
-                      label={t("other")}
-                    />
-                  </RadioGroup>
-
-                  {/* Error Handling */}
-                  {errors.gender && (
-                    <Typography color="error" variant="caption">
-                      {errors.gender}
-                    </Typography>
-                  )}
-                </FormControl>
-              </Grid>
-
-              {salaryType === "Fixed" && (
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label={t("salaryFixedPerDay")}
-                    type="number"
-                    size="small"
-                    value={fixedSalary}
-                    onChange={(e) => setFixedSalary(e.target.value)}
-                    fullWidth
-                    error={!!errors.fixedSalary}
-                    helperText={errors.fixedSalary}
-                  />
-                </Grid>
-              )}
-
-              {salaryType === "Ranged" && (
-                <>
-                  <Grid item xs={6} sm={3}>
-                    <TextField
-                      label={t("WageFrom")}
-                      type="number"
-                      size="small"
-                      value={salaryFrom}
-                      onChange={(e) => setSalaryFrom(e.target.value)}
-                      fullWidth
-                      error={!!errors.salaryFrom}
-                      helperText={errors.salaryFrom}
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={3}>
-                    <TextField
-                      label={t("WageTo")}
-                      type="number"
-                      size="small"
-                      value={salaryTo}
-                      onChange={(e) => setSalaryTo(e.target.value)}
-                      fullWidth
-                      error={!!errors.salaryTo}
-                      helperText={errors.salaryTo}
-                    />
-                  </Grid>
-                </>
-              )}
-
-              <Grid item xs={6}>
-                <TextField
-                  label={`${t("AboutWorker")} *`}
-                  fullWidth
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>{t("WagesType")} *</InputLabel>
+                <Select
                   size="small"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </Grid>
-              {/* Bank Information Section */}
-              {/* <Grid item xs={12}>
-  <Typography
-    variant="h6"
-    sx={{ mt: 2, mb: 1, fontWeight: 600, color: 'primary.main' }}
-  >
-    {t('BankInformation')}
-  </Typography>
-</Grid> */}
+                  MenuProps={{ disablePortal: true }}
+                  value={salaryType}
+                  onChange={(e) => setSalaryType(e.target.value)}
+                  label={`${t("WagesType")} *`}
+                  sx={{
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  }}
+                >
+                  <MenuItem value="Fixed">{t("salaryFixedPerDay")}</MenuItem>
+                  <MenuItem value="Ranged">{t("salaryRangedPerday")}</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
 
-              <Grid item xs={6} sm={4}>
-                <TextField
-                  label={`${t("BankName")}`}
-                  fullWidth
-                  size="small"
-                  value={bankName}
-                  onChange={(e) => setBankName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={6} sm={4}>
-                <TextField
-                  label={`${t("IFSCCode")}`}
-                  fullWidth
-                  size="small"
-                  value={ifscCode}
-                  onChange={(e) => setIfscCode(e.target.value.toUpperCase())}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label={`${t("BankAccountNumber")}`}
-                  fullWidth
-                  size="small"
-                  value={bankAccount}
+            <Grid item xs={12} sm={6}>
+              <FormControl error={!!errors.gender}>
+                <RadioGroup
+                  row
+                  aria-labelledby="gender-label"
+                  value={gender}
                   onChange={(e) => {
-                    const input = e.target.value;
-                    // ✅ Allow only digits, up to 18
-                    if (/^\d*$/.test(input) && input.length <= 18) {
-                      setBankAccount(input);
-                    }
+                    setGender(e.target.value);
+                    setErrors((prev) => ({ ...prev, gender: "" }));
+                  }}
+                >
+                  <FormControlLabel
+                    value="Male"
+                    control={<Radio size="small" />}
+                    label={t("male")}
+                  />
+                  <FormControlLabel
+                    value="Female"
+                    control={<Radio size="small" />}
+                    label={t("female")}
+                  />
+                  <FormControlLabel
+                    value="Other"
+                    control={<Radio size="small" />}
+                    label={t("other")}
+                  />
+                </RadioGroup>
+
+                {errors.gender && (
+                  <Typography color="error" variant="caption">
+                    {errors.gender}
+                  </Typography>
+                )}
+              </FormControl>
+            </Grid>
+
+            {salaryType === "Fixed" && (
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t("salaryFixedPerDay")}
+                  type="number"
+                  size="small"
+                  value={fixedSalary}
+                  onChange={(e) => setFixedSalary(e.target.value)}
+                  fullWidth
+                  error={!!errors.fixedSalary}
+                  helperText={errors.fixedSalary}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 3,
+                      backgroundColor: "#fafbff",
+                    },
                   }}
                 />
               </Grid>
+            )}
 
-              <Grid item xs={12} sx={{ textAlign: "center" }}>
+            {salaryType === "Ranged" && (
+              <>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label={t("WageFrom")}
+                    type="number"
+                    size="small"
+                    value={salaryFrom}
+                    onChange={(e) => setSalaryFrom(e.target.value)}
+                    fullWidth
+                    error={!!errors.salaryFrom}
+                    helperText={errors.salaryFrom}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: 3,
+                        backgroundColor: "#fafbff",
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label={t("WageTo")}
+                    type="number"
+                    size="small"
+                    value={salaryTo}
+                    onChange={(e) => setSalaryTo(e.target.value)}
+                    fullWidth
+                    error={!!errors.salaryTo}
+                    helperText={errors.salaryTo}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: 3,
+                        backgroundColor: "#fafbff",
+                      },
+                    }}
+                  />
+                </Grid>
+              </>
+            )}
+
+            <Grid item xs={12}>
+              <TextField
+                label={`${t("AboutWorker")} *`}
+                fullWidth
+                size="small"
+                multiline
+                minRows={2}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            {/* Bank Details Section */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  mt: 1,
+                  mb: 0.5,
+                  px: 1.2,
+                  py: 1,
+                  borderRadius: 3,
+                  backgroundColor: "#f8fbff",
+                  border: "1px solid #edf2f7",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.98rem",
+                    fontWeight: 700,
+                    color: "#1f2a44",
+                  }}
+                >
+                  {t("BankInformation")}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label={`${t("BankName")}`}
+                fullWidth
+                size="small"
+                value={bankName}
+                onChange={(e) => setBankName(e.target.value)}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label={`${t("IFSCCode")}`}
+                fullWidth
+                size="small"
+                value={ifscCode}
+                onChange={(e) => setIfscCode(e.target.value.toUpperCase())}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label={`${t("BankAccountNumber")}`}
+                fullWidth
+                size="small"
+                value={bankAccount}
+                onChange={(e) => {
+                  const input = e.target.value;
+                  if (/^\d*$/.test(input) && input.length <= 18) {
+                    setBankAccount(input);
+                  }
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box sx={{ textAlign: "center", mt: 1 }}>
                 <Button
                   variant="contained"
                   color="primary"
-                  size="small"
+                  size="large"
                   type="submit"
                   disabled={isSubmitting}
-                  sx={{ padding: "5px 15px", mt: 1 }}
+                  sx={{
+                    minWidth: 180,
+                    py: 1.25,
+                    px: 3,
+                    borderRadius: 3,
+                    fontWeight: 800,
+                    textTransform: "none",
+                    background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+                    boxShadow: "0 10px 22px rgba(37,99,235,0.22)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+                      boxShadow: "0 12px 24px rgba(37,99,235,0.28)",
+                    },
+                    "&:disabled": {
+                      background: "#d1d5db",
+                      color: "#7b8794",
+                    },
+                  }}
                 >
                   {isSubmitting ? "Submitting..." : t("submit")}
                 </Button>
-              </Grid>
+              </Box>
             </Grid>
-          </form>
-        </Card>
-      </Box>
-    </>
-  );
+          </Grid>
+        </form>
+      </Card>
+    </Box>
+  </>
+);
 };
 
 export default PostJob;

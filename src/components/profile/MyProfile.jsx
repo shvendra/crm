@@ -365,262 +365,428 @@ const handleFileChange = async (e, key = 'profilePhoto') => {
     if (!isAuthorized) navigateTo('/landing');
   }, [isAuthorized, navigateTo]);
 
-  return (
+return (
+  <Box
+    sx={{
+      minHeight: "100vh",
+      backgroundColor: "#f5f7fb",
+      pb: 8,
+      px: { xs: 1, md: 2 },
+      pt: 1,
+    }}
+  >
     <Box
       sx={{
-        maxWidth: '1200px',
-        margin: 'auto',
-        mb: 10,
+        maxWidth: "1200px",
+        margin: "auto",
         zIndex: 1,
-        position: 'relative',
+        position: "relative",
       }}
     >
-           <Box 
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1.5,
-                        p: 2,  mx: "auto"
-                      }}
-                    >
-                      <Box
-                         onClick={() => navigateTo(-1)}
-                        sx={{
-                          width: 36,
-                          height: 36,
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          transition: "background-color 0.2s ease",
-                          "&:hover": { backgroundColor: "#f1f1f1" },
-                        }}
-                      >
-                        <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
-                      </Box>
-                   <Box>
-        <Typography fontSize={16} fontWeight={700}>
-          {t('ProfileInfo')}
-        </Typography>
-      
-        <Typography fontSize={12} color="text.secondary">
-          {t('ProfileInfo')}/{t('KYC')}/{t('ServiceableAreaAndWorkerCategories')}
-        </Typography>
-      </Box>
-      
-                    </Box>
-      <Box component="form" onSubmit={e => e.preventDefault()}>
-        <Paper
-          elevation={3}
+      {/* Header */}
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          backgroundColor: "rgba(245,247,251,0.92)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid #e8edf5",
+          borderRadius: 3,
+          px: 2,
+          py: 1.2,
+          mb: 3,
+        }}
+      >
+        <Box
           sx={{
-            width: '100%',
-            borderRadius: 2,
-            boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-            background: '#fff',
-            p: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
           }}
         >
           <Box
-            className="profilehead"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={1}
+            onClick={() => navigateTo(-1)}
+            sx={{
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              backgroundColor: "#ffffff",
+              border: "1px solid #e5e7eb",
+              transition: "all 0.2s ease",
+              "&:hover": { backgroundColor: "#f8fafc" },
+            }}
           >
-            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-              {t('ProfileInfo')}
+            <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#1f2937" }} />
+          </Box>
+
+          <Box>
+            <Typography fontSize={17} fontWeight={800} color="#1f2a44">
+              {t("ProfileInfo")}
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 'bold',
-                marginRight: '7px',
-                color: user?.bmwId ? 'green' : '#4a4a4a',
-                fontSize: () => '17px',
-                background: 'white',
-                borderRadius: '7px',
-                paddingLeft: '9px',
-                paddingRight: '8px',
-              }}
-            >
-              ID : {user?.bmwId || 'Not Assigned'}
+
+            <Typography fontSize={12} color="#6b7280">
+              {t("ProfileInfo")} / {t("KYC")} / {t("ServiceableAreaAndWorkerCategories")}
             </Typography>
           </Box>
-          {/* Pass updated userData and previews to ProfilePanel */}
-          <ProfilePanel
-            user={user}
-            userData={userData}
-            setUserData={setUserData}
-            profilePreview={profilePreview}
-            handleFileChange={handleFileChange}
-          />
-          {(user?.role === 'Agent' || user?.role === 'SelfWorker' || user?.role === 'Worker') && (
+        </Box>
+      </Box>
+
+      <Box component="form" onSubmit={(e) => e.preventDefault()}>
+        <Paper
+          elevation={0}
+          sx={{
+            width: "100%",
+            borderRadius: "20px",
+            boxShadow: "0 10px 30px rgba(15,23,42,0.05)",
+            background: "#fff",
+            p: { xs: 1.2, md: 2 },
+            border: "1px solid #e8edf5",
+            position: "relative",
+            overflow: "hidden",
+            "&::before": {
+              content: '"BookMyWorker"',
+              position: "absolute",
+              top: "48%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              fontSize: { xs: "2.2rem", md: "5rem" },
+              fontWeight: 800,
+              color: "rgba(37,99,235,0.04)",
+              zIndex: 0,
+              pointerEvents: "none",
+              whiteSpace: "nowrap",
+            },
+          }}
+        >
+          {/* Profile Header */}
+          <Box
+            className="profilehead"
+            sx={{
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: { xs: "flex-start", sm: "center" },
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 1.2,
+              mb: 2,
+              px: 1.5,
+              py: 1.3,
+              borderRadius: 3,
+              background: "linear-gradient(180deg, #f8fbff 0%, #f2f6fc 100%)",
+              border: "1px solid #edf2f7",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 800,
+                color: "#2563eb",
+                fontSize: { xs: "1rem", md: "1.2rem" },
+              }}
+            >
+              {t("ProfileInfo")}
+            </Typography>
+
+            <Typography
+              sx={{
+                fontWeight: 800,
+                color: user?.bmwId ? "#15803d" : "#475467",
+                fontSize: "0.95rem",
+                background: "#ffffff",
+                borderRadius: "999px",
+                px: 1.6,
+                py: 0.6,
+                border: "1px solid #e5e7eb",
+              }}
+            >
+              ID : {user?.bmwId || "Not Assigned"}
+            </Typography>
+          </Box>
+
+          {/* Profile Panel */}
+          <Box sx={{ position: "relative", zIndex: 1 }}>
+            <ProfilePanel
+              user={user}
+              userData={userData}
+              setUserData={setUserData}
+              profilePreview={profilePreview}
+              handleFileChange={handleFileChange}
+            />
+          </Box>
+
+          {/* Serviceable Area */}
+          {(user?.role === "Agent" ||
+            user?.role === "SelfWorker" ||
+            user?.role === "Worker") && (
             <Box
               className="profilehead"
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-                userSelect: 'none',
+                position: "relative",
+                zIndex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                cursor: "pointer",
+                userSelect: "none",
+                mt: 3,
+                px: 1.5,
+                py: 1.3,
+                borderRadius: 3,
+                border: "1px solid #edf2f7",
+                backgroundColor: "#fcfdff",
               }}
-              justifyContent="space-between"
-              alignItems="center"
-              mt={2}
             >
-              {/* Left Side Label */}
-              <Typography variant="h6" sx={{ color: 'text.secondary', fontWeight: 600 }}>
-                {t('ServiceableAreaAndWorkerCategories')}
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "#1f2a44",
+                  fontWeight: 700,
+                  fontSize: { xs: "0.98rem", md: "1.05rem" },
+                }}
+              >
+                {t("ServiceableAreaAndWorkerCategories")}
               </Typography>
-              {/* Right Side Edit Icon */}
-              <IconButton size="small" onClick={() => setOpenDialog(true)} sx={{ color: 'gray' }}>
+
+              <IconButton
+                size="small"
+                onClick={() => setOpenDialog(true)}
+                sx={{
+                  color: "#64748b",
+                  border: "1px solid #dbe3ef",
+                  backgroundColor: "#fff",
+                  "&:hover": { backgroundColor: "#f8fbff" },
+                }}
+              >
                 <Pencil size={18} />
               </IconButton>
             </Box>
           )}
+
+          {/* KYC */}
           <Box
             className="profilehead"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-              userSelect: 'none',
-              mb: showKYCSection ? 0 : 0,
-              mt: 2, // Added margin top
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+              userSelect: "none",
+              mt: 3,
+              px: 1.5,
+              py: 1.2,
+              borderRadius: 3,
+              border: "1px solid #edf2f7",
+              backgroundColor: "#fcfdff",
             }}
-            onClick={() => setShowKYCSection(prev => !prev)}
+            onClick={() => setShowKYCSection((prev) => !prev)}
             aria-expanded={showKYCSection}
             role="button"
             tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') setShowKYCSection(prev => !prev);
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setShowKYCSection((prev) => !prev);
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-              {t('KYC')}
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 800,
+                color: "#2563eb",
+                fontSize: { xs: "1rem", md: "1.1rem" },
+              }}
+            >
+              {t("KYC")}
             </Typography>
+
             <IconButton
               size="medium"
-              aria-label={showKYCSection ? 'Collapse KYC section' : 'Expand KYC section'}
+              aria-label={showKYCSection ? "Collapse KYC section" : "Expand KYC section"}
+              sx={{
+                border: "1px solid #e5e7eb",
+                backgroundColor: "#fff",
+              }}
             >
               {showKYCSection ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
           </Box>
 
           <Collapse in={showKYCSection} timeout="auto" unmountOnExit>
-            {/* Pass updated userData and previews to KYCPanel */}
-            <KYCPanel
-              user={user} // Still pass original user for initial data if needed
-              userData={userData}
-              setUserData={setUserData}
-              handleKYCFileChange={handleKYCFileChange}
-              aadharPreview={aadharPreview}
-              config={config}
-            />
+            <Box
+              sx={{
+                position: "relative",
+                zIndex: 1,
+                mt: 1.5,
+                p: { xs: 1, md: 1.5 },
+                borderRadius: 3,
+                backgroundColor: "#ffffff",
+                border: "1px solid #edf2f7",
+              }}
+            >
+              <KYCPanel
+                user={user}
+                userData={userData}
+                setUserData={setUserData}
+                handleKYCFileChange={handleKYCFileChange}
+                aadharPreview={aadharPreview}
+                config={config}
+              />
+            </Box>
           </Collapse>
 
+          {/* Change Password */}
           <Box
             className="profilehead"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-              userSelect: 'none',
-              mb: showPasswordSection ? 2 : 0,
-              mt: 2, // Added margin top
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+              userSelect: "none",
+              mt: 3,
+              px: 1.5,
+              py: 1.2,
+              borderRadius: 3,
+              border: "1px solid #edf2f7",
+              backgroundColor: "#fcfdff",
             }}
-            onClick={() => setShowPasswordSection(prev => !prev)}
+            onClick={() => setShowPasswordSection((prev) => !prev)}
             aria-expanded={showPasswordSection}
             role="button"
             tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') setShowPasswordSection(prev => !prev);
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setShowPasswordSection((prev) => !prev);
+              }
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-              {t('ChangePassword')}
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 800,
+                color: "#2563eb",
+                fontSize: { xs: "1rem", md: "1.1rem" },
+              }}
+            >
+              {t("ChangePassword")}
             </Typography>
+
             <IconButton
               size="medium"
               aria-label={
                 showPasswordSection
-                  ? 'Collapse Change Password section'
-                  : 'Expand Change Password section'
+                  ? "Collapse Change Password section"
+                  : "Expand Change Password section"
               }
+              sx={{
+                border: "1px solid #e5e7eb",
+                backgroundColor: "#fff",
+              }}
             >
               {showPasswordSection ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
           </Box>
 
           <Collapse in={showPasswordSection} timeout="auto" unmountOnExit>
-            {/* Pass updated userData to ChangePasswordPanel */}
-            <ChangePasswordPanel
-              userData={userData}
-              setUserData={setUserData}
-              showPassword={showPassword}
-              setShowPassword={setShowPassword}
-            />
+            <Box
+              sx={{
+                position: "relative",
+                zIndex: 1,
+                mt: 1.5,
+                p: { xs: 1, md: 1.5 },
+                borderRadius: 3,
+                backgroundColor: "#ffffff",
+                border: "1px solid #edf2f7",
+              }}
+            >
+              <ChangePasswordPanel
+                userData={userData}
+                setUserData={setUserData}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+              />
+            </Box>
           </Collapse>
         </Paper>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={!isFormChanged()}
-              size="small"
-              onClick={() => handleSaveUserData()} // ✅ Call manually instead of relying on native submit
-            >
-              {t('Submit')}
-            </Button>
-          </Box>
+        {/* Submit Button */}
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!isFormChanged()}
+            size="large"
+            onClick={() => handleSaveUserData()}
+            sx={{
+              minWidth: 180,
+              py: 1.25,
+              px: 3,
+              borderRadius: 3,
+              fontWeight: 800,
+              textTransform: "none",
+              background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+              boxShadow: "0 10px 22px rgba(37,99,235,0.22)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+                boxShadow: "0 12px 24px rgba(37,99,235,0.28)",
+              },
+              "&:disabled": {
+                background: "#d1d5db",
+                color: "#7b8794",
+              },
+            }}
+          >
+            {t("Submit")}
+          </Button>
         </Box>
-        {isSaving && (
-  <Box
-    sx={{
-      position: 'fixed',
-      inset: 0,
-      backgroundColor: 'rgba(255,255,255,0.6)',
-      zIndex: 2000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
-    <CircularProgress size={40} />
-  </Box>
-)}
 
+        {isSaving && (
+          <Box
+            sx={{
+              position: "fixed",
+              inset: 0,
+              backgroundColor: "rgba(255,255,255,0.65)",
+              zIndex: 2000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress size={40} />
+          </Box>
+        )}
       </Box>
+
       <ServiceableAreaDialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
         indianStates={indianStates}
         categories={categories}
         selectedUser={user}
-        onApply={data => {
-          // Build updated object FIRST
+        onApply={(data) => {
           const updatedUserData = {
             ...userData,
             serviceArea: data.districts || [],
             categories: data.categories || [],
           };
 
-          // Update state
           setUserData(updatedUserData);
-
-          // ✅ Pass updated object directly to save function
           handleSaveUserData(updatedUserData);
-
           setOpenDialog(false);
         }}
         lang={i18n.language}
       />
     </Box>
-  );
+  </Box>
+);
 };
 
 export default MyProfile;

@@ -551,16 +551,16 @@ return (
     py: { xs: 0, md: 1 },
   }}
 >
-  <Box
-    sx={{
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      mb: { xs: 0, md: 2 },
-    }}
-  >
-    <JobBanner isWebView={isWebView} />
-  </Box>
+<Box
+  sx={{
+    width: "100%",
+    display: { xs: "none", md: "flex" }, // hide on mobile, show on md+
+    justifyContent: "center",
+    mb: { xs: 0, md: 2 },
+  }}
+>
+  <JobBanner isWebView={isWebView} />
+</Box>
 
 <Container
   maxWidth="sm"

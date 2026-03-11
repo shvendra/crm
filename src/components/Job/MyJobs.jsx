@@ -50,6 +50,7 @@ const MyJobs = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useTranslation();
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -161,81 +162,147 @@ const MyJobs = () => {
 
   const paginatedJobs = filteredJobs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  return (
-    <>
-      <Box 
-                                      sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: 1.5,
-                                       pt: 2,
-                                       pl: 2,
-                                       pr: 2,
-                                          mx: "auto"
-                                      }}
-                                    >
-                                      <Box
-                                         onClick={() => navigateTo(-1)}
-                                        sx={{
-                                          width: 36,
-                                          height: 36,
-                                          borderRadius: "50%",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          cursor: "pointer",
-                                          transition: "background-color 0.2s ease",
-                                          "&:hover": { backgroundColor: "#f1f1f1" },
-                                        }}
-                                      >
-                                        <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
-                                      </Box>
-                                   <Box>
-                        <Typography fontSize={16} fontWeight={700}>
-                          {t('MyRegisteredWorkers')}
-                        </Typography>
-                      
-                        <Typography fontSize={12} color="text.secondary">
-                          {t('MyRegisteredWorkers')}
-                        </Typography>
-                      </Box>
-                      
-                                    </Box>
-    <Box sx={{ p: 1, mt: '15px' }}>
-     
-      <Paper elevation={3} sx={{ p: 1 }}>
-        <Typography
-          variant="h5"
-          textAlign="center"
-          color="primary"
-          sx={{ fontWeight: 600, background: '#f4f5f8', p: 1 }}
+return (
+  <>
+    {/* Header */}
+    <Box
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        backgroundColor: "rgba(245,247,251,0.92)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid #e8edf5",
+        borderRadius: 3,
+        px: 2,
+        py: 1.2,
+        mb: 3,
+        mx: 1,
+        mt: 1,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+        }}
+      >
+        <Box
+          onClick={() => navigateTo(-1)}
+          sx={{
+            width: 38,
+            height: 38,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            backgroundColor: "#ffffff",
+            border: "1px solid #e5e7eb",
+            transition: "all 0.2s ease",
+            "&:hover": { backgroundColor: "#f8fafc" },
+          }}
         >
-          {t('MyRegisteredWorkers')}
-        </Typography>
+          <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#1f2937" }} />
+        </Box>
+
+        <Box>
+          <Typography fontSize={17} fontWeight={800} color="#1f2a44">
+            {t("MyRegisteredWorkers")}
+          </Typography>
+
+          <Typography fontSize={12} color="#6b7280">
+            {t("MyRegisteredWorkers")}
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+
+    {/* Main */}
+    <Box
+      sx={{
+        px: 1,
+        pb: 3,
+        backgroundColor: "#f5f7fb",
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{
+          p: 1.5,
+          borderRadius: "20px",
+          border: "1px solid #e8edf5",
+          backgroundColor: "#ffffff",
+          boxShadow: "0 10px 30px rgba(15,23,42,0.05)",
+        }}
+      >
+        <Box
+          sx={{
+            textAlign: "center",
+            mb: 2,
+            py: 1.3,
+            borderRadius: 3,
+            background: "linear-gradient(180deg, #f8fbff 0%, #f2f6fc 100%)",
+            border: "1px solid #edf2f7",
+          }}
+        >
+          <Typography
+            variant="h5"
+            color="primary"
+            sx={{
+              fontWeight: 800,
+              fontSize: { xs: "1.15rem", md: "1.45rem" },
+            }}
+          >
+            {t("MyRegisteredWorkers")}
+          </Typography>
+        </Box>
 
         <TextField
-          label={t('SearchByNamePhoneCity')}
+          label={t("SearchByNamePhoneCity")}
           variant="outlined"
           fullWidth
           size="small"
           value={search}
-          onChange={e => setSearch(e.target.value.toLowerCase())}
-          sx={{ mb: 2 }}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
+          sx={{
+            mb: 2,
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
+              backgroundColor: "#fafbff",
+            },
+          }}
         />
 
-        {/* 🔹 Compact Android-style Table */}
-        <TableContainer component={Paper} sx={{ minWidth: 250 }}>
-          <Table size="small" sx={{ backgroundColor: '#f9f9f9' }}>
+        {/* Table */}
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            minWidth: 250,
+            borderRadius: 4,
+            border: "1px solid #e8edf5",
+            overflow: "hidden",
+            backgroundColor: "#fff",
+          }}
+        >
+          <Table size="small">
             <TableHead>
-              <TableRow>
-                {[t('Name'), t('Phone'), t('DOB'), t('Action')].map(h => (
+              <TableRow
+                sx={{
+                  backgroundColor: "#f8fafc",
+                }}
+              >
+                {[t("Name"), t("Phone"), t("DOB"), t("Action")].map((h) => (
                   <TableCell
                     key={h}
                     sx={{
-                      backgroundColor: 'rgb(248, 249, 250)',
-                      fontWeight: 'bold',
-                      whiteSpace: 'nowrap',
-                      fontSize: '0.9rem',
+                      fontWeight: 800,
+                      whiteSpace: "nowrap",
+                      fontSize: "0.88rem",
+                      color: "#334155",
+                      borderBottom: "1px solid #e8edf5",
                     }}
                   >
                     {h}
@@ -246,31 +313,71 @@ const MyJobs = () => {
 
             <TableBody>
               {paginatedJobs.length > 0 ? (
-                paginatedJobs.map(job => (
-                  <TableRow key={job._id} hover>
-                    <TableCell>{job.name}</TableCell>
-                    <TableCell>{job.phone}</TableCell>
-                    <TableCell>{getAge(job.dob)}</TableCell>
+                paginatedJobs.map((job) => (
+                  <TableRow
+                    key={job._id}
+                    hover
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#f8fbff",
+                      },
+                    }}
+                  >
+                    <TableCell sx={{ fontWeight: 600, color: "#1f2a44" }}>
+                      {job.name}
+                    </TableCell>
+                    <TableCell sx={{ color: "#475467" }}>{job.phone}</TableCell>
+                    <TableCell sx={{ color: "#475467" }}>
+                      {getAge(job.dob)}
+                    </TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleEdit(job)} color="primary">
-                        <EditIcon />
+                      <IconButton
+                        onClick={() => handleEdit(job)}
+                        sx={{
+                          border: "1px solid #dbe3ef",
+                          backgroundColor: "#f8fbff",
+                          "&:hover": {
+                            backgroundColor: "#eef4ff",
+                          },
+                        }}
+                      >
+                        <EditIcon color="primary" />
                       </IconButton>
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={4} align="center" sx={{ py: 3 }}>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('NoWorkersAdded')}
+                  <TableCell colSpan={4} align="center" sx={{ py: 4 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#6b7280",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {t("NoWorkersAdded")}
                     </Typography>
+
                     <Button
                       variant="contained"
                       size="small"
-                      sx={{ mt: 1 }}
-                      onClick={() => navigate('/job/post')}
+                      sx={{
+                        mt: 1.5,
+                        borderRadius: 2.5,
+                        px: 2.5,
+                        py: 0.9,
+                        fontWeight: 700,
+                        textTransform: "none",
+                        background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+                        boxShadow: "0 10px 20px rgba(37,99,235,0.16)",
+                        "&:hover": {
+                          background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+                        },
+                      }}
+                      onClick={() => navigate("/job/post")}
                     >
-                      {t('ClickHereToAdd')}
+                      {t("ClickHereToAdd")}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -278,27 +385,44 @@ const MyJobs = () => {
             </TableBody>
           </Table>
 
+          {/* Pagination Footer */}
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mt: 1,
-              mb: 1,
-              px: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 0,
+              px: 1.5,
+              py: 1.2,
+              borderTop: "1px solid #edf2f7",
+              backgroundColor: "#fcfdff",
             }}
           >
             <Button
               size="small"
               variant="outlined"
               disabled={page === 0}
-              onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+              sx={{
+                borderRadius: 2.5,
+                textTransform: "none",
+                fontWeight: 700,
+              }}
             >
-              {t('Previous')}
+              {t("Previous")}
             </Button>
 
-            <Typography variant="body2">
-              {t('Page')} {page + 1} {t('of')} {Math.ceil(filteredJobs.length / rowsPerPage)}
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#475467",
+                fontWeight: 700,
+                textAlign: "center",
+                px: 1,
+              }}
+            >
+              {t("Page")} {page + 1} {t("of")}{" "}
+              {Math.ceil(filteredJobs.length / rowsPerPage)}
             </Typography>
 
             <Button
@@ -306,18 +430,23 @@ const MyJobs = () => {
               variant="outlined"
               disabled={page >= Math.ceil(filteredJobs.length / rowsPerPage) - 1}
               onClick={() =>
-                setPage(prev =>
+                setPage((prev) =>
                   Math.min(prev + 1, Math.ceil(filteredJobs.length / rowsPerPage) - 1)
                 )
               }
+              sx={{
+                borderRadius: 2.5,
+                textTransform: "none",
+                fontWeight: 700,
+              }}
             >
-              {t('Next')}
+              {t("Next")}
             </Button>
           </Box>
         </TableContainer>
       </Paper>
 
-      {/* 🔹 Popup Dialog for Full Details */}
+      {/* Edit Dialog */}
       <Dialog
         open={!!editingJob}
         onClose={handleCloseDialog}
@@ -325,213 +454,302 @@ const MyJobs = () => {
         maxWidth="sm"
         PaperProps={{
           sx: {
-            borderRadius: 3,
-            p: 1,
-            background: '#fafafa',
-            boxShadow: 6,
+            borderRadius: 4,
+            p: 0.5,
+            background: "#ffffff",
+            boxShadow: "0 14px 40px rgba(15,23,42,0.10)",
+            border: "1px solid #e8edf5",
           },
         }}
       >
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 600 }}>
-          {t('Worker Details')}
+        <DialogTitle
+          sx={{
+            textAlign: "center",
+            fontWeight: 800,
+            color: "#1f2a44",
+            borderBottom: "1px solid #edf2f7",
+            backgroundColor: "#f8fbff",
+          }}
+        >
+          {t("Worker Details")}
         </DialogTitle>
-        <DialogContent dividers sx={{p: 0}}>
+
+        <DialogContent dividers sx={{ p: 2 }}>
           {editingJob && (
             <>
               <TextField
-                label={t('Name')}
+                label={t("Name")}
                 fullWidth
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
                 size="small"
-                value={editingJob.name || ''}
-                onChange={e => handleChange('name', e.target.value)}
+                value={editingJob.name || ""}
+                onChange={(e) => handleChange("name", e.target.value)}
               />
+
               <TextField
-                label={t('Phone')}
+                label={t("Phone")}
                 fullWidth
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
                 size="small"
-                value={editingJob.phone || ''}
-                onChange={e => handleChange('phone', e.target.value)}
+                value={editingJob.phone || ""}
+                onChange={(e) => handleChange("phone", e.target.value)}
               />
+
               <TextField
-                label={t('Address')}
+                label={t("Address")}
                 fullWidth
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
                 size="small"
-                value={editingJob.address || ''}
-                onChange={e => handleChange('address', e.target.value)}
+                value={editingJob.address || ""}
+                onChange={(e) => handleChange("address", e.target.value)}
               />
+
               <TextField
-                label={t('District')}
+                label={t("District")}
                 fullWidth
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
                 size="small"
-                value={editingJob.district || ''}
-                onChange={e => handleChange('district', e.target.value)}
-                disabled={editingJob.status === 'Verified'}
+                value={editingJob.district || ""}
+                onChange={(e) => handleChange("district", e.target.value)}
+                disabled={editingJob.status === "Verified"}
               />
+
               <TextField
-                label={t('DOB')}
+                label={t("DOB")}
                 fullWidth
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
                 size="small"
                 value={formatDOB(editingJob.dob)}
-                // InputProps={{ readOnly: true }}
-                  disabled={editingJob.status === 'Verified'}
-
+                disabled={editingJob.status === "Verified"}
               />
-       {/* 🔹 Bank Information Section */}
-{editingJob.status === 'Verified' && (
-  <Alert severity="info" sx={{ mt: 2 }}>
-    Bank details cannot be edited once the profile is verified.
-  </Alert>
-)}
 
-<TextField
-  label={t('Bank Name')}
-  fullWidth
-  sx={{ mt: 1 }}
-  size="small"
-  value={editingJob.bankDetails?.bankName || ''}
-  onChange={e =>
-    handleChange('bankDetails', {
-      ...editingJob.bankDetails,
-      bankName: e.target.value,
-    })
-  }
-  disabled={editingJob.status === 'Verified'}
-/>
+              {editingJob.status === "Verified" && (
+                <Alert severity="info" sx={{ mt: 2, borderRadius: 3 }}>
+                  Bank details cannot be edited once the profile is verified.
+                </Alert>
+              )}
 
-<TextField
-  label={t('Account Number')}
-  fullWidth
-  sx={{ mt: 1 }}
-  size="small"
-  value={editingJob.bankDetails?.accountNumber || ''}
-  onChange={e =>
-    handleChange('bankDetails', {
-      ...editingJob.bankDetails,
-      accountNumber: e.target.value,
-    })
-  }
-  disabled={editingJob.status === 'Verified'}
-/>
-{/* 🔹 Gender */}
-<FormControl
-  sx={{ mt: 1 }}
-  disabled={editingJob.status === 'Verified'}
->
-  <RadioGroup
-    row
-    value={editingJob.gender || ''}
-    onChange={(e) => handleChange('gender', e.target.value)}
-  >
-    <FormControlLabel value="Male" control={<Radio size="small" />} label={t('Male')} />
-    <FormControlLabel value="Female" control={<Radio size="small" />} label={t('Female')} />
-    <FormControlLabel value="Other" control={<Radio size="small" />} label={t('Other')} />
-  </RadioGroup>
-</FormControl>
+              <TextField
+                label={t("Bank Name")}
+                fullWidth
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+                size="small"
+                value={editingJob.bankDetails?.bankName || ""}
+                onChange={(e) =>
+                  handleChange("bankDetails", {
+                    ...editingJob.bankDetails,
+                    bankName: e.target.value,
+                  })
+                }
+                disabled={editingJob.status === "Verified"}
+              />
 
-{/* 🔹 Work Experience */}
-<TextField
-  select
-  label={t('Work Experience (Years)')}
-  fullWidth
-  sx={{ mt: 1 }}
-  size="small"
-  value={editingJob.workExperience ?? 0}
-  onChange={(e) => handleChange('workExperience', e.target.value)}
-  disabled={editingJob.status === 'Verified'}
->
-  {Array.from({ length: 36 }, (_, i) => (
-    <MenuItem key={i} value={i}>
-      {i} {i === 1 ? 'Year' : 'Years'}
-    </MenuItem>
-  ))}
-</TextField>
+              <TextField
+                label={t("Account Number")}
+                fullWidth
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+                size="small"
+                value={editingJob.bankDetails?.accountNumber || ""}
+                onChange={(e) =>
+                  handleChange("bankDetails", {
+                    ...editingJob.bankDetails,
+                    accountNumber: e.target.value,
+                  })
+                }
+                disabled={editingJob.status === "Verified"}
+              />
 
-{/* 🔹 Wages Type */}
-<TextField
-  select
-  label={t('Wages Type')}
-  fullWidth
-  sx={{ mt: 1 }}
-  size="small"
-  value={editingJob.salaryType || ''}
-  onChange={(e) => handleChange('salaryType', e.target.value)}
-  disabled={editingJob.status === 'Verified'}
->
-  <MenuItem value="Fixed">{t('Fixed')}</MenuItem>
-  <MenuItem value="Ranged">{t('Ranged')}</MenuItem>
-</TextField>
+              <FormControl sx={{ mt: 1 }} disabled={editingJob.status === "Verified"}>
+                <RadioGroup
+                  row
+                  value={editingJob.gender || ""}
+                  onChange={(e) => handleChange("gender", e.target.value)}
+                >
+                  <FormControlLabel
+                    value="Male"
+                    control={<Radio size="small" />}
+                    label={t("Male")}
+                  />
+                  <FormControlLabel
+                    value="Female"
+                    control={<Radio size="small" />}
+                    label={t("Female")}
+                  />
+                  <FormControlLabel
+                    value="Other"
+                    control={<Radio size="small" />}
+                    label={t("Other")}
+                  />
+                </RadioGroup>
+              </FormControl>
 
-{/* 🔹 Fixed Wage */}
-{editingJob.salaryType === 'Fixed' && (
-  <TextField
-    label={t('Fixed Wage Amount')}
-    fullWidth
-    sx={{ mt: 1 }}
-    size="small"
-    type="number"
-    value={editingJob.fixedSalary || ''}
-    onChange={(e) => handleChange('fixedSalary', e.target.value)}
-    disabled={editingJob.status === 'Verified'}
-  />
-)}
+              <TextField
+                select
+                label={t("Work Experience (Years)")}
+                fullWidth
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+                size="small"
+                value={editingJob.workExperience ?? 0}
+                onChange={(e) => handleChange("workExperience", e.target.value)}
+                disabled={editingJob.status === "Verified"}
+              >
+                {Array.from({ length: 36 }, (_, i) => (
+                  <MenuItem key={i} value={i}>
+                    {i} {i === 1 ? "Year" : "Years"}
+                  </MenuItem>
+                ))}
+              </TextField>
 
-{/* 🔹 Ranged Wage */}
-{editingJob.salaryType === 'Ranged' && (
-  <Grid container spacing={1} sx={{ mt: 0.5 }}>
-    <Grid item xs={6}>
-      <TextField
-        label={t('Min Wage')}
-        fullWidth
-        size="small"
-        type="number"
-        value={editingJob.salaryFrom || ''}
-        onChange={(e) =>
-          handleChange('salaryFrom', e.target.value)
-        }
-        disabled={editingJob.status === 'Verified'}
-      />
-    </Grid>
-    <Grid item xs={6}>
-      <TextField
-        label={t('Max Wage')}
-        fullWidth
-        size="small"
-        type="number"
-        value={editingJob.salaryTo || ''}
-        onChange={(e) =>
-          handleChange('salaryTo', e.target.value)
-        }
-        disabled={editingJob.status === 'Verified'}
-      />
-    </Grid>
-  </Grid>
-)}
+              <TextField
+                select
+                label={t("Wages Type")}
+                fullWidth
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+                size="small"
+                value={editingJob.salaryType || ""}
+                onChange={(e) => handleChange("salaryType", e.target.value)}
+                disabled={editingJob.status === "Verified"}
+              >
+                <MenuItem value="Fixed">{t("Fixed")}</MenuItem>
+                <MenuItem value="Ranged">{t("Ranged")}</MenuItem>
+              </TextField>
 
-<TextField
-  label={t('IFSC Code')}
-  fullWidth
-  sx={{ mt: 1 }}
-  size="small"
-  value={editingJob.bankDetails?.ifscCode || ''}
-  onChange={e =>
-    handleChange('bankDetails', {
-      ...editingJob.bankDetails,
-      ifscCode: e.target.value,
-    })
-  }
-  disabled={editingJob.status === 'Verified'}
-/>
+              {editingJob.salaryType === "Fixed" && (
+                <TextField
+                  label={t("Fixed Wage Amount")}
+                  fullWidth
+                  sx={{
+                    mt: 1,
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 3,
+                      backgroundColor: "#fafbff",
+                    },
+                  }}
+                  size="small"
+                  type="number"
+                  value={editingJob.fixedSalary || ""}
+                  onChange={(e) => handleChange("fixedSalary", e.target.value)}
+                  disabled={editingJob.status === "Verified"}
+                />
+              )}
 
+              {editingJob.salaryType === "Ranged" && (
+                <Grid container spacing={1} sx={{ mt: 0.5 }}>
+                  <Grid item xs={6}>
+                    <TextField
+                      label={t("Min Wage")}
+                      fullWidth
+                      size="small"
+                      type="number"
+                      value={editingJob.salaryFrom || ""}
+                      onChange={(e) => handleChange("salaryFrom", e.target.value)}
+                      disabled={editingJob.status === "Verified"}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: 3,
+                          backgroundColor: "#fafbff",
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label={t("Max Wage")}
+                      fullWidth
+                      size="small"
+                      type="number"
+                      value={editingJob.salaryTo || ""}
+                      onChange={(e) => handleChange("salaryTo", e.target.value)}
+                      disabled={editingJob.status === "Verified"}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: 3,
+                          backgroundColor: "#fafbff",
+                        },
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              )}
 
+              <TextField
+                label={t("IFSC Code")}
+                fullWidth
+                sx={{
+                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                    backgroundColor: "#fafbff",
+                  },
+                }}
+                size="small"
+                value={editingJob.bankDetails?.ifscCode || ""}
+                onChange={(e) =>
+                  handleChange("bankDetails", {
+                    ...editingJob.bankDetails,
+                    ifscCode: e.target.value,
+                  })
+                }
+                disabled={editingJob.status === "Verified"}
+              />
 
               <Alert
-                severity={editingJob.status === 'Verified' ? 'success' : 'error'}
-                sx={{ mt: 2 }}
+                severity={editingJob.status === "Verified" ? "success" : "error"}
+                sx={{ mt: 2, borderRadius: 3 }}
               >
                 {editingJob.status}
               </Alert>
@@ -539,18 +757,51 @@ const MyJobs = () => {
           )}
         </DialogContent>
 
-        <DialogActions sx={{ justifyContent: 'space-between', px: 3 }}>
-          <Button onClick={handleCloseDialog} color="error" variant="outlined">
-            {t('Cancel')}
+        <DialogActions
+          sx={{
+            justifyContent: "space-between",
+            px: 3,
+            py: 2,
+            borderTop: "1px solid #edf2f7",
+          }}
+        >
+          <Button
+            onClick={handleCloseDialog}
+            color="error"
+            variant="outlined"
+            sx={{
+              borderRadius: 2.5,
+              textTransform: "none",
+              fontWeight: 700,
+              px: 2.5,
+            }}
+          >
+            {t("Cancel")}
           </Button>
-          <Button onClick={handleSave} color="primary" variant="contained">
-            {t('Save')}
+
+          <Button
+            onClick={handleSave}
+            color="primary"
+            variant="contained"
+            sx={{
+              borderRadius: 2.5,
+              textTransform: "none",
+              fontWeight: 700,
+              px: 2.5,
+              background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+              boxShadow: "0 10px 20px rgba(37,99,235,0.16)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+              },
+            }}
+          >
+            {t("Save")}
           </Button>
         </DialogActions>
       </Dialog>
     </Box>
-    </>
-  );
+  </>
+);
 };
 
 export default MyJobs;

@@ -279,582 +279,724 @@ const handleWithdraw = async (e) => {
   }
 };
 
-  return (
-    <Box
+return (
+  <Box
+    sx={{
+      minHeight: "100vh",
+      backgroundColor: "#f5f7fb",
+      pb: 8,
+    }}
+  >
+    <Container
       sx={{
-           margin: 'auto',
-        mb: 10,
-        zIndex: 1,
-        position: 'relative',
+        maxWidth: "1200px !important",
+        pt: 2,
       }}
     >
-      
-      {/* Main Content */}
-      <Container
-        // maxWidth="lg"
+      {/* Header */}
+      <Box
         sx={{
-          flex: 1,
-          // py: 3,
-          mb: 5,
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          backgroundColor: "rgba(245,247,251,0.92)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid #e8edf5",
+          borderRadius: 3,
+          px: 2,
+          py: 1.2,
+          mb: 3,
         }}
       >
-           <Box 
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                              pt: 2,
-                              pb: 2,
-                                mx: "auto"
-                            }}
-                          >
-                            <Box
-                               onClick={() => navigateTo(-1)}
-                              sx={{
-                                width: 36,
-                                height: 36,
-                                borderRadius: "50%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                                transition: "background-color 0.2s ease",
-                                "&:hover": { backgroundColor: "#f1f1f1" },
-                              }}
-                            >
-                              <ArrowBackIosNewIcon sx={{ fontSize: 18 }} />
-                            </Box>
-                         <Box>
-              <Typography fontSize={16} fontWeight={700}>
-                {t('PayoutSummary')}
-              </Typography>
-            
-              <Typography fontSize={12} color="text.secondary">
-                {t('PayoutSummary')}/{t('Transactions')}
-              </Typography>
-            </Box>
-            
-                          </Box>
-        {(user?.role === 'Agent' || user?.role === 'SelfWorker') && (
-          <Card
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+          }}
+        >
+          <Box
+            onClick={() => navigateTo(-1)}
             sx={{
-              mb: 3,
-              borderRadius: 4,
-              boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-              border: '1px solid #f0f0f0',
-              transition: 'all 0.2s ease',
-              '&:hover': {
-                boxShadow: '0 6px 24px rgba(0,0,0,0.12)',
-              },
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              backgroundColor: "#ffffff",
+              border: "1px solid #e5e7eb",
+              transition: "all 0.2s ease",
+              "&:hover": { backgroundColor: "#f8fafc" },
             }}
           >
-            <Box
-              sx={{
-                background: '#f4f5f8',
-                px: 3,
-                py: 2,
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
-              }}
-            >
-              <Typography
-                variant="h5"
-                align="center"
-                color="primary"
-                sx={{
-                  fontWeight: 700,
-                  textShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                }}
-              >
-                💰 {t('PayoutSummary')}
-              </Typography>
-            </Box>
-            <CardContent sx={{ p: 1 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#e8f5e9',
-                      borderRadius: 3,
-                      border: '1px solid #c8e6c9',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#2e7d32" fontWeight={500} mb={1}>
-                      💰 {t('AvailableAmount')}
-                    </Typography>
-                    <Typography variant="h5" sx={{ color: '#1b5e20', fontWeight: 700 }}>
-                      ₹{payoutInfo.availableAmount?.toFixed(2)}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#f3e5f5',
-                      borderRadius: 3,
-                      border: '1px solid #e1bee7',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#7b1fa2" fontWeight={500} mb={1}>
-                      📤 {t('TotalWithdrawn')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#4a148c', fontWeight: 600 }}>
-                      ₹{payoutInfo.totalWithdrawn?.toFixed(2)}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#fff3e0',
-                      borderRadius: 3,
-                      border: '1px solid #ffcc02',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#f57c00" fontWeight={500} mb={1}>
-                      🎁 {t('TotalIncentive')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#e65100', fontWeight: 600 }}>
-                      ₹{payoutInfo.totalIncentive?.toFixed(2)}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#fce4ec',
-                      borderRadius: 3,
-                      border: '1px solid #f8bbd9',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#c2185b" fontWeight={500} mb={1}>
-                      🎯 {t('TotalIncentiveWithdrawal')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#ad1457', fontWeight: 600 }}>
-                      ₹{payoutInfo.incentiveDebitAmount?.toFixed(2)}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#e3f2fd',
-                      borderRadius: 3,
-                      border: '1px solid #bbdefb',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#1976d2" fontWeight={500} mb={1}>
-                      🏦 {t('BankAccount')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#1565c0', fontWeight: 600 }}>
-                      {maskedAccount(payoutInfo.bankDetails.accountNumber)}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Box
-                    sx={{
-                      p: 1,
-                      bgcolor: '#f1f8e9',
-                      borderRadius: 3,
-                      border: '1px solid #dcedc1',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="body2" color="#388e3c" fontWeight={500} mb={1}>
-                      🔢 {t('IFSCCode')}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#2e7d32', fontWeight: 600 }}>
-                      {payoutInfo.bankDetails.ifscCode}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+            <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#1f2937" }} />
+          </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  sx={{
-                    py: 1.5, // slightly less vertical padding
-                    px: 3, // slightly less horizontal padding
-                    borderRadius: 4,
-                    fontSize: '1rem', // reduced font size for better proportion
-                    fontWeight: 'bold',
-                    bgcolor: '#1976d2',
-                    textTransform: 'none',
-                    minWidth: 160, // slightly smaller width
-                    boxShadow: '0 3px 12px rgba(25, 118, 210, 0.3)',
-                    '&:hover': {
-                      bgcolor: '#1565c0',
-                      boxShadow: '0 5px 18px rgba(25, 118, 210, 0.4)',
-                    },
-                    '&:disabled': {
-                      bgcolor: '#e0e0e0',
-                      color: '#999',
-                    },
-                  }}
-                  onClick={() => {
-                    const { accountNumber, ifscCode } = payoutInfo.bankDetails;
-                    if (!accountNumber || !ifscCode) {
-                      toast.error(t('AddBankDetailsWarning'));
-                      return;
-                    }
-                    if (payoutInfo.availableAmount <= 0) {
-                      toast.error(t('InsufficientBalanceWarning'));
-                      return;
-                    }
-                    setOpenWithdrawDialog(true);
-                  }}
-                >
-                  🏧 {t('Withdraw')}
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
-        )}
+          <Box>
+            <Typography fontSize={17} fontWeight={800} color="#1f2a44">
+              {t("PayoutSummary")}
+            </Typography>
+            <Typography fontSize={12} color="#6b7280">
+              {t("PayoutSummary")} / {t("Transactions")}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
 
-        {/* Transactions Card */}
+      {/* Summary Cards */}
+      {(user?.role === "Agent" || user?.role === "SelfWorker") && (
         <Card
           sx={{
             mb: 3,
-            borderRadius: 4,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            border: '1px solid #f0f0f0',
-            transition: 'all 0.2s ease',
-            '&:hover': {
-              boxShadow: '0 6px 24px rgba(0,0,0,0.12)',
-            },
+            borderRadius: "20px",
+            border: "1px solid #e8edf5",
+            boxShadow: "0 10px 30px rgba(15,23,42,0.05)",
+            overflow: "hidden",
           }}
         >
           <Box
             sx={{
-              background: '#f4f5f8',
-              px: 3,
+              px: 2.5,
               py: 2,
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
+              borderBottom: "1px solid #edf2f7",
+              background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
             }}
           >
             <Typography
-              variant="h5"
-              align="center"
-              color="primary"
               sx={{
-                fontWeight: 700,
-                textShadow: '0 1px 2px rgba(229, 218, 218, 0.1)',
+                fontSize: { xs: "1.1rem", md: "1.35rem" },
+                fontWeight: 800,
+                color: "#1f2a44",
+                textAlign: "center",
               }}
             >
-              {t('Transactions')}
+              💰 {t("PayoutSummary")}
             </Typography>
           </Box>
-          <CardContent sx={{ p: 0 }}>
-            <Box sx={{ overflowX: 'auto' }}>
-              <Table size="small" sx={{ minWidth: 140 }}>
-                <TableHead>
-                  <TableRow
+
+          <CardContent sx={{ p: { xs: 1.5, md: 2.5 } }}>
+            <Grid container spacing={2}>
+              <Grid item xs={6} md={3}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#eefaf1",
+                    border: "1px solid #ccebd3",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
                     sx={{
-                      bgcolor: '#f8f9fa',
-                      '& .MuiTableCell-head': {
-                        fontWeight: 600,
-                        color: '#333',
-                        borderBottom: '2px solid #e0e0e0',
-                      },
+                      fontSize: "0.8rem",
+                      color: "#2e7d32",
+                      fontWeight: 700,
+                      mb: 0.8,
                     }}
                   >
-                    <TableCell>{t('SN')}</TableCell>
-                    {/* <TableCell>{t('TransactionID')}</TableCell> */}
-                    <TableCell>{t('Date')}</TableCell>
-                    {/* <TableCell>{t("Type")}</TableCell> */}
-                    <TableCell>{t('Status')}</TableCell>
-                    <TableCell align="right">{t('Amount')}</TableCell>
-                    {user?.role === 'Agent' ||
-                      (user?.role === 'SelfWorker' && (
-                        <TableCell align="right">{t('Incentive')}</TableCell>
-                      ))}
-                  </TableRow>
-                </TableHead>
-                <TransactionsTable transactions={transactions} user={user} handleRowClick={handleRowClick}/>
-              </Table>
+                    💰 {t("AvailableAmount")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.4rem" },
+                      color: "#1b5e20",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ₹{payoutInfo.availableAmount?.toFixed(2)}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6} md={3}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#f7effb",
+                    border: "1px solid #ead7f7",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "#7b1fa2",
+                      fontWeight: 700,
+                      mb: 0.8,
+                    }}
+                  >
+                    📤 {t("TotalWithdrawn")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.25rem" },
+                      color: "#4a148c",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ₹{payoutInfo.totalWithdrawn?.toFixed(2)}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6} md={3}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#fff7eb",
+                    border: "1px solid #ffe0ad",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "#e65100",
+                      fontWeight: 700,
+                      mb: 0.8,
+                    }}
+                  >
+                    🎁 {t("TotalIncentive")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.25rem" },
+                      color: "#ef6c00",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ₹{payoutInfo.totalIncentive?.toFixed(2)}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6} md={3}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#fff0f5",
+                    border: "1px solid #f8c9dc",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "#c2185b",
+                      fontWeight: 700,
+                      mb: 0.8,
+                    }}
+                  >
+                    🎯 {t("TotalIncentiveWithdrawal")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.25rem" },
+                      color: "#ad1457",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ₹{payoutInfo.incentiveDebitAmount?.toFixed(2)}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6} md={6}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#eff6ff",
+                    border: "1px solid #cfe3ff",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "#1565c0",
+                      fontWeight: 700,
+                      mb: 0.8,
+                    }}
+                  >
+                    🏦 {t("BankAccount")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.2rem" },
+                      color: "#0d47a1",
+                      fontWeight: 800,
+                    }}
+                  >
+                    {maskedAccount(payoutInfo.bankDetails.accountNumber)}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6} md={6}>
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 4,
+                    backgroundColor: "#f4fbef",
+                    border: "1px solid #dcedc8",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "0.8rem",
+                      color: "#2e7d32",
+                      fontWeight: 700,
+                      mb: 0.8,
+                    }}
+                  >
+                    🔢 {t("IFSCCode")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.2rem" },
+                      color: "#33691e",
+                      fontWeight: 800,
+                    }}
+                  >
+                    {payoutInfo.bankDetails.ifscCode}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  minWidth: 180,
+                  py: 1.4,
+                  px: 3,
+                  borderRadius: 3,
+                  fontSize: "0.98rem",
+                  fontWeight: 800,
+                  textTransform: "none",
+                  background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+                  boxShadow: "0 10px 22px rgba(37,99,235,0.22)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+                    boxShadow: "0 12px 24px rgba(37,99,235,0.28)",
+                  },
+                  "&:disabled": {
+                    background: "#d1d5db",
+                    color: "#7b8794",
+                  },
+                }}
+                onClick={() => {
+                  const { accountNumber, ifscCode } = payoutInfo.bankDetails;
+                  if (!accountNumber || !ifscCode) {
+                    toast.error(t("AddBankDetailsWarning"));
+                    return;
+                  }
+                  if (payoutInfo.availableAmount <= 0) {
+                    toast.error(t("InsufficientBalanceWarning"));
+                    return;
+                  }
+                  setOpenWithdrawDialog(true);
+                }}
+              >
+                🏧 {t("Withdraw")}
+              </Button>
             </Box>
           </CardContent>
         </Card>
-      </Container>
+      )}
 
-      {/* Withdraw Dialog */}
-      <Dialog
-        disablePortal
-        open={openWithdrawDialog}
-        onClose={() => setOpenWithdrawDialog(false)}
-        fullScreen={fullScreen}
-        fullWidth
-        maxWidth="xs"
+      {/* Transactions */}
+      <Card
+        sx={{
+          borderRadius: "20px",
+          border: "1px solid #e8edf5",
+          boxShadow: "0 10px 30px rgba(15,23,42,0.05)",
+          overflow: "hidden",
+        }}
       >
-        <DialogTitle sx={{ textAlign: 'center', fontSize: '1.2rem' }}>
-          {t('ConfirmWithdrawal')}
-        </DialogTitle>
-
-        <DialogContent sx={{ px: 3, py: 2 }}>
-          <Typography variant="subtitle1" fontWeight={600} mb={1}>
-            {t('WithdrawConfirmationMessage')}
+        <Box
+          sx={{
+            px: 2.5,
+            py: 2,
+            borderBottom: "1px solid #edf2f7",
+            background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: { xs: "1.05rem", md: "1.3rem" },
+              fontWeight: 800,
+              color: "#1f2a44",
+              textAlign: "center",
+            }}
+          >
+            {t("Transactions")}
           </Typography>
+        </Box>
 
-          <Box mb={1}>
-            <Typography variant="body2">
-              <strong>{t('AccountNumberLabel')}:</strong>{' '}
-              {maskedAccount(payoutInfo.bankDetails.accountNumber)}
-            </Typography>
-            <Typography variant="body2">
-              <strong>{t('IFSCLabel')}:</strong> {payoutInfo.bankDetails.ifscCode}
-            </Typography>
-            <Typography variant="body2">
-              <strong>{t('AccountHolder')}:</strong> {payoutInfo.bankDetails.accountHolder}
-            </Typography>
+        <CardContent sx={{ p: 0 }}>
+          <Box sx={{ overflowX: "auto", backgroundColor: "#fff" }}>
+            <Table size="small" sx={{ minWidth: 460 }}>
+              <TableHead>
+                <TableRow
+                  sx={{
+                    backgroundColor: "#f8fafc",
+                    "& .MuiTableCell-head": {
+                      fontWeight: 800,
+                      color: "#334155",
+                      borderBottom: "1px solid #e8edf5",
+                      fontSize: "0.84rem",
+                    },
+                  }}
+                >
+                  <TableCell>{t("SN")}</TableCell>
+                  <TableCell>{t("Date")}</TableCell>
+                  <TableCell>{t("Status")}</TableCell>
+                  <TableCell align="right">{t("Amount")}</TableCell>
+                  {user?.role === "Agent" ||
+                    (user?.role === "SelfWorker" && (
+                      <TableCell align="right">{t("Incentive")}</TableCell>
+                    ))}
+                </TableRow>
+              </TableHead>
+
+              <TransactionsTable
+                transactions={transactions}
+                user={user}
+                handleRowClick={handleRowClick}
+              />
+            </Table>
           </Box>
+        </CardContent>
+      </Card>
+    </Container>
 
-          <Divider sx={{ my: 1 }} />
-
-          <Typography variant="body2">
-            <strong>{t('AvailableAmount')}:</strong> ₹{payoutInfo.availableAmount?.toFixed(2)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <strong>{t('incentive')}:</strong> ₹
-            {payoutInfo.totalIncentive > 500 ? payoutInfo.totalIncentive?.toFixed(2) - 500 : 0}
-          </Typography>
-
-          <Typography variant="body2" mt={2} fontStyle="italic" color="text.secondary">
-            💡 {t('PostWithdrawalNote') || 'Amount will be credited to your bank within 24 hours.'}
-          </Typography>
-        </DialogContent>
-
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button
-            fullWidth
-            variant="outlined"
-            onClick={() => setOpenWithdrawDialog(false)}
-            sx={{
-              mr: 1,
-              py: 1.5,
-              borderRadius: 3,
-              fontWeight: 600,
-              textTransform: 'none',
-            }}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={handleWithdraw}
-            type="button"
-            sx={{
-              ml: 1,
-              py: 1.5,
-              borderRadius: 3,
-              fontWeight: 600,
-              bgcolor: '#1976d2',
-              textTransform: 'none',
-              boxShadow: '0 2px 8px rgba(25, 118, 210, 0.3)',
-              '&:hover': {
-                bgcolor: '#1565c0',
-                boxShadow: '0 4px 12px rgba(25, 118, 210, 0.4)',
-              },
-            }}
-          >
-            {t('Transfer')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        maxWidth="sm"
-        fullWidth
-        fullScreen={fullScreen}
+    {/* Withdraw Dialog */}
+    <Dialog
+      disablePortal
+      open={openWithdrawDialog}
+      onClose={() => setOpenWithdrawDialog(false)}
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="xs"
+      PaperProps={{
+        sx: {
+          borderRadius: fullScreen ? 0 : 4,
+          overflow: "hidden",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          textAlign: "center",
+          fontSize: "1.15rem",
+          fontWeight: 800,
+          borderBottom: "1px solid #edf2f7",
+          backgroundColor: "#f8fbff",
+        }}
       >
-        <DialogTitle
+        {t("ConfirmWithdrawal")}
+      </DialogTitle>
+
+      <DialogContent sx={{ px: 3, py: 2.5 }}>
+        <Typography variant="subtitle1" fontWeight={700} mb={1.2} color="#1f2a44">
+          {t("WithdrawConfirmationMessage")}
+        </Typography>
+
+        <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            px: 1,
-            py: 1,
-            fontWeight: 700,
+            p: 1.6,
+            borderRadius: 3,
+            backgroundColor: "#f8fafc",
+            border: "1px solid #e8edf5",
+            mb: 1.5,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            Invoice
+          <Typography variant="body2" sx={{ mb: 0.5 }}>
+            <strong>{t("AccountNumberLabel")}:</strong>{" "}
+            {maskedAccount(payoutInfo.bankDetails.accountNumber)}
           </Typography>
-          <IconButton onClick={handleScreenshot} size="small">
-            <PrintIcon fontSize="small" />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent
-          dividers
+          <Typography variant="body2" sx={{ mb: 0.5 }}>
+            <strong>{t("IFSCLabel")}:</strong> {payoutInfo.bankDetails.ifscCode}
+          </Typography>
+          <Typography variant="body2">
+            <strong>{t("AccountHolder")}:</strong>{" "}
+            {payoutInfo.bankDetails.accountHolder}
+          </Typography>
+        </Box>
+
+        <Divider sx={{ my: 1.5 }} />
+
+        <Typography variant="body2" sx={{ mb: 0.8 }}>
+          <strong>{t("AvailableAmount")}:</strong> ₹
+          {payoutInfo.availableAmount?.toFixed(2)}
+        </Typography>
+
+        <Typography variant="body2" color="text.secondary">
+          <strong>{t("incentive")}:</strong> ₹
+          {payoutInfo.totalIncentive > 500
+            ? payoutInfo.totalIncentive?.toFixed(2) - 500
+            : 0}
+        </Typography>
+
+        <Typography
+          variant="body2"
+          mt={2}
+          fontStyle="italic"
+          color="text.secondary"
+        >
+          💡 {t("PostWithdrawalNote") || "Amount will be credited to your bank within 24 hours."}
+        </Typography>
+      </DialogContent>
+
+      <DialogActions sx={{ px: 3, pb: 2.2, pt: 0 }}>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={() => setOpenWithdrawDialog(false)}
           sx={{
-            p: 1, // Remove default padding and apply minimal
+            mr: 1,
+            py: 1.3,
+            borderRadius: 3,
+            fontWeight: 700,
+            textTransform: "none",
           }}
         >
-          {' '}
-          <div id="invoice-section" style={{ margin: '5px' }}>
-            {selectedTxn && (
-              <Box
-                style={{
-                  border: '1px solid #ccc',
-                  borderRadius: '8px',
-                  padding: '16px',
-                  margin: '16px auto',
-                  backgroundColor: '#ffffff',
-                  maxWidth: '800px',
-                  boxShadow: '0 0 6px rgba(0,0,0,0.1)',
-                  fontFamily: 'monospace',
-                }}
-              >
-                {/* Header Section */}
-                <Box sx={{ textAlign: 'center', mb: 2 }}>
-                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-                    BookMyWorker
-                  </Typography>
-                  <Typography variant="body2">Khasara No 34/1/33, Rewa Semariya Road,</Typography>
+          {t("Cancel")}
+        </Button>
+
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleWithdraw}
+          type="button"
+          sx={{
+            ml: 1,
+            py: 1.3,
+            borderRadius: 3,
+            fontWeight: 700,
+            textTransform: "none",
+            background: "linear-gradient(90deg, #2563eb, #1d4ed8)",
+            boxShadow: "0 10px 20px rgba(37,99,235,0.20)",
+            "&:hover": {
+              background: "linear-gradient(90deg, #1d4ed8, #1e40af)",
+            },
+          }}
+        >
+          {t("Transfer")}
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+    {/* Invoice Dialog */}
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      maxWidth="sm"
+      fullWidth
+      fullScreen={fullScreen}
+      PaperProps={{
+        sx: {
+          borderRadius: fullScreen ? 0 : 4,
+          overflow: "hidden",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          px: 2,
+          py: 1.4,
+          fontWeight: 800,
+          borderBottom: "1px solid #edf2f7",
+          backgroundColor: "#f8fbff",
+        }}
+      >
+        <Typography variant="h6" sx={{ fontWeight: 800 }}>
+          Invoice
+        </Typography>
+        <IconButton onClick={handleScreenshot} size="small">
+          <PrintIcon fontSize="small" />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent
+        dividers
+        sx={{
+          p: 1,
+          backgroundColor: "#f8fafc",
+        }}
+      >
+        <div id="invoice-section" style={{ margin: "6px" }}>
+          {selectedTxn && (
+            <Box
+              style={{
+                border: "1px solid #dbe3ef",
+                borderRadius: "12px",
+                padding: "16px",
+                margin: "16px auto",
+                backgroundColor: "#ffffff",
+                maxWidth: "800px",
+                boxShadow: "0 0 8px rgba(15,23,42,0.06)",
+                fontFamily: "monospace",
+              }}
+            >
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1976d2" }}>
+                  BookMyWorker
+                </Typography>
+                <Typography variant="body2">
+                  Khasara No 34/1/33, Rewa Semariya Road,
+                </Typography>
+                <Typography variant="body2">
+                  Karahiya, District: Rewa, Madhya Pradesh - 486450
+                </Typography>
+                <Typography variant="body2">
+                  Email: support@bookmyworkers.com
+                </Typography>
+                <Typography variant="body2">
+                  GSTIN: 23NBJPS3070R1ZQ
+                </Typography>
+
+                <Box
+                  sx={{
+                    borderBottom: "1px dashed #999",
+                    mt: 1,
+                    mb: 2,
+                    width: "100%",
+                  }}
+                />
+              </Box>
+
+              <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={6}>
                   <Typography variant="body2">
-                    Karahiya, District: Rewa, Madhya Pradesh - 486450
+                    <strong>Name:</strong> {user?.name || "N/A"}
                   </Typography>
-                  <Typography variant="body2">Email: support@bookmyworkers.com</Typography>
-                  <Typography variant="body2">GSTIN: 23NBJPS3070R1ZQ</Typography>
-
-                  {/* 👇 Divider after address */}
-                  <Box
-                    sx={{
-                      borderBottom: '1px dashed #999',
-                      mt: 1,
-                      mb: 2,
-                      width: '100%',
-                    }}
-                  />
-                </Box>
-
-                {/* Bill Metadata */}
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                  <Grid item xs={6}>
-                    <Typography variant="body2">
-                      <strong>Name:</strong> {user?.name || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2">
-                      <strong>Firm:</strong> {user?.kyc?.firmName || 'N/A'}
-                    </Typography>
-
-                    <Typography variant="body2">
-                      <strong>Phone:</strong> {user?.phone || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2">
-                      <strong>Email:</strong> {user?.email || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2">
-                      <strong>Address:</strong>{' '}
-                      {user?.block + ' ' + user?.district + ' ' + user?.state || 'N/A'}
-                    </Typography>
-
-                    <Typography variant="body2">
-                      <strong>GST:</strong> {user?.kyc?.gstNumber || 'N/A'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6} textAlign="right">
-                    <Typography variant="body2">
-                      <strong>Date:</strong> {new Date(selectedTxn.createdAt).toLocaleString()}
-                    </Typography>
-                    <Typography variant="body2">
-                      <strong>Transaction ID:</strong> {selectedTxn.creditTransactionId || 'N/A'}
-                    </Typography>
-                  </Grid>
+                  <Typography variant="body2">
+                    <strong>Firm:</strong> {user?.kyc?.firmName || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Phone:</strong> {user?.phone || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Email:</strong> {user?.email || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Address:</strong>{" "}
+                    {user?.block + " " + user?.district + " " + user?.state || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>GST:</strong> {user?.kyc?.gstNumber || "N/A"}
+                  </Typography>
                 </Grid>
 
-                {/* Payment Table */}
-                <Table size="small" sx={{ border: '1px solid #ddd' }}>
-                  <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
-                    <TableRow>
-                      <TableCell>
-                        <strong>Description</strong>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <strong>Amount (₹)</strong>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Worker Wage</TableCell>
-                      <TableCell align="right">{selectedTxn.amount.toFixed(2)}</TableCell>
-                    </TableRow>
-                    {user?.role === 'Employer' && selectedTxn.platformCharges && (
-                      <>
-                        <TableRow>
-                          <TableCell>Platform Charges</TableCell>
-                          <TableCell align="right">
-                            {selectedTxn.platformCharges.toFixed(2)}
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>GST Charges</TableCell>
-                          <TableCell align="right">{selectedTxn.gstCharges.toFixed(2)}</TableCell>
-                        </TableRow>
-                      </>
-                    )}
-                    {user?.role === 'Agent' ||
-                      (user?.role === 'SelfWorker' && (
-                        <TableRow>
-                          <TableCell>Incentive</TableCell>
-                          <TableCell align="right">
-                            {Number(selectedTxn.incentiveCharges || 0).toFixed(2)}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    <TableRow>
-                      <TableCell>
-                        <strong>Total</strong>
-                      </TableCell>
-                      <TableCell align="right">
-                        (₹)
-                        <strong>
-                          {user?.role === 'Employer'
-                            ? (
-                                Number(selectedTxn.amount) +
-                                Number(selectedTxn.platformCharges) +
-                                Number(selectedTxn.gstCharges || 0)
-                              ).toFixed(2)
-                            : Number(selectedTxn.amount).toFixed(2)}
-                        </strong>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-
-                {/* Footer */}
-                <Box sx={{ mt: 3, textAlign: 'center' }}>
-                  <Typography variant="caption" color="textSecondary">
-                    This is a digitally generated invoice and does not require a physical signature.
+                <Grid item xs={6} textAlign="right">
+                  <Typography variant="body2">
+                    <strong>Date:</strong>{" "}
+                    {new Date(selectedTxn.createdAt).toLocaleString()}
                   </Typography>
-                </Box>
+                  <Typography variant="body2">
+                    <strong>Transaction ID:</strong>{" "}
+                    {selectedTxn.creditTransactionId || "N/A"}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <Table size="small" sx={{ border: "1px solid #ddd" }}>
+                <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+                  <TableRow>
+                    <TableCell>
+                      <strong>Description</strong>
+                    </TableCell>
+                    <TableCell align="right">
+                      <strong>Amount (₹)</strong>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Worker Wage</TableCell>
+                    <TableCell align="right">
+                      {selectedTxn.amount.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+
+                  {user?.role === "Employer" && selectedTxn.platformCharges && (
+                    <>
+                      <TableRow>
+                        <TableCell>Platform Charges</TableCell>
+                        <TableCell align="right">
+                          {selectedTxn.platformCharges.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>GST Charges</TableCell>
+                        <TableCell align="right">
+                          {selectedTxn.gstCharges.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  )}
+
+                  {user?.role === "Agent" ||
+                    (user?.role === "SelfWorker" && (
+                      <TableRow>
+                        <TableCell>Incentive</TableCell>
+                        <TableCell align="right">
+                          {Number(selectedTxn.incentiveCharges || 0).toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+
+                  <TableRow>
+                    <TableCell>
+                      <strong>Total</strong>
+                    </TableCell>
+                    <TableCell align="right">
+                      (₹)
+                      <strong>
+                        {user?.role === "Employer"
+                          ? (
+                              Number(selectedTxn.amount) +
+                              Number(selectedTxn.platformCharges) +
+                              Number(selectedTxn.gstCharges || 0)
+                            ).toFixed(2)
+                          : Number(selectedTxn.amount).toFixed(2)}
+                      </strong>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+
+              <Box sx={{ mt: 3, textAlign: "center" }}>
+                <Typography variant="caption" color="textSecondary">
+                  This is a digitally generated invoice and does not require a physical signature.
+                </Typography>
               </Box>
-            )}
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
-  );
+            </Box>
+          )}
+        </div>
+      </DialogContent>
+
+      <DialogActions sx={{ px: 2, py: 1.2 }}>
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </DialogActions>
+    </Dialog>
+  </Box>
+);
 };
 
 export default Payout;
