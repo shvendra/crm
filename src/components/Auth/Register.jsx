@@ -542,7 +542,7 @@ return (
   sx={{
     // minHeight: "100vh",
     width: "100%",
-    bgcolor: { xs: "#fff", md: "#f2f4f7" },
+    // bgcolor: { xs: "#fff", md: "#f2f4f7" },
     display: "flex",
     flexDirection: "column", // important
     alignItems: "center",
@@ -553,14 +553,15 @@ return (
 >
 <Box
   sx={{
-    width: "100%",
-    maxWidth: { xs: "100%", xl: 1400 },
+    // width: "100%",
+    maxWidth: "1400px",
+    mx: "auto",
     display: "flex",
-    flexDirection: { xs: "column", xl: "row" },
-    alignItems: { xs: "stretch", xl: "center" },
+    flexDirection: { xs: "column", md: "row" },
+    alignItems: { xs: "stretch", md: "stretch" },
     justifyContent: "center",
-    gap: { xs: 0, xl: 4 },
-    px: { xs: 0, xl: 3 },
+    gap: { xs: 0, md: 2, lg: 3 },
+    px: { xs: 0, md: 2, lg: 3 },
   }}
 >
 
@@ -592,14 +593,15 @@ return (
 <Container
   maxWidth="sm"
   disableGutters
+  
   sx={{
-    width: "100%",
     display: "flex",
-    justifyContent: "center",
     mt: 0,
     flexShrink: 0,
     ml: 0,
     mr: 0,
+    width: "fit-content",
+    maxWidth: "none",
   }}
 >
     <Box
@@ -611,7 +613,7 @@ return (
         boxShadow: { xs: "none", md: "0 10px 40px rgba(16,24,40,0.08)" },
         px: { xs: 2, sm: 3.5 },
         py: { xs: 2.5, sm: 3.5 },
-        minHeight: { xs: "100vh", md: "auto" },
+        minHeight: {  md: "auto" },
         position: "relative",
       }}
     >
@@ -687,6 +689,72 @@ return (
               {step === 1 ? t("chooseCategory") : t("fillBasicInfo")}
             </Typography>
           </Box>
+{isWebView && (
+  <Box
+    sx={{
+      mb: 2.5,
+      px: 2,
+      py: 1.5,
+      borderRadius: "12px",
+      border: "1px solid #d5e3ff",
+      bgcolor: "#f5f9ff",
+      boxShadow: "0 4px 14px rgba(25,118,210,0.08)",
+    }}
+  >
+    <Typography
+      sx={{
+        fontSize: "0.92rem",
+        fontWeight: 700,
+        color: "#1976d2",
+        mb: 0.8,
+      }}
+    >
+      Important Note
+    </Typography>
+
+    <Typography
+      sx={{
+        fontSize: "0.88rem",
+        lineHeight: 1.7,
+        color: "#344054",
+      }}
+    >
+      This app is mainly for{" "}
+      <Box component="span" sx={{ fontWeight: 700 }}>
+        Agents
+      </Box>{" "}
+      and{" "}
+      <Box component="span" sx={{ fontWeight: 700 }}>
+        Self Workers
+      </Box>
+      .
+      <br />
+      If you are an{" "}
+      <Box component="span" sx={{ fontWeight: 700 }}>
+        Employer
+      </Box>{" "}
+      and want to hire workers, please visit{" "}
+    <Box
+  component="a"
+  href="https://bookmyworkers.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  sx={{
+    fontWeight: 700,
+    color: "#1976d2",
+    textDecoration: "none",
+    cursor: "pointer",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  }}
+>
+  bookmyworkers.com
+</Box>{" "}
+      and search for workers near your location.
+    </Typography>
+  </Box>
+)}
 
           <form
             onSubmit={handleRegister}

@@ -124,15 +124,34 @@ const sliderImages = [
       
       <Box sx={{ height: '100vh', bgcolor: '#f5f5f5', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Photo Slider Section */}
-        <Box sx={{ position: 'relative', height: { xs: '20vh', md: '30vh' }, overflow: 'hidden', flexShrink: 0, bgcolor: '#f0f0f0' }}>
-          <Slider {...sliderSettings}>
-            {sliderImages.map((image, index) => (
-              <Box key={index} sx={{ height: { xs: '25vh', md: '30vh' } }}>
-                <Box component="img" src={image} alt={`Slide ${index + 1}`} sx={{ width: '100%', objectFit: 'contain', objectPosition: 'center' }} />
-              </Box>
-            ))}
-          </Slider>
-        </Box>
+      {/* Photo Slider Section */}
+<Box
+  sx={{
+    position: "relative",
+    height: { xs: "25vh", md: "30vh" },
+    overflow: "hidden",
+    flexShrink: 0,
+    bgcolor: "#f0f0f0",
+  }}
+>
+  <Slider {...sliderSettings}>
+    {sliderImages.map((image, index) => (
+      <Box key={index} sx={{ height: { xs: "25vh", md: "30vh" } }}>
+        <Box
+          component="img"
+          src={image}
+          alt={`Slide ${index + 1}`}
+          sx={{
+            width: "100%",
+            height: "100%",
+            objectFit: { xs: "contain", md: "cover" },
+            objectPosition: "center",
+          }}
+        />
+      </Box>
+    ))}
+  </Slider>
+</Box>
 
         {/* Content Section */}
         <Box sx={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column', py: { xs: 2, md: 3 }, overflow: 'auto' }}>
@@ -177,15 +196,7 @@ const sliderImages = [
               ))}
             </Grid>
 
-            {/* App Store Links */}
-            <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: { xs: 0.5, md: 1 } }}>
-              <Grid item xs={6} md={3}>
-                <Button variant="contained" fullWidth startIcon={<FaApple />} sx={{ py: { xs: 1, md: 1.2 }, borderRadius: { xs: '12px', md: '16px' }, bgcolor: '#000', color: 'white', fontSize: { xs: '0.8rem', md: '1rem' }, '&:hover': { bgcolor: '#333' } }}>App Store</Button>
-              </Grid>
-              <Grid item xs={6} md={3}>
-                <Button component="a" href="https://play.google.com/store/apps/details?id=com.app.myworker" target="_blank" rel="noopener noreferrer" variant="contained" fullWidth startIcon={<FaGooglePlay />} sx={{ py: { xs: 1, md: 1.2 }, borderRadius: { xs: '12px', md: '16px' }, bgcolor: '#34a853', color: 'white', fontSize: { xs: '0.8rem', md: '1rem' }, '&:hover': { bgcolor: '#2d8f47' } }}>Play Store</Button>
-              </Grid>
-            </Grid>
+     
 
             {/* Social Media Icons & Support */}
             <Box sx={{ textAlign: 'center' }}>

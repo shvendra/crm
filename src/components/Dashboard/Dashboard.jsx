@@ -1095,7 +1095,7 @@ const buildWhatsappMessage = (stream, lang = "en") => {
 
   // Close the modal
   const handleRequirementClose = () => {
-    fetchRequirements();
+    // fetchRequirements();
     setRequirementOpen(false);
     setRrequirementTypeOpen(false);
   };
@@ -4318,54 +4318,66 @@ backgroundImage: {
                             stream.req_type == "Contract_Based" ||
                             stream.req_type == "Office_Staff"
                         )) ? (
-                        <Grid item xs={12} sx={{ pt: 0, pb: 0 }}>
-                          <Box
-                            sx={{
-                              height: "250px",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              position: "relative",
-                             backgroundImage: {
-  xs: `url("${config.FILE_BASE_URL}/ImagesWeb/home-slide-2.jpeg")`,
-  sm: `url("${config.FILE_BASE_URL}/ImagesWeb/agent_desk.jpg")`,
-},
-
-                              backgroundSize: {
-                                xs: "cover",
-                                sm: "initial",
-                              },
-                              backgroundPosition: "center",
-                              backgroundRepeat: "no-repeat",
-                              borderRadius: 2,
-                              overflow: "hidden",
-                            }}
-                          >
-                            {/* dark overlay */}
-                            <Box
-                              sx={{
-                                position: "absolute",
-                                inset: 0,
-                                backgroundColor: "rgba(0,0,0,0.7)", // was 0.45 → now darker
-                              }}
-                            />
-
-                            {/* text */}
-                            <Box
-                              sx={{
-                                position: "relative",
-                                zIndex: 1,
-                                p: 3,
-                                color: "#fff",
-                                fontSize: 18,
-                                fontWeight: 600,
-                                textAlign: "center",
-                              }}
-                            >
-                              {t("noRequirementsFound")}
-                            </Box>
-                          </Box>
-                        </Grid>
+                                   <Grid item xs={12} sx={{ pt: 0, pb: 0 }}>
+                         {requirementsLoading ? (
+                           <Box
+                             sx={{
+                               height: "250px",
+                               display: "flex",
+                               justifyContent: "center",
+                               alignItems: "center",
+                             }}
+                           >
+                             <CircularProgress sx={{ color: "#1976d2" }} />
+                           </Box>
+                         ) : (
+                           <Box
+                             sx={{
+                               height: "250px",
+                               display: "flex",
+                               justifyContent: "center",
+                               alignItems: "center",
+                               position: "relative",
+                               backgroundImage: {
+                                 xs: 'url("/home-slide-2.jpeg")',
+                                 sm: 'url("/agent_desk.jpg")',
+                               },
+                               backgroundSize: {
+                                 xs: "cover",
+                                 sm: "initial",
+                               },
+                               backgroundPosition: "center",
+                               backgroundRepeat: "no-repeat",
+                               borderRadius: 2,
+                               overflow: "hidden",
+                             }}
+                           >
+                             {/* dark overlay */}
+                             <Box
+                               sx={{
+                                 position: "absolute",
+                                 inset: 0,
+                                 backgroundColor: "rgba(0,0,0,0.7)",
+                               }}
+                             />
+                       
+                             {/* text */}
+                             <Box
+                               sx={{
+                                 position: "relative",
+                                 zIndex: 1,
+                                 p: 3,
+                                 color: "#fff",
+                                 fontSize: 18,
+                                 fontWeight: 600,
+                                 textAlign: "center",
+                               }}
+                             >
+                               {t("noRequirementsFound")}
+                             </Box>
+                           </Box>
+                         )}
+                       </Grid>
                       ) : (
                         currentReq
                           .filter((stream) => {
@@ -4866,7 +4878,19 @@ backgroundImage: {
                               stream.req_type == "Contract_Based" ||
                               stream.req_type == "Office_Staff"
                           )) ? (
-                          <Grid item xs={12} sx={{ pt: 0, pb: 0 }}>
+                                    <Grid item xs={12} sx={{ pt: 0, pb: 0 }}>
+                          {requirementsLoading ? (
+                            <Box
+                              sx={{
+                                height: "250px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <CircularProgress sx={{ color: "#1976d2" }} />
+                            </Box>
+                          ) : (
                             <Box
                               sx={{
                                 height: "250px",
@@ -4874,11 +4898,10 @@ backgroundImage: {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 position: "relative",
-                               backgroundImage: {
-  xs: `url("${config.FILE_BASE_URL}/ImagesWeb/home-slide-2.jpeg")`,
-  sm: `url("${config.FILE_BASE_URL}/ImagesWeb/agent_desk.jpg")`,
-},
-
+                                backgroundImage: {
+                                  xs: 'url("/home-slide-2.jpeg")',
+                                  sm: 'url("/agent_desk.jpg")',
+                                },
                                 backgroundSize: {
                                   xs: "cover",
                                   sm: "initial",
@@ -4894,10 +4917,10 @@ backgroundImage: {
                                 sx={{
                                   position: "absolute",
                                   inset: 0,
-                                  backgroundColor: "rgba(0,0,0,0.7)", // was 0.45 → now darker
+                                  backgroundColor: "rgba(0,0,0,0.7)",
                                 }}
                               />
-
+                        
                               {/* text */}
                               <Box
                                 sx={{
@@ -4913,7 +4936,8 @@ backgroundImage: {
                                 {t("noRequirementsFound")}
                               </Box>
                             </Box>
-                          </Grid>
+                          )}
+                        </Grid>
                         ) : (
                           currentReq
                             .filter((stream) => {

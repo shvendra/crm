@@ -295,438 +295,682 @@ const RequestWorkerForm = ({ typeOfReq, handleRequirementClose, setSubscriptionO
 
   const selectedCategory = categories.find(cat => cat.value === formData.workType);
 
-  return (
-    <Paper
+return (
+  <Paper
+    sx={{
+      width: "100%",
+      maxWidth: 980,
+      mx: "auto",
+      borderRadius: { xs: 0, md: 4 },
+      overflow: "hidden",
+      background:
+        "linear-gradient(180deg, rgba(248,250,252,1) 0%, rgba(255,255,255,1) 100%)",
+      border: { xs: "none", md: "1px solid #e5e7eb" },
+      boxShadow: {
+        xs: "none",
+        md: "0 20px 50px rgba(15, 23, 42, 0.10)",
+      },
+    }}
+  >
+    <Box
       sx={{
-        boxShadow: 4,
-        borderRadius: 3,
-        mx: 'auto',
-        backgroundColor: 'background.paper',
+        position: "sticky",
+        top: 0,
+        zIndex: 20,
+        background: "linear-gradient(90deg, #1976d2 0%, #1565c0 100%)",
+        color: "#fff",
+        px: { xs: 2, sm: 3 },
+        py: 1.5,
+        borderBottom: "1px solid rgba(255,255,255,0.12)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 2,
+      }}
+    >
+      <Box>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 800,
+            color: "#fff !important",
+            lineHeight: 1.2,
+            fontSize: { xs: "1rem", sm: "1.15rem" },
+          }}
+        >
+          {t("title")}
+        </Typography>
+        <Typography
+          sx={{
+            mt: 0.3,
+            fontSize: "0.8rem",
+            color: "rgba(255,255,255,0.85)",
+          }}
+        >
+          Fill in the details below to submit your requirement
+        </Typography>
+      </Box>
+
+      <Button
+        onClick={handleRequirementClose}
+        size="small"
+        variant="outlined"
+        sx={{
+          minWidth: "auto",
+          px: 2,
+          py: 0.8,
+          borderRadius: "10px",
+          color: "#fff",
+          borderColor: "rgba(255,255,255,0.75)",
+          fontWeight: 700,
+          textTransform: "none",
+          "&:hover": {
+            borderColor: "#fff",
+            backgroundColor: "rgba(255,255,255,0.08)",
+          },
+        }}
+      >
+        {t("close")}
+      </Button>
+    </Box>
+
+    <Box
+      sx={{
+        overflowY: "auto",
+        maxHeight: "calc(90vh - 74px)",
+        px: { xs: 1.5, sm: 2.5, md: 3 },
+        py: { xs: 2, sm: 2.5 },
+        background:
+          "radial-gradient(circle at top right, rgba(25,118,210,0.05), transparent 32%)",
       }}
     >
       <Box
         sx={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-          background: '#1a76d2',
-          color: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: '5px',
-          px: '12px',
-          py: 1,
-          borderBottom: '1px solid #ccc',
+          mb: 2.5,
+          p: { xs: 1.75, sm: 2 },
+          borderRadius: 3,
+          bgcolor: "#f8fbff",
+          border: "1px solid #dbeafe",
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: 600, pr: '3px', color: 'white !important' }}>
-          {t('title')}
-        </Typography>
-        <Button
-          onClick={handleRequirementClose}
-          color="error"
-          size="small"
-          variant="outlined"
-          sx={{ color: 'white', borderColor: 'white' }}
+        <Typography
+          sx={{
+            fontSize: "0.92rem",
+            fontWeight: 700,
+            color: "#1976d2",
+            mb: 0.5,
+          }}
         >
-          {t('close')}
-        </Button>
+          Requirement Details
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "0.84rem",
+            color: "#475467",
+            lineHeight: 1.7,
+          }}
+        >
+          Please enter complete job details so workers or suppliers can understand your requirement clearly.
+        </Typography>
       </Box>
 
-      {/* Form rendering */}
-      {/* <ThemeProvider theme={androidTheme}> */}
-      <Box
-        sx={{
-          overflowY: 'auto',
-          maxHeight: 'calc(90vh - 60px)',
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2} sx={{ p: '10px 9px 11px' }}>
-            <Grid item xs={6}>
-              <FormControl fullWidth error={!!errors.workType}>
-                <InputLabel>{t('workType')}</InputLabel>
-                <Select
-                  MenuProps={{ disablePortal: true }}
-                  value={formData.workType}
-                  size="small"
-                  onChange={handleWorkTypeChange}
-                  label={t('workType')}
-                >
-                  {/* Using filteredCategories state, but it's not updated by search input */}
-                  {/* If you want search, you need to connect handleSearchChange to a TextField */}
-                  {categories.map(
-                    (
-                      cat // Directly map categories for now
-                    ) => (
-                      <MenuItem key={cat.value} value={cat.value}>
-                        {i18n.language === 'hi'
-                          ? cat.hindilabel
-                          : i18n.language === 'mr'
-                            ? cat.marathilabel
-                            : i18n.language === 'gu'
-                              ? cat.gujaratilabel
-                              : cat.label}
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2.2}>
+          <Grid item xs={12} sm={6}>
+            <FormControl
+              fullWidth
+              error={!!errors.workType}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            >
+              <InputLabel>{t("workType")}</InputLabel>
+              <Select
+                MenuProps={{ disablePortal: true }}
+                value={formData.workType}
+                size="small"
+                onChange={handleWorkTypeChange}
+                label={t("workType")}
+              >
+                {categories.map(cat => (
+                  <MenuItem key={cat.value} value={cat.value}>
+                    {i18n.language === "hi"
+                      ? cat.hindilabel
+                      : i18n.language === "mr"
+                        ? cat.marathilabel
+                        : i18n.language === "gu"
+                          ? cat.gujaratilabel
+                          : cat.label}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.workType && <FormHelperText>{errors.workType}</FormHelperText>}
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <FormControl
+              fullWidth
+              error={!!errors.subCategory}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            >
+              <InputLabel>{t("subCategory")}</InputLabel>
+              <Select
+                MenuProps={{ disablePortal: true }}
+                value={formData.subCategory}
+                onChange={handleSubCategoryChange}
+                label={t("subCategory")}
+                size="small"
+              >
+                {selectedCategory?.subcategories?.map(sub => (
+                  <MenuItem key={sub.value} value={sub.value}>
+                    {i18n.language === "hi"
+                      ? sub.hindilabel
+                      : i18n.language === "mr"
+                        ? sub.marathilabel
+                        : sub.label}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.subCategory && <FormHelperText>{errors.subCategory}</FormHelperText>}
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="workerNeedDate"
+              label={t("workDate")}
+              type="date"
+              size="small"
+              fullWidth
+              value={formData.workerNeedDate}
+              onChange={handleChange}
+              onFocus={() => setTimeout(() => setIsFocused(true), 0)}
+              onBlur={() => setIsFocused(false)}
+              InputLabelProps={{
+                shrink: isFocused || !!formData.workerNeedDate,
+              }}
+              inputProps={{ min: today }}
+              error={!!errors.workerNeedDate}
+              helperText={errors.workerNeedDate}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="workerQuantitySkilled"
+              label={t("workerCount")}
+              type="number"
+              size="small"
+              fullWidth
+              value={formData.workerQuantitySkilled}
+              onChange={handleChange}
+              error={!!errors.workerQuantitySkilled}
+              helperText={errors.workerQuantitySkilled}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <FormControl
+              fullWidth
+              error={!!errors.state}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            >
+              <InputLabel>{t("state")}</InputLabel>
+              <Select
+                value={formData.state}
+                onChange={handleStateChange}
+                label={t("state")}
+                size="small"
+                MenuProps={{ disablePortal: true }}
+              >
+                <MenuItem value="">{t("selectState")}</MenuItem>
+                {Object.keys(stateDistrictTehsil).map(state => (
+                  <MenuItem key={state} value={state}>
+                    {state}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.state && <FormHelperText>{errors.state}</FormHelperText>}
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <FormControl
+              fullWidth
+              disabled={!formData.state}
+              error={!!errors.district}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            >
+              <InputLabel>{t("district")}</InputLabel>
+              <Select
+                value={formData.district}
+                onChange={handleDistrictChange}
+                label={t("district")}
+                size="small"
+                MenuProps={{ disablePortal: true }}
+              >
+                <MenuItem value="">{t("selectDistrict")}</MenuItem>
+                {formData.state &&
+                  Object.keys(stateDistrictTehsil[formData.state] || {}).map(districtName => (
+                    <MenuItem key={districtName} value={districtName}>
+                      {districtName}
+                    </MenuItem>
+                  ))}
+              </Select>
+              {errors.district && <FormHelperText>{errors.district}</FormHelperText>}
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <FormControl
+              fullWidth
+              disabled={!formData.district}
+              error={!!errors.tehsil}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            >
+              <InputLabel>{t("tehsil")}</InputLabel>
+              <Select
+                value={formData.tehsil}
+                onChange={handleTehsilChange}
+                label={t("tehsil")}
+                size="small"
+                MenuProps={{ disablePortal: true }}
+              >
+                <MenuItem value="">{t("selectTehsil")}</MenuItem>
+                {formData.state &&
+                  formData.district &&
+                  (stateDistrictTehsil[formData.state]?.[formData.district] || []).map(
+                    tehsilName => (
+                      <MenuItem key={tehsilName} value={tehsilName}>
+                        {tehsilName}
                       </MenuItem>
                     )
                   )}
-                </Select>
-                {errors.workType && <FormHelperText>{errors.workType}</FormHelperText>}
-              </FormControl>
-            </Grid>
+              </Select>
+              {errors.tehsil && <FormHelperText>{errors.tehsil}</FormHelperText>}
+            </FormControl>
+          </Grid>
 
-            <Grid item xs={6}>
-              <FormControl fullWidth error={!!errors.subCategory}>
-                <InputLabel>{t('subCategory')}</InputLabel>
-                <Select
-                  MenuProps={{ disablePortal: true }}
-                  value={formData.subCategory}
-                  onChange={handleSubCategoryChange}
-                  label={t('subCategory')}
-                  size="small"
-                >
-                  {selectedCategory?.subcategories?.map(sub => (
-                    <MenuItem key={sub.value} value={sub.value}>
-                      {i18n.language === 'hi'
-                        ? sub.hindilabel
-                        : i18n.language === 'mr'
-                          ? sub.marathilabel
-                          : sub.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errors.subCategory && <FormHelperText>{errors.subCategory}</FormHelperText>}
-              </FormControl>
-            </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label={t("estimated_days")}
+              variant="outlined"
+              type="number"
+              size="small"
+              fullWidth
+              value={formData.estimated_days || ""}
+              onChange={e => setFormData({ ...formData, estimated_days: e.target.value })}
+              error={!!errors.estimated_days}
+              helperText={errors.estimated_days}
+              inputProps={{ min: 1 }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "14px",
+                  backgroundColor: "#fff",
+                },
+              }}
+            />
+          </Grid>
 
-            <>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  name="workerNeedDate"
-                  label={t('workDate')}
-                  type="date"
-                  size="small"
-                  fullWidth
-                  value={formData.workerNeedDate}
-                  onChange={handleChange}
-                  onFocus={() => setTimeout(() => setIsFocused(true), 0)} // ✅ small delay fixes double-click issue
-                  onBlur={() => setIsFocused(false)}
-                  InputLabelProps={{
-                    shrink: isFocused || !!formData.workerNeedDate,
-                  }}
-                  inputProps={{ min: today }}
-                  error={!!errors.workerNeedDate}
-                  helperText={errors.workerNeedDate}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  name="workerQuantitySkilled"
-                  label={t('workerCount')}
-                  type="number"
-                  size="small"
-                  fullWidth
-                  value={formData.workerQuantitySkilled}
-                  onChange={handleChange}
-                  error={!!errors.workerQuantitySkilled}
-                  helperText={errors.workerQuantitySkilled}
-                />
-              </Grid>
-            </>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 3,
+                bgcolor: "#ffffff",
+                border: "1px solid #e5e7eb",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "0.9rem",
+                  fontWeight: 700,
+                  color: "#344054",
+                  mb: 1.5,
+                }}
+              >
+                {t("locality")}
+              </Typography>
 
-            <Grid item xs={6} sm={6}>
-              <FormControl fullWidth error={!!errors.state}>
-                <InputLabel>{t('state')}</InputLabel>
-                <Select
-                  value={formData.state}
-                  onChange={handleStateChange}
-                  label={t('state')}
-                  size="small"
-                  MenuProps={{ disablePortal: true }}
-                >
-                  <MenuItem value="">{t('selectState')}</MenuItem>
-                  {Object.keys(stateDistrictTehsil).map(state => (
-                    <MenuItem key={state} value={state}>
-                      {state}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errors.state && <FormHelperText>{errors.state}</FormHelperText>}
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={6} sm={6}>
-              <FormControl fullWidth disabled={!formData.state} error={!!errors.district}>
-                <InputLabel>{t('district')}</InputLabel>
-                <Select
-                  value={formData.district}
-                  onChange={handleDistrictChange}
-                  label={t('district')}
-                  size="small"
-                  MenuProps={{ disablePortal: true }}
-                >
-                  <MenuItem value="">{t('selectDistrict')}</MenuItem>
-                  {formData.state &&
-                    Object.keys(stateDistrictTehsil[formData.state] || {}).map(districtName => (
-                      <MenuItem key={districtName} value={districtName}>
-                        {districtName}
-                      </MenuItem>
-                    ))}
-                </Select>
-                {errors.district && <FormHelperText>{errors.district}</FormHelperText>}
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={6} sm={6}>
-              <FormControl fullWidth disabled={!formData.district} error={!!errors.tehsil}>
-                <InputLabel>{t('tehsil')}</InputLabel>
-                <Select
-                  value={formData.tehsil}
-                  onChange={handleTehsilChange}
-                  label={t('tehsil')}
-                  size="small"
-                  MenuProps={{ disablePortal: true }}
-                >
-                  <MenuItem value="">{t('selectTehsil')}</MenuItem>
-                  {formData.state &&
-                    formData.district &&
-                    (stateDistrictTehsil[formData.state]?.[formData.district] || []).map(
-                      tehsilName => (
-                        <MenuItem key={tehsilName} value={tehsilName}>
-                          {tehsilName}
-                        </MenuItem>
-                      )
-                    )}
-                </Select>
-                {errors.tehsil && <FormHelperText>{errors.tehsil}</FormHelperText>}
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <TextField
-                  label={t('estimated_days')}
-                  variant="outlined"
-                  type="number"
-                  size="small"
-                  fullWidth
-                  value={formData.estimated_days || ''}
-                  onChange={e => setFormData({ ...formData, estimated_days: e.target.value })}
-                  error={!!errors.estimated_days}
-                  helperText={errors.estimated_days}
-                  inputProps={{ min: 1 }}
-                />
-              </Box>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.2, flexDirection: { xs: "column", sm: "row" } }}>
                 <TextField
                   name="workLocation"
-                  label={t('locality')}
+                  label={t("locality")}
                   fullWidth
                   size="small"
                   value={locationName ? locationName : formData.workLocation}
                   onChange={handleChange}
                   error={!!errors.workLocation}
                   helperText={errors.workLocation}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "14px",
+                      backgroundColor: "#fff",
+                    },
+                  }}
                 />
                 <Button
                   variant="outlined"
                   onClick={handleOpenMap}
                   size="small"
-                  sx={{ minWidth: 'auto', px: 2 }} // Match TextField height
+                  sx={{
+                    minWidth: { xs: "100%", sm: 110 },
+                    height: 40,
+                    borderRadius: "12px",
+                    textTransform: "none",
+                    fontWeight: 700,
+                  }}
                   startIcon={<LocationOnIcon />}
                 >
                   Map
                 </Button>
               </Box>
-              {/* Display selected coordinates if available */}
+
               {locationName && (
-                <Typography variant="body2" color="textSecondary" sx={{ mt: 0.5 }}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{
+                    mt: 1.2,
+                    px: 1.2,
+                    py: 0.9,
+                    borderRadius: 2,
+                    bgcolor: "#f8fafc",
+                    border: "1px solid #e2e8f0",
+                  }}
+                >
                   📍 {locationName}
                 </Typography>
               )}
-            </Grid>
+            </Box>
+          </Grid>
 
-            <Grid item xs={6} sm={6}>
-              <TextField
-                name="minBudgetPerWorker"
-                label={
-                  typeOfReq === 'Daily_Wages' || typeOfReq === 'Supply_based'
-                    ? t('minBudget')
-                    : typeOfReq === 'Office_Staff'
-                      ? t('minContractPM')
-                      : t('minBudgetContract')
-                }
-                type="number"
-                fullWidth
-                size="small"
-                value={formData.minBudgetPerWorker}
-                onChange={handleChange}
-                error={!!errors.minBudgetPerWorker}
-                helperText={errors.minBudgetPerWorker}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                p: { xs: 1.5, sm: 2 },
+                borderRadius: 3,
+                bgcolor: "#f8fbff",
+                border: "1px solid #dbeafe",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: "#1976d2",
+                  mb: 1.6,
                 }}
-              />
-            </Grid>
+              >
+                Budget Details
+              </Typography>
 
-            <Grid item xs={6} sm={6}>
-              <TextField
-                name="maxBudgetPerWorker"
-                label={
-                  typeOfReq === 'Daily_Wages' || typeOfReq === 'Supply_based'
-                    ? t('maxBudget')
-                    : typeOfReq === 'Office_Staff'
-                      ? t('maxContractPM')
-                      : t('maxBudgetContract')
-                }
-                type="number"
-                size="small"
-                fullWidth
-                value={formData.maxBudgetPerWorker}
-                onChange={handleChange}
-                error={!!errors.maxBudgetPerWorker}
-                helperText={errors.maxBudgetPerWorker}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-                }}
-              />
-            </Grid>
-
-            {typeOfReq === 'Daily_Wages' && (
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Grid item xs={6} sm={6}>
-                  <TimePicker
-                    label={t('inTime')}
-                    value={inTime}
-                    onChange={handleTimeChange('inTime')}
-                    ampm
-                    slotProps={{
-                      textField: {
-                        fullWidth: true,
-                        size: 'small',
-                        variant: 'outlined',
-                        sx: {
-                          '& .MuiInputBase-root': {
-                            height: 40,
-                          },
-                          '& .MuiInputBase-input': {
-                            padding: '8px 14px',
-                          },
-                          '& .MuiPickersOutlinedInput-sectionsContainer': {
-                            padding: '0 !important',
-                            minHeight: 'unset',
-                            height: '100%',
-                          },
-                        },
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name="minBudgetPerWorker"
+                    label={
+                      typeOfReq === "Daily_Wages" || typeOfReq === "Supply_based"
+                        ? t("minBudget")
+                        : typeOfReq === "Office_Staff"
+                          ? t("minContractPM")
+                          : t("minBudgetContract")
+                    }
+                    type="number"
+                    fullWidth
+                    size="small"
+                    value={formData.minBudgetPerWorker}
+                    onChange={handleChange}
+                    error={!!errors.minBudgetPerWorker}
+                    helperText={errors.minBudgetPerWorker}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "14px",
+                        backgroundColor: "#fff",
                       },
                     }}
                   />
                 </Grid>
 
-                <Grid item xs={6} sm={6}>
-                  <TimePicker
-                    label={t('outTime')}
-                    value={outTime}
-                    onChange={handleTimeChange('outTime')}
-                    ampm
-                    slotProps={{
-                      textField: {
-                        fullWidth: true,
-                        size: 'small',
-                        variant: 'outlined',
-                        sx: {
-                          '& .MuiInputBase-root': {
-                            height: 40,
-                          },
-                          '& .MuiInputBase-input': {
-                            padding: '8px 14px',
-                          },
-                          '& .MuiPickersOutlinedInput-sectionsContainer': {
-                            padding: '0 !important',
-                            minHeight: 'unset',
-                            height: '100%',
-                          },
-                        },
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name="maxBudgetPerWorker"
+                    label={
+                      typeOfReq === "Daily_Wages" || typeOfReq === "Supply_based"
+                        ? t("maxBudget")
+                        : typeOfReq === "Office_Staff"
+                          ? t("maxContractPM")
+                          : t("maxBudgetContract")
+                    }
+                    type="number"
+                    size="small"
+                    fullWidth
+                    value={formData.maxBudgetPerWorker}
+                    onChange={handleChange}
+                    error={!!errors.maxBudgetPerWorker}
+                    helperText={errors.maxBudgetPerWorker}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "14px",
+                        backgroundColor: "#fff",
                       },
                     }}
                   />
                 </Grid>
-              </LocalizationProvider>
-            )}
+              </Grid>
+            </Box>
+          </Grid>
 
+          {typeOfReq === "Daily_Wages" && (
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Grid item xs={12} sm={6}>
+                <TimePicker
+                  label={t("inTime")}
+                  value={inTime}
+                  onChange={handleTimeChange("inTime")}
+                  ampm
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      size: "small",
+                      variant: "outlined",
+                      sx: {
+                        "& .MuiInputBase-root": {
+                          height: 40,
+                          borderRadius: "14px",
+                          backgroundColor: "#fff",
+                        },
+                        "& .MuiInputBase-input": {
+                          padding: "8px 14px",
+                        },
+                        "& .MuiPickersOutlinedInput-sectionsContainer": {
+                          padding: "0 !important",
+                          minHeight: "unset",
+                          height: "100%",
+                        },
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TimePicker
+                  label={t("outTime")}
+                  value={outTime}
+                  onChange={handleTimeChange("outTime")}
+                  ampm
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      size: "small",
+                      variant: "outlined",
+                      sx: {
+                        "& .MuiInputBase-root": {
+                          height: 40,
+                          borderRadius: "14px",
+                          backgroundColor: "#fff",
+                        },
+                        "& .MuiInputBase-input": {
+                          padding: "8px 14px",
+                        },
+                        "& .MuiPickersOutlinedInput-sectionsContainer": {
+                          padding: "0 !important",
+                          minHeight: "unset",
+                          height: "100%",
+                        },
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+            </LocalizationProvider>
+          )}
+
+          <Grid item xs={12}>
+           <TextField
+  name="remarks"
+  label={typeOfReq === "officeStaff" ? t("jobDescription") : t("description")}
+  size="small"
+  placeholder={
+    typeOfReq === "Daily_Wages" || typeOfReq === "Supply_based"
+      ? t("descriptionPlaceholder")
+      : t("jobdescription")
+  }
+  fullWidth
+  rows={1}
+  multiline
+  value={formData.remarks}
+  onChange={(e) => {
+    const value = e.target.value;
+    const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
+
+    setFormData((prev) => ({
+      ...prev,
+      remarks: value,
+    }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      remarks: wordCount < 10 ? "Minimum 10 words required" : "",
+    }));
+  }}
+  error={!!formErrors.remarks}
+  helperText={
+    formErrors.remarks ||
+    `${formData.remarks?.trim().split(/\s+/).filter(Boolean).length || 0} / 10 words`
+  }
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "14px",
+      backgroundColor: "#fff",
+      minHeight: "40px",
+    },
+    "& .MuiOutlinedInput-input": {
+      padding: "8px 12px",
+    },
+  }}
+/>
+          </Grid>
+
+          {typeOfReq !== "Daily_Wages" && (
             <Grid item xs={12}>
-              <TextField
-                name="remarks"
-                label={typeOfReq === 'officeStaff' ? t('jobDescription') : t('description')}
-                size="small"
-                placeholder={
-                  typeOfReq === 'Daily_Wages' || typeOfReq === 'Supply_based'
-                    ? t('descriptionPlaceholder')
-                    : t('jobdescription')
-                }
-                fullWidth
-                rows={1}
-                value={formData.remarks}
-                onChange={e => {
-                  const value = e.target.value;
-                  const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
-
-                  setFormData(prev => ({
-                    ...prev,
-                    remarks: value,
-                  }));
-
-                  setFormErrors(prev => ({
-                    ...prev,
-                    remarks: wordCount < 10 ? 'Minimum 10 words required' : '',
-                  }));
+              <Box
+                sx={{
+                  p: { xs: 1.5, sm: 2 },
+                  borderRadius: 3,
+                  bgcolor: "#fff",
+                  border: "1px solid #e5e7eb",
                 }}
-                error={!!formErrors.remarks}
-                helperText={
-                  formErrors.remarks ||
-                  `${formData.remarks?.trim().split(/\s+/).filter(Boolean).length || 0} / 10 words`
-                }
-              />
-            </Grid>
-            {typeOfReq !== 'Daily_Wages' && (
-              <Grid item xs={12}>
+              >
                 <FormControl component="fieldset" fullWidth>
-                  <FormLabel component="legend" sx={{ fontWeight: 700, mb: 2, fontSize: '1rem' }}>
-                    {t('facilitiesAndBenefits')}
+                  <FormLabel
+                    component="legend"
+                    sx={{
+                      fontWeight: 800,
+                      mb: 2,
+                      fontSize: "1rem",
+                      color: "#101828",
+                    }}
+                  >
+                    {t("facilitiesAndBenefits")}
                   </FormLabel>
-                  <Grid container spacing={2}>
+
+                  <Grid container spacing={1.5}>
                     {[
-                      { key: 'accommodationAvailable', label: t('accommodationAvailable') },
-                      { key: 'foodAvailable', label: t('foodAvailable') },
-                      { key: 'incentive', label: t('incentive') },
-                      { key: 'bonus', label: t('bonus') },
-                      { key: 'transportProvided', label: t('transportProvided') },
-                      { key: 'weeklyOff', label: t('weeklyOff') },
-                      { key: 'overtimeAvailable', label: t('overtimeAvailable') },
-                      { key: 'insuranceAvailable', label: t('insuranceAvailable') },
-                      { key: 'pfAvailable', label: t('pfAvailable') },
-                      { key: 'esicAvailable', label: t('esicAvailable') },
+                      { key: "accommodationAvailable", label: t("accommodationAvailable") },
+                      { key: "foodAvailable", label: t("foodAvailable") },
+                      { key: "incentive", label: t("incentive") },
+                      { key: "bonus", label: t("bonus") },
+                      { key: "transportProvided", label: t("transportProvided") },
+                      { key: "weeklyOff", label: t("weeklyOff") },
+                      { key: "overtimeAvailable", label: t("overtimeAvailable") },
+                      { key: "insuranceAvailable", label: t("insuranceAvailable") },
+                      { key: "pfAvailable", label: t("pfAvailable") },
+                      { key: "esicAvailable", label: t("esicAvailable") },
                     ].map(item => (
-                      <Grid item xs={6} key={item.key}>
+                      <Grid item xs={12} sm={6} key={item.key}>
                         <Box
                           sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            py: 0,
-                            px: 1,
-                            borderRadius: 2,
-                            bgcolor: formData[item.key] ? 'primary.light' : 'grey.100',
-                            transition: 'all 0.3s',
-                            '&:hover': {
-                              bgcolor: 'primary.lighter',
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            py: 1.1,
+                            px: 1.4,
+                            borderRadius: 2.5,
+                            border: "1px solid",
+                            borderColor: formData[item.key] ? "#bfdbfe" : "#e5e7eb",
+                            bgcolor: formData[item.key] ? "#eff6ff" : "#f9fafb",
+                            transition: "all 0.25s ease",
+                            "&:hover": {
+                              borderColor: "#93c5fd",
+                              bgcolor: "#f8fbff",
                             },
                           }}
                         >
-                          <Typography sx={{ fontWeight: 500, fontSize: '0.95rem' }}>
+                          <Typography sx={{ fontWeight: 600, fontSize: "0.92rem", pr: 1 }}>
                             {item.label}
                           </Typography>
                           <Switch
@@ -744,10 +988,20 @@ const RequestWorkerForm = ({ typeOfReq, handleRequirementClose, setSubscriptionO
                     ))}
                   </Grid>
                 </FormControl>
-              </Grid>
-            )}
+              </Box>
+            </Grid>
+          )}
 
-            <Grid item xs={12}>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                position: "sticky",
+                bottom: 0,
+                pt: 1,
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 25%, rgba(255,255,255,1) 100%)",
+              }}
+            >
               <Button
                 type="submit"
                 variant="contained"
@@ -755,25 +1009,31 @@ const RequestWorkerForm = ({ typeOfReq, handleRequirementClose, setSubscriptionO
                 fullWidth
                 disabled={loading}
                 size="large"
-                sx={{ borderRadius: 2, py: 1.2, fontWeight: 600 }}
+                sx={{
+                  borderRadius: 3,
+                  py: 1.35,
+                  fontWeight: 800,
+                  fontSize: "0.98rem",
+                  textTransform: "none",
+                  boxShadow: "0 10px 24px rgba(25,118,210,0.24)",
+                }}
               >
-                {t('submit')}
+                {t("submit")}
               </Button>
-            </Grid>
+            </Box>
           </Grid>
-        </form>
-      </Box>
-      {/* </ThemeProvider> */}
+        </Grid>
+      </form>
+    </Box>
 
-      {/* You can reuse your current form JSX here with cleaned logic */}
-      <GoogleMapPicker
-        open={mapOpen}
-        onClose={handleCloseMap}
-        onLocationSelect={handleLocationSelect}
-        initialLocation={formData?.workLocation}
-      />
-    </Paper>
-  );
+    <GoogleMapPicker
+      open={mapOpen}
+      onClose={handleCloseMap}
+      onLocationSelect={handleLocationSelect}
+      initialLocation={formData?.workLocation}
+    />
+  </Paper>
+);
 };
 
 export default RequestWorkerForm;
