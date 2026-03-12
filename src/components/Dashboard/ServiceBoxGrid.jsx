@@ -257,89 +257,117 @@ const handleClick = service => {
 const serviceList =
   user.role === 'Employer' ? services : servicesForOtherRoles;
 
-  return (
+return (
+  <Box
+    sx={{
+      width: "100%",
+      mt: 1.5,
+      mb: 2,
+      px: { xs: 1, sm: 1.5 },
+    }}
+  >
     <Box
       sx={{
-        width: '100%',
-        display: 'grid',
-        gap: 1.5,
-        px: 1,
-        mt: 1,
-        mb: 1.5,
+        display: "grid",
+        gap: { xs: 1.2, sm: 1.5, md: 1.8 },
         gridTemplateColumns: {
-          xs: 'repeat(3, 1fr)',
-          sm: 'repeat(4, 1fr)',
-          md: 'repeat(5, 1fr)',
-          lg: 'repeat(6, 1fr)',
+          xs: "repeat(3, 1fr)",
+          sm: "repeat(4, 1fr)",
+          md: "repeat(5, 1fr)",
+          lg: "repeat(6, 1fr)",
         },
       }}
     >
-      
       {serviceList.map((service, index) => {
         const title =
-  i18n.language === 'hi'
-    ? service.hi
-    : i18n.language === 'mr'
-    ? service.mr
-    : i18n.language === 'gu'
-    ? service.gu
-    : service.en;
-
+          i18n.language === "hi"
+            ? service.hi
+            : i18n.language === "mr"
+            ? service.mr
+            : i18n.language === "gu"
+            ? service.gu
+            : service.en;
 
         return (
           <Card
-  key={index}
-  onClick={() => handleClick(service)}
-  sx={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    p: "4px",
-    borderRadius: 2,
-    boxShadow: 3,
-// border: '1px solid #1b75d2',
-// backgroundColor: getBackgroundColor(service.en),
-    cursor: 'pointer',
-
-    animation: 'softBlink 10s infinite',
-
-    '@keyframes softBlink': {
-      '0%': {
-        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-        transform: 'scale(1)',
-      },
-      '50%': {
-        boxShadow: '0 8px 20px rgba(0,0,0,0.5)',
-        transform: 'scale(1.03)',
-      },
-      '100%': {
-        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-        transform: 'scale(1)',
-      },
-    },
-
-    transition: 'all 0.25s ease',
-
-    '&:hover': {
-      animation: 'none',
-      transform: 'scale(1.07)',
-    },
-
-    '&:active': {
-      transform: 'scale(0.96)',
-    },
-  }}
->
-
+            key={index}
+            onClick={() => handleClick(service)}
+            sx={{
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: 3,
+              cursor: "pointer",
+              background:
+                "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+              border: "1px solid #e3eefc",
+              boxShadow: "0 8px 22px rgba(15, 23, 42, 0.08)",
+              transition: "all 0.28s ease",
+              minHeight: { xs: 108, sm: 118, md: 124 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              px: 1,
+              py: 1.2,
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(135deg, rgba(25,118,210,0.06) 0%, transparent 60%)",
+                pointerEvents: "none",
+              },
+              "&:hover": {
+                transform: "translateY(-6px) scale(1.02)",
+                boxShadow: "0 18px 32px rgba(25, 118, 210, 0.16)",
+                borderColor: "#90caf9",
+              },
+              "&:active": {
+                transform: "scale(0.98)",
+              },
+            }}
+          >
             <CardContent
               sx={{
+                position: "relative",
+                zIndex: 1,
                 p: 0,
-                pb: '0 !important', // ✅ overrides MUI default
-                textAlign: 'center',
+                pb: "0 !important",
+                textAlign: "center",
+                width: "100%",
               }}
             >
-              {service.icon}
-              <Typography fontWeight={600} fontSize={13}>
+              <Box
+                sx={{
+                  width: { xs: 52, sm: 58 },
+                  height: { xs: 52, sm: 58 },
+                  mx: "auto",
+                  mb: 1,
+                  borderRadius: "18px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    "linear-gradient(180deg, #eef6ff 0%, #e3f2fd 100%)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.65)",
+                }}
+              >
+                {service.icon}
+              </Box>
+
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: { xs: 11.5, sm: 12.5, md: 13 },
+                  lineHeight: 1.35,
+                  color: "#1e293b",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  minHeight: { xs: 30, sm: 34 },
+                  px: 0.3,
+                }}
+              >
                 {title}
               </Typography>
             </CardContent>
@@ -347,7 +375,8 @@ const serviceList =
         );
       })}
     </Box>
-  );
+  </Box>
+);
 };
 
 export default ServiceBoxGrid;
