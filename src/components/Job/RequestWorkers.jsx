@@ -410,7 +410,7 @@ return (
             lineHeight: 1.7,
           }}
         >
-          Please enter complete job details so workers or suppliers can understand your requirement clearly.
+          Please enter complete details so workers or suppliers can understand your requirement clearly.
         </Typography>
       </Box>
 
