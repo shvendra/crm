@@ -1708,7 +1708,7 @@ const isPageLoading = requirementsLoading || agentsLoading;
         >
           Verified Agents
         </Typography>
-        <Typography
+        {/* <Typography
           sx={{
             fontSize: "0.84rem",
             color: "#64748b",
@@ -1716,7 +1716,7 @@ const isPageLoading = requirementsLoading || agentsLoading;
           }}
         >
           Trusted manpower suppliers and verified workforce providers near you
-        </Typography>
+        </Typography> */}
       </Box>
 
       <Box
