@@ -5956,227 +5956,292 @@ backgroundImage: {
           </DialogContent>
         </Dialog>
 
-        <Dialog
-          open={requirementTypeOpen}
-          onClose={handleRequirementClose}
-          fullScreen={fullScreen}
-          TransitionComponent={Transition}
-          fullWidth
-          maxWidth="xs"
-          PaperProps={{
-            sx: {
-              borderRadius: fullScreen ? 0 : "20px",
-              boxShadow: 6,
-              bgcolor: "#fafafa",
-              width: fullScreen ? "100%" : 420,
-              ...(fullScreen
-                ? {
-                    position: "fixed",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    m: 0,
-                    borderRadius: 0,
-                  }
-                : {
-                    m: "auto",
-                    position: "relative",
-                  }),
+<Dialog
+  open={requirementTypeOpen}
+  onClose={handleRequirementClose}
+  fullScreen={fullScreen}
+  TransitionComponent={Transition}
+  fullWidth
+  maxWidth="xs"
+  PaperProps={{
+    sx: {
+      overflow: "hidden",
+      borderRadius: fullScreen ? 0 : "24px",
+      boxShadow: "0 24px 60px rgba(15, 23, 42, 0.22)",
+      bgcolor: "#ffffff",
+      width: fullScreen ? "100%" : 440,
+      border: "1px solid #e2e8f0",
+      ...(fullScreen
+        ? {
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            m: 0,
+            borderRadius: 0,
+          }
+        : {
+            m: "auto",
+            position: "relative",
+          }),
+    },
+  }}
+>
+  {/* Header */}
+  <Box
+    sx={{
+      px: 3,
+      pt: 2.5,
+      pb: 2,
+      background: "linear-gradient(90deg, #1976d2 0%, #185a9d 100%)",
+      color: "#fff",
+      textAlign: "center",
+      borderBottom: "1px solid rgba(255,255,255,0.1)",
+    }}
+  >
+    <DialogTitle
+      sx={{
+        p: 0,
+        fontWeight: 800,
+        fontSize: { xs: "1.05rem", sm: "1.15rem" },
+        color: "#fff",
+        lineHeight: 1.2,
+      }}
+    >
+      {t("selectRequirementType")}
+    </DialogTitle>
+
+    <Typography
+      sx={{
+        mt: 0.8,
+        fontSize: "0.84rem",
+        color: "rgba(255,255,255,0.88)",
+      }}
+    >
+      Choose the type of requirement you want to post
+    </Typography>
+  </Box>
+
+  {/* Content */}
+  <DialogContent
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 2,
+      mt: 0,
+      px: 3,
+      py: 2.5,
+      background:
+        "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+    }}
+  >
+    <RadioGroup
+      value={requirementType}
+      onChange={handleRequirementSelect}
+      sx={{ width: "100%", gap: 1.1 }}
+    >
+      {[
+        { label: t("dailyWages"), value: "Daily_Wages" },
+        { label: t("contractBased"), value: "Contract_Based" },
+        { label: t("SupplyBased"), value: "Supply_Based" },
+        { label: t("officeStaff"), value: "Office_Staff" },
+      ].map((option) => (
+        <FormControlLabel
+          key={option.value}
+          value={option.value}
+          control={
+            <Radio
+              sx={{
+                color: "#1976d2",
+                "&.Mui-checked": {
+                  color: "#1976d2",
+                },
+              }}
+            />
+          }
+          label={
+            <span
+              style={{
+                fontSize: "15px",
+                fontWeight: 600,
+                color: "#1e293b",
+              }}
+            >
+              {option.label}
+            </span>
+          }
+          sx={{
+            mx: 0,
+            borderRadius: "16px",
+            border:
+              requirementType === option.value
+                ? "1.5px solid #1976d2"
+                : "1px solid #e2e8f0",
+            background:
+              requirementType === option.value
+                ? "linear-gradient(90deg, #eff6ff 0%, #e3f2fd 100%)"
+                : "#ffffff",
+            px: 1.8,
+            py: 0.9,
+            transition: "all 0.28s ease",
+            boxShadow:
+              requirementType === option.value
+                ? "0 8px 20px rgba(25,118,210,0.12)"
+                : "0 2px 8px rgba(15,23,42,0.04)",
+            "&:hover": {
+              backgroundColor:
+                requirementType === option.value ? undefined : "#f8fafc",
+              borderColor: "#90caf9",
             },
           }}
-        >
-          {/* ---- Header ---- */}
-          <DialogTitle
-            sx={{
-              textAlign: "center",
-              fontWeight: 700,
-              fontSize: "18px",
-              pt: 2,
-              pb: 0,
-              color: "#333",
-            }}
-          >
-            {t("selectRequirementType")}
-          </DialogTitle>
+        />
+      ))}
+    </RadioGroup>
 
-          {/* ---- Content ---- */}
-          <DialogContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 2,
-              mt: 2,
-              px: 3,
-            }}
-          >
-            <RadioGroup
-              value={requirementType}
-              onChange={handleRequirementSelect}
-              sx={{ width: "100%", gap: 0 }}
-            >
-              {[
-                { label: t("dailyWages"), value: "Daily_Wages" },
-                { label: t("contractBased"), value: "Contract_Based" },
-                { label: t("SupplyBased"), value: "Supply_Based" },
-                { label: t("officeStaff"), value: "Office_Staff" },
-              ].map((option) => (
-                <FormControlLabel
-                  key={option.value}
-                  value={option.value}
-                  control={
-                    <Radio
-                      sx={{
-                        color: "#1976d2",
-                        "&.Mui-checked": {
-                          color: "#1976d2",
-                        },
-                      }}
-                    />
-                  }
-                  label={
-                    <span
-                      style={{
-                        fontSize: "15px",
-                        fontWeight: 500,
-                        color: "#333",
-                      }}
-                    >
-                      {option.label}
-                    </span>
-                  }
-                  sx={{
-                    mx: 0,
-                    backgroundColor:
-                      requirementType === option.value ? "#e3f2fd" : "#fff",
-                    borderRadius: "12px",
-                    border:
-                      requirementType === option.value
-                        ? "1.5px solid #1976d2"
-                        : "1px solid #e0e0e0",
-                    px: 2,
-                    py: 1,
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "#f5f5f5",
-                    },
-                  }}
-                />
-              ))}
-            </RadioGroup>
+    {/* Dynamic Info Section */}
+    <Box
+      sx={{
+        mt: 1,
+        p: 2.5,
+        borderRadius: 4,
+        width: "100%",
+        background: (() => {
+          switch (requirementType) {
+            case "Daily_Wages":
+              return "linear-gradient(135deg, #e3f2fd, #bbdefb)";
+            case "Contract_Based":
+              return "linear-gradient(135deg, #fff3e0, #ffe0b2)";
+            case "Supply_Based":
+              return "linear-gradient(135deg, #e0f7fa, #b2ebf2)";
+            case "Office_Staff":
+              return "linear-gradient(135deg, #ede7f6, #d1c4e9)";
+            default:
+              return "linear-gradient(135deg, #f8fafc, #eef2f7)";
+          }
+        })(),
+        textAlign: "center",
+        minHeight: fullScreen ? 220 : 190,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        transition: "all 0.35s ease",
+        boxShadow: "0 12px 28px rgba(15,23,42,0.10)",
+        border: "1px solid rgba(255,255,255,0.55)",
+      }}
+    >
+      <Box
+        sx={{
+          mb: 1.2,
+          fontSize: 60,
+          lineHeight: 1,
+          filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.10))",
+        }}
+      >
+        {requirementType === "Daily_Wages" && "💪"}
+        {requirementType === "Contract_Based" && "📄"}
+        {requirementType === "Supply_Based" && "🚚"}
+        {requirementType === "Office_Staff" && "💼"}
+        {!requirementType && "🧠"}
+      </Box>
 
-            {/* ---- Dynamic Info Section ---- */}
-            <Box
-              sx={{
-                mt: 2,
-                p: 2.5,
-                borderRadius: 3,
-                width: "100%",
-                background: (() => {
-                  switch (requirementType) {
-                    case "Daily_Wages":
-                      return "linear-gradient(135deg, #e3f2fd, #bbdefb)";
-                    case "Contract_Based":
-                      return "linear-gradient(135deg, #fff3e0, #ffe0b2)";
-                    case "Supply_Based":
-                      return "linear-gradient(135deg, #e0f7fa, #b2ebf2)";
-                    case "Office_Staff":
-                      return "linear-gradient(135deg, #ede7f6, #d1c4e9)";
-                    default:
-                      return "linear-gradient(135deg, #f5f5f5, #eeeeee)";
-                  }
-                })(),
-                textAlign: "center",
-                minHeight: fullScreen ? 220 : 180,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                transition: "all 0.4s ease",
-                boxShadow: 2,
-              }}
-            >
-              <Box sx={{ mb: 1, fontSize: 60 }}>
-                {requirementType === "Daily_Wages" && "💪"}
-                {requirementType === "Contract_Based" && "📄"}
-                {requirementType === "Supply_Based" && "🚚"}
-                {requirementType === "Office_Staff" && "💼"}
-                {!requirementType && "🧠"}
-              </Box>
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 800,
+          color: "#1f2937",
+          fontSize: { xs: "1rem", sm: "1.08rem" },
+        }}
+      >
+        {requirementType
+          ? {
+              Daily_Wages: "Daily Wage Workers",
+              Contract_Based: "Contract-Based Projects",
+              Supply_Based: "Supply and Labour Supply",
+              Office_Staff: "Office & Admin Staff",
+            }[requirementType]
+          : "Select Requirement Type"}
+      </Typography>
 
-              <Typography variant="h6" sx={{ fontWeight: 700, color: "#333" }}>
-                {requirementType
-                  ? {
-                      Daily_Wages: "Daily Wage Workers",
-                      Contract_Based: "Contract-Based Projects",
-                      Supply_Based: "Supply and Labour Supply",
-                      Office_Staff: "Office & Admin Staff",
-                    }[requirementType]
-                  : "Select Requirement Type"}
-              </Typography>
+      <Typography
+        variant="body2"
+        sx={{
+          mt: 1,
+          color: "#475569",
+          maxWidth: 290,
+          lineHeight: 1.55,
+          fontSize: "0.88rem",
+          fontWeight: 500,
+        }}
+      >
+        {requirementType
+          ? {
+              Daily_Wages:
+                "Hire skilled or unskilled workers for daily site work and short-term labour needs.",
+              Contract_Based:
+                "Get manpower teams for time-bound projects, contracts, and planned work execution.",
+              Supply_Based:
+                "Connect for worker supply, bulk labour needs, and manpower arrangement support.",
+              Office_Staff:
+                "Hire professional office, admin, and support staff for business operations.",
+            }[requirementType]
+          : "Choose an option above to see details and continue with the right requirement type."}
+      </Typography>
+    </Box>
+  </DialogContent>
 
-              <Typography
-                variant="body2"
-                sx={{ mt: 1, color: "#555", maxWidth: 280, lineHeight: 1.4 }}
-              >
-                {requirementType
-                  ? {
-                      Daily_Wages:
-                        "Hire skilled/unskilled workers for daily site work.",
-                      Contract_Based:
-                        "Get teams for time-bound projects and contracts.",
-                      Supply_Based:
-                        "Partner for bulk manpower or supply agreements.",
-                      Office_Staff:
-                        "Hire professional staff for office operations.",
-                    }[requirementType]
-                  : "Choose an option above to see details."}
-              </Typography>
-            </Box>
-          </DialogContent>
+  {/* Footer */}
+  <DialogActions
+    sx={{
+      justifyContent: "space-between",
+      px: 3,
+      pb: 2.5,
+      pt: 1.2,
+      backgroundColor: "#fff",
+      borderTop: "1px solid #eef2f7",
+    }}
+  >
+    <Button
+      onClick={handleRequirementClose}
+      sx={{
+        color: "#475569",
+        backgroundColor: "#f8fafc",
+        borderRadius: "12px",
+        textTransform: "none",
+        px: 3,
+        py: 1,
+        fontWeight: 700,
+        border: "1px solid #e2e8f0",
+        "&:hover": {
+          backgroundColor: "#eef2f7",
+        },
+      }}
+    >
+      Cancel
+    </Button>
 
-          {/* ---- Footer ---- */}
-          <DialogActions
-            sx={{
-              justifyContent: "space-between",
-              px: 3,
-              pb: 2.5,
-              pt: 1,
-            }}
-          >
-            <Button
-              onClick={handleRequirementClose}
-              sx={{
-                color: "#555",
-                backgroundColor: "#f5f5f5",
-                borderRadius: "10px",
-                textTransform: "none",
-                px: 3,
-                py: 1,
-                fontWeight: 500,
-                "&:hover": { backgroundColor: "#e0e0e0" },
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleConfirmReqType}
-              disabled={!requirementType}
-              variant="contained"
-              sx={{
-                borderRadius: "10px",
-                textTransform: "none",
-                px: 3,
-                py: 1,
-                fontWeight: 600,
-                backgroundColor: "#1976d2",
-                "&:hover": { backgroundColor: "#115293" },
-              }}
-            >
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
+    <Button
+      onClick={handleConfirmReqType}
+      disabled={!requirementType}
+      variant="contained"
+      sx={{
+        borderRadius: "12px",
+        textTransform: "none",
+        px: 3,
+        py: 1,
+        fontWeight: 800,
+        background: "linear-gradient(90deg, #1976d2 0%, #185a9d 100%)",
+        boxShadow: "0 10px 24px rgba(25,118,210,0.24)",
+        "&:hover": {
+          background: "linear-gradient(90deg, #1669bb 0%, #144e87 100%)",
+        },
+      }}
+    >
+      Confirm
+    </Button>
+  </DialogActions>
+</Dialog>
 
         <AgentAssignModal
           open={assignOpenModal}
