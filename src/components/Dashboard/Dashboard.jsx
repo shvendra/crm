@@ -201,7 +201,7 @@ const currentLang = i18n.language || "en";
               state: user.state,
               page: pageNumber,
               status: ["Verified"], // or ["Verified", "Unverified"]
-              limit: 25,
+              limit: 50,
             },
             withCredentials: true,
           }
@@ -1573,251 +1573,317 @@ const isPageLoading = requirementsLoading || agentsLoading;
                       {currentReq.length === 0 ||
                       currentReq.every((req) => req.status === "Assigned") ? (
                         <Grid item xs={12}>
-                          <Box
-                            display="flex"
-                            flexWrap="wrap"
-                            justifyContent="center"
-                            sx={{
-                              gap: 0,
-                              rowGap: 0,
-                            }}
-                          >
-                            {agentloading && <CircularProgress />}
-                            {displayedAgents.map((agent, idx) => (
-                              <Box
-                                key={idx}
-                                sx={{
-                                  // width: {
-                                  //   xs: '25%',
-                                  //   sm: 'auto',
-                                  // },
-                                  // flex: {
-                                  //   xs: '0 0 25%',
-                                  //   sm: '1 0 auto',
-                                  // },
-                                  boxSizing: "border-box",
-                                  p: "2px",
-                                }}
-                              >
-                                {/* Agent Card */}
-                                <Box
-                                // sx={{
-                                //   width: '100%',
-                                //   minWidth: 0,
-                                //   borderRadius: 2,
-                                //   backgroundColor: '#fff',
-                                //   boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                //   position: 'relative',
-                                //   textAlign: 'center',
-                                //   px: 1,
-                                //   py: 1,
-                                // }}
-                                sx={{
-                                  mt: "8px"
-                                }}
-                                >
-                                  <Stack
-                                    alignItems="center"
-                                    spacing={0.5}
-                                    onClick={() =>
-                                      navigate("/verified-agents", {
-                                        state: {
-                                          agentId: agent._id,
-                                          source: "verified_agents",
-                                        },
-                                      })
-                                    }
-                                    sx={{
-                                      cursor: "pointer",
-                                      position: "relative",
-                                    }}
-                                  >
-                                    {/* Avatar Wrapper (IMPORTANT) */}
-                                    <Box sx={{ position: "relative" }}>
-                                      <Avatar
-                                        src={
-                                          agent?.profilePhoto
-                                            ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
-                                                /([^:]\/)\/+/g,
-                                                "$1"
-                                              )
-                                            : "/usericon.png"
-                                        }
-                                        alt={agent.name}
-                                        sx={{
-                                          width: 48,
-                                          height: 48,
-                                          // animation: `${blinkAnimationagent} 1.5s infinite`,
-                                          border: "2px solid #1976d2",
-                                        }}
-                                      />
+  <Box
+    sx={{
+      borderRadius: 4,
+      background:
+        "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+      border: "1px solid #e3eefc",
+      boxShadow: "0 12px 40px rgba(25, 118, 210, 0.08)",
+      px: { xs: 1.2, sm: 2, md: 2.5 },
+      py: { xs: 1.5, sm: 2, md: 2.5 },
+      overflow: "hidden",
+    }}
+  >
+    {/* Header */}
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        mb: 2,
+        flexWrap: "wrap",
+        gap: 1,
+      }}
+    >
+      <Box>
+        <Typography
+          sx={{
+            fontSize: { xs: "1rem", sm: "1.1rem" },
+            fontWeight: 800,
+            color: "#0f172a",
+            lineHeight: 1.2,
+          }}
+        >
+          Verified Agents
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "0.84rem",
+            color: "#64748b",
+            mt: 0.4,
+          }}
+        >
+          Trusted manpower suppliers and verified workforce providers near you
+        </Typography>
+      </Box>
 
-                                      {/* Verified Badge */}
-                                      <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: -2,
-                    right: -2,
-                    backgroundColor: "#185a9d",
-                    borderRadius: "50%",
-                    width: 22,
-                    height: 22,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "2px solid white",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
-                    color: "#fff",
-                    fontSize: 16,
-                    fontWeight: 700,
-                  }}
-                >
-                  ✔
-                </Box>
-                                    </Box>
+      <Box
+        sx={{
+          px: 1.4,
+          py: 0.7,
+          borderRadius: "999px",
+          bgcolor: "#e8f1fd",
+          color: "#185a9d",
+          fontSize: "0.8rem",
+          fontWeight: 700,
+        }}
+      >
+        {totalAgents + 300}+ Agents
+      </Box>
+    </Box>
 
-                                    {/* Name */}
-                                    <Typography
-                                      variant="body2"
-                                      fontWeight={600}
-                                      noWrap
-                                      sx={{
-                                        color: "darkgreen",
-                                        fontSize: "0.7rem",
-                                        maxWidth: "100%",
-                                      }}
-                                    >
-                                      {agent.name?.split(" ")[0]?.slice(0, 8) ||
-                                        "-"}
-                                    </Typography>
+    {/* Agents Grid */}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "repeat(4, minmax(0, 1fr))",
+          sm: "repeat(5, minmax(0, 1fr))",
+          md: "repeat(6, minmax(0, 1fr))",
+          lg: "repeat(8, minmax(0, 1fr))",
+          xl: "repeat(10, minmax(0, 1fr))",
+        },
+        gap: { xs: 1, sm: 1.2, md: 1.5 },
+      }}
+    >
+      {agentloading && (
+        <Box
+          sx={{
+            gridColumn: "1 / -1",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 140,
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
 
-                                    {/* Masked Number */}
-                                    <Typography
-                                      variant="caption"
-                                      sx={{
-                                        color: "blue",
-                                        fontSize: "0.68rem",
-                                        wordBreak: "break-word",
-                                      }}
-                                    >
-                                      {getRandom10DigitNumber()}
-                                    </Typography>
+      {displayedAgents.map((agent, idx) => (
+        <Box
+          key={idx}
+          onClick={() =>
+            navigate("/verified-agents", {
+              state: {
+                agentId: agent._id,
+                source: "verified_agents",
+              },
+            })
+          }
+          sx={{
+            cursor: "pointer",
+            borderRadius: 3,
+            p: { xs: 1, sm: 1.2 },
+            background: "#fff",
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 6px 18px rgba(15, 23, 42, 0.06)",
+            transition: "all 0.25s ease",
+            textAlign: "center",
+            "&:hover": {
+              transform: "translateY(-4px)",
+              boxShadow: "0 14px 28px rgba(25, 118, 210, 0.16)",
+              borderColor: "#90caf9",
+            },
+          }}
+        >
+          <Stack alignItems="center" spacing={0.8} sx={{ position: "relative" }}>
+            {/* Avatar */}
+            <Box sx={{ position: "relative" }}>
+              <Avatar
+                src={
+                  agent?.profilePhoto
+                    ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
+                        /([^:]\/)\/+/g,
+                        "$1"
+                      )
+                    : "/usericon.png"
+                }
+                alt={agent.name}
+                sx={{
+                  width: { xs: 52, sm: 58 },
+                  height: { xs: 52, sm: 58 },
+                  border: "2.5px solid #1976d2",
+                  boxShadow: "0 8px 20px rgba(25, 118, 210, 0.18)",
+                }}
+              />
 
-                                    {/* Rating */}
-                                    <Box
-                                      mt={0.5}
-                                      display="flex"
-                                      justifyContent="center"
-                                    >
-                                      {Array.from({ length: 5 }, (_, i) => {
-                                        const rating = +(
-                                          4 + Math.random()
-                                        ).toFixed(1);
-                                        const fullStar =
-                                          i + 1 <= Math.floor(rating);
-                                        const halfStar =
-                                          rating % 1 !== 0 &&
-                                          i + 1 === Math.ceil(rating);
+              {/* Verified Badge */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: -3,
+                  right: -3,
+                  background: "linear-gradient(135deg, #1976d2 0%, #185a9d 100%)",
+                  borderRadius: "50%",
+                  width: 22,
+                  height: 22,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "2px solid white",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+                  color: "#fff",
+                  fontSize: 13,
+                  fontWeight: 800,
+                }}
+              >
+                ✔
+              </Box>
+            </Box>
 
-                                        return (
-                                          <StarIcon
-                                            key={i}
-                                            sx={{
-                                              fontSize: "12px",
-                                              color: fullStar
-                                                ? rating >= 4
-                                                  ? "#4caf50"
-                                                  : "#ffc107"
-                                                : halfStar
-                                                  ? "#ffb300"
-                                                  : "#e0e0e0",
-                                            }}
-                                          />
-                                        );
-                                      })}
-                                    </Box>
-                                  </Stack>
-                                </Box>
-                              </Box>
-                            ))}
+            {/* Name */}
+            <Typography
+              variant="body2"
+              fontWeight={700}
+              noWrap
+              sx={{
+                color: "#14532d",
+                fontSize: { xs: "0.72rem", sm: "0.76rem" },
+                maxWidth: "100%",
+              }}
+            >
+              {agent.name?.split(" ")[0]?.slice(0, 8) || "-"}
+            </Typography>
 
-                            {/* +More Card */}
-                            {!showAll && verifiedAgents.length > 20 && (
-                              <Box
-                                onClick={() => navigate("/verified-agents")}
-                                sx={{
-                                  boxSizing: "border-box",
-                                  p: "2px",
-                                  cursor: "pointer",
-                                  "&:hover": {
-                                    backgroundColor: "#e0e0e0",
-                                  },
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    width: "100%",
-                                    height: "100%",
-                                    mt: "2px",
-                                    p: "4px", // ✅ small padding for all screens
-                                    borderRadius: 2,
-                                    // backgroundColor: '#f0f0f0',
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                                    display: "flex",
-                                    alignItems: "center", // ✅ horizontal center
-                                    justifyContent: "center", // ✅ vertical center
-                                    flexDirection: "column",
-                                    textAlign: "center", // ✅ text alignment safety
-                                  }}
-                                >
-                                  <Typography
-                                    variant="h6"
-                                    fontWeight={700}
-                                    color="primary"
-                                  >
-                                    +{totalAgents+300 - 8} More
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    color="text.secondary"
-                                  >
-                                    Verified Agents
-                                  </Typography>
-                                </Box>
-                              </Box>
-                            )}
-                          </Box>
-                          {hasMore && (
-                      <Box sx={{ textAlign: "center", mt: 3 }}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={handleLoadMore}
-                          disabled={loading}
-                          sx={{
-                            borderRadius: "30px",
-                            textTransform: "none",
-                            fontWeight: 600,
-                            px: 4,
-                            py: 1.2,
-                            boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
-                            letterSpacing: "0.5px",
-                            transition: "all 0.3s ease",
-                            "&:hover": {
-                              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.25)",
-                              transform: "translateY(-2px)",
-                            },
-                            "&:active": {
-                              transform: "scale(0.98)",
-                              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                            },
-                          }}
-                        >
-                          {loading ? "Loading…" : "Load More"}
-                        </Button>
-                      </Box>
-                    )}
-                        </Grid>
+            {/* Masked Number */}
+            <Typography
+              variant="caption"
+              sx={{
+                color: "#2563eb",
+                fontSize: { xs: "0.66rem", sm: "0.7rem" },
+                wordBreak: "break-word",
+                fontWeight: 600,
+              }}
+            >
+              {getRandom10DigitNumber()}
+            </Typography>
+
+            {/* Rating */}
+            <Box
+              mt={0.2}
+              display="flex"
+              justifyContent="center"
+              sx={{
+                px: 0.8,
+                py: 0.4,
+                borderRadius: "999px",
+                bgcolor: "#f8fafc",
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              {Array.from({ length: 5 }, (_, i) => {
+                const rating = +(4 + Math.random()).toFixed(1);
+                const fullStar = i + 1 <= Math.floor(rating);
+                const halfStar =
+                  rating % 1 !== 0 && i + 1 === Math.ceil(rating);
+
+                return (
+                  <StarIcon
+                    key={i}
+                    sx={{
+                      fontSize: "12px",
+                      color: fullStar
+                        ? rating >= 4
+                          ? "#22c55e"
+                          : "#f59e0b"
+                        : halfStar
+                        ? "#fbbf24"
+                        : "#e5e7eb",
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          </Stack>
+        </Box>
+      ))}
+
+      {/* +More Card */}
+      {!showAll && verifiedAgents.length > 20 && (
+        <Box
+          onClick={() => navigate("/verified-agents")}
+          sx={{
+            cursor: "pointer",
+            borderRadius: 3,
+            p: { xs: 1, sm: 1.2 },
+            background: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
+            border: "1px dashed #60a5fa",
+            boxShadow: "0 6px 18px rgba(37, 99, 235, 0.10)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            minHeight: { xs: 118, sm: 132 },
+            transition: "all 0.25s ease",
+            "&:hover": {
+              transform: "translateY(-4px)",
+              boxShadow: "0 14px 28px rgba(37, 99, 235, 0.16)",
+              background: "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
+            },
+          }}
+        >
+          <Box>
+            <Typography
+              sx={{
+                fontSize: { xs: "1rem", sm: "1.15rem" },
+                fontWeight: 800,
+                color: "#185a9d",
+                lineHeight: 1.2,
+              }}
+            >
+              +{totalAgents + 300 - 8} More
+            </Typography>
+            <Typography
+              sx={{
+                mt: 0.5,
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                color: "#475569",
+              }}
+            >
+              Verified Agents
+            </Typography>
+          </Box>
+        </Box>
+      )}
+    </Box>
+
+    {/* Load More */}
+    {hasMore && (
+      <Box sx={{ textAlign: "center", mt: 3 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleLoadMore}
+          disabled={loading}
+          sx={{
+            minWidth: 170,
+            borderRadius: "999px",
+            textTransform: "none",
+            fontWeight: 700,
+            fontSize: "0.95rem",
+            px: 4,
+            py: 1.2,
+            background: "linear-gradient(90deg, #1976d2 0%, #185a9d 100%)",
+            boxShadow: "0 8px 20px rgba(25, 118, 210, 0.28)",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              boxShadow: "0 12px 28px rgba(25, 118, 210, 0.35)",
+              transform: "translateY(-2px)",
+            },
+            "&:active": {
+              transform: "scale(0.98)",
+            },
+          }}
+        >
+          {loading ? "Loading…" : "Load More"}
+        </Button>
+      </Box>
+    )}
+  </Box>
+</Grid>
                       ) : (
                         currentReq
                           .filter(
