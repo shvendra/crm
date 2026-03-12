@@ -1396,160 +1396,238 @@ const isPageLoading = requirementsLoading || agentsLoading;
                     )}
                     <ServiceBoxGrid />
                     
-                    <Divider
-                      sx={{
-                        borderColor: "#1876d2",
-                        borderBottomWidth: "5px",
-                        opacity: 1.25,
-                      }}
-                    />
                     <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                      sx={{ p: 0, m: 0 }}
-                    >
-                      <Box>
-                        <Typography
-                          className="dash-head"
-                          variant="h6"
-                          sx={{ mb: 0, p: 0, ml: "3px", lineHeight: 1.2 }}
-                        >
-                          {user?.isSubscribed === false ||
-                          currentReq.length === 0 ||
-                          currentReq.every(
-                            (req) => req.status === "Assigned"
-                          ) ? (
-                            <>
-                              {t("agentnearyoudash")}
-                              <Box
-                                component="span"
-                                sx={{
-                                  display: "block",
-                                  color: "lightgray",
-                                  fontSize: "0.9rem",
-                                }}
-                              >
-                                {t("reqpostdash")}
-                              </Box>
-                            </>
-                          ) : (
-                            <>
-                              {t("myRequirement")}
-                              <Box
-                                component="span"
-                                sx={{
-                                  display: "block",
-                                  color: "lightgray",
-                                  fontSize: "0.9rem",
-                                }}
-                              >
-                                {t("reqpostdash")}
-                              </Box>
-                            </>
-                          )}
-                        </Typography>
-                      </Box>
+  sx={{
+    borderRadius: 3,
+    overflow: "hidden",
+    background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+    border: "1px solid #dbeafe",
+    boxShadow: "0 10px 28px rgba(25, 118, 210, 0.08)",
+    mb: 1.5,
+  }}
+>
+  <Divider
+    sx={{
+      borderColor: "#1876d2",
+      borderBottomWidth: "4px",
+      opacity: 1,
+    }}
+  />
 
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        sx={{ p: 0, m: 0 }}
-                      >
-                        {/* Left Section: History + Refresh */}
-                        <Stack
-                          direction="row"
-                          spacing={0.5}
-                          sx={{ pb: "12px", mr: "7px" }}
-                        >
-                          {/* History Button */}
-                          <Box
-                            display="flex"
-                            flexDirection="column"
-                            alignItems="center"
-                            sx={{ gap: 0 }}
-                          >
-                            <IconButton
-                              onClick={() => navigate("/history")}
-                              aria-label="History"
-                              color="primary"
-                              sx={{ p: 0, m: 0 }}
-                            >
-                              <HistoryIcon sx={{ p: 0, m: 0 }} />
-                            </IconButton>
-                            <Typography
-                              variant="caption"
-                              sx={{ lineHeight: 0.4 }}
-                            >
-                              {t("history")}
-                            </Typography>
-                          </Box>
+  <Box
+    display="flex"
+    alignItems="center"
+    justifyContent="space-between"
+    sx={{
+      px: 1.2,
+      py: 1.1,
+      gap: 1,
+    }}
+  >
+    {/* Left title section */}
+    <Box sx={{ minWidth: 0 }}>
+      <Typography
+        className="dash-head"
+        variant="h6"
+        sx={{
+          mb: 0,
+          p: 0,
+          ml: "3px",
+          lineHeight: 1.15,
+          fontWeight: 800,
+          fontSize: { xs: "1rem", sm: "1.1rem" },
+          color: "#0f172a",
+        }}
+      >
+        {user?.isSubscribed === false ||
+        currentReq.length === 0 ||
+        currentReq.every((req) => req.status === "Assigned") ? (
+          <>
+            {t("agentnearyoudash")}
+            <Box
+              component="span"
+              sx={{
+                display: "block",
+                color: "#64748b",
+                fontSize: "0.82rem",
+                fontWeight: 500,
+                mt: 0.35,
+              }}
+            >
+              {t("reqpostdash")}
+            </Box>
+          </>
+        ) : (
+          <>
+            {t("myRequirement")}
+            <Box
+              component="span"
+              sx={{
+                display: "block",
+                color: "#64748b",
+                fontSize: "0.82rem",
+                fontWeight: 500,
+                mt: 0.35,
+              }}
+            >
+              {t("reqpostdash")}
+            </Box>
+          </>
+        )}
+      </Typography>
+    </Box>
 
-                          {/* Refresh Button */}
-                          <Box
-                            display="flex"
-                            flexDirection="column"
-                            alignItems="center"
-                            sx={{ gap: 0 }}
-                          >
-                            <IconButton
-                              aria-label="Refresh"
-                              color="primary"
-                              onClick={() => {
-                                toast.success("Refreshed");
-                                setTimeout(() => {
-                                  fetchRequirements();
-                                }, 500);
-                              }}
-                              sx={{ p: 0, m: 0 }}
-                            >
-                              <RefreshIcon sx={{ p: 0, m: 0 }} />
-                            </IconButton>
-                            <Typography
-                              variant="caption"
-                              sx={{ lineHeight: 0.4 }}
-                            >
-                              {t("refresh")}
-                            </Typography>
-                          </Box>
-                        </Stack>
+    {/* Right actions section */}
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      sx={{
+        p: 0,
+        m: 0,
+        gap: 1,
+        flexShrink: 0,
+      }}
+    >
+      {/* History + Refresh */}
+      <Stack
+        direction="row"
+        spacing={0.8}
+        sx={{
+          mr: "4px",
+          alignItems: "center",
+        }}
+      >
+        {/* History Button */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            px: 0.8,
+            py: 0.6,
+            borderRadius: 2,
+            backgroundColor: "#eff6ff",
+            border: "1px solid #dbeafe",
+            minWidth: 54,
+          }}
+        >
+          <IconButton
+            onClick={() => navigate("/history")}
+            aria-label="History"
+            color="primary"
+            sx={{
+              p: 0,
+              m: 0,
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
+            <HistoryIcon sx={{ p: 0, m: 0, fontSize: 20 }} />
+          </IconButton>
+          <Typography
+            variant="caption"
+            sx={{
+              mt: 0.3,
+              lineHeight: 1,
+              fontSize: "0.68rem",
+              fontWeight: 600,
+              color: "#334155",
+            }}
+          >
+            {t("history")}
+          </Typography>
+        </Box>
 
-                        {/* Right Section: Post Requirement Button */}
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          sx={{
-                            py: 0.2,
-                            px: 1.2,
+        {/* Refresh Button */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            px: 0.8,
+            py: 0.6,
+            borderRadius: 2,
+            backgroundColor: "#eff6ff",
+            border: "1px solid #dbeafe",
+            minWidth: 54,
+          }}
+        >
+          <IconButton
+            aria-label="Refresh"
+            color="primary"
+            onClick={() => {
+              toast.success("Refreshed");
+              setTimeout(() => {
+                fetchRequirements();
+              }, 500);
+            }}
+            sx={{
+              p: 0,
+              m: 0,
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
+            <RefreshIcon sx={{ p: 0, m: 0, fontSize: 20 }} />
+          </IconButton>
+          <Typography
+            variant="caption"
+            sx={{
+              mt: 0.3,
+              lineHeight: 1,
+              fontSize: "0.68rem",
+              fontWeight: 600,
+              color: "#334155",
+            }}
+          >
+            {t("refresh")}
+          </Typography>
+        </Box>
+      </Stack>
 
-                            fontSize: "0.75rem",
-                            lineHeight: 1,
-                            minHeight: "32px",
-                            borderRadius: "6px",
-                            borderColor: "#1b76d3",
-                            textTransform: "none",
-                            animation: `${blink} 1s infinite`,
-                            "&:hover": {
-                              borderColor: "black",
-                              backgroundColor: "rgba(0,0,0,0.08)",
-                            },
-                          }}
-                          startIcon={<AddCircleIcon sx={{ fontSize: 14 }} />}
-                          onClick={handleRequirementOpen}
-                        >
-                          {t("postRequirement")}
-                        </Button>
-                      </Box>
-                    </Box>
-                    <Divider
-                      sx={{
-                        // mb: 1,
-                        borderColor: "#1876d2",
-                        borderBottomWidth: "5px",
-                        opacity: 1.25,
-                      }}
-                    />
+      {/* Post Requirement Button */}
+      <Button
+        variant="contained"
+        size="small"
+        sx={{
+          py: 0.7,
+          px: 1.6,
+          fontSize: "0.76rem",
+          lineHeight: 1,
+          minHeight: "34px",
+          borderRadius: "10px",
+          textTransform: "none",
+          fontWeight: 700,
+          color: "#fff",
+          background: "linear-gradient(90deg, #1b76d3 0%, #185a9d 100%)",
+          boxShadow: "0 6px 18px rgba(27, 118, 211, 0.24)",
+          animation: `${blink} 1s infinite`,
+          "&:hover": {
+            background: "linear-gradient(90deg, #185a9d 0%, #144b80 100%)",
+            boxShadow: "0 8px 22px rgba(27, 118, 211, 0.30)",
+          },
+        }}
+        startIcon={<AddCircleIcon sx={{ fontSize: 15 }} />}
+        onClick={handleRequirementOpen}
+      >
+        {t("postRequirement")}
+      </Button>
+    </Box>
+  </Box>
+
+  <Divider
+    sx={{
+      borderColor: "#1876d2",
+      borderBottomWidth: "4px",
+      opacity: 1,
+    }}
+  />
+</Box>
                     {isPageLoading ? (
   /* 🔥 SINGLE LOADER FOR ENTIRE PAGE */
   <Box
