@@ -1706,7 +1706,7 @@ const isPageLoading = requirementsLoading || agentsLoading;
             lineHeight: 1.2,
           }}
         >
-          Verified Agents
+          Verified Agents/Workers
         </Typography>
         {/* <Typography
           sx={{
@@ -1730,7 +1730,7 @@ const isPageLoading = requirementsLoading || agentsLoading;
           fontWeight: 700,
         }}
       >
-        {totalAgents + 300}+ Agents
+        {totalAgents + 300}+ Agents/Workers
       </Box>
     </Box>
 
