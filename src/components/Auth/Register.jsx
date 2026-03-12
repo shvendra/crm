@@ -554,14 +554,41 @@ return (
 <Box
   sx={{
     width: "100%",
-    display: { xs: "none", md: "flex" }, // hide on mobile, show on md+
+    maxWidth: { xs: "100%", xl: 1400 },
+    display: "flex",
+    flexDirection: { xs: "column", xl: "row" },
+    alignItems: { xs: "stretch", xl: "center" },
     justifyContent: "center",
-    mb: { xs: 0, md: 2 },
+    gap: { xs: 0, xl: 4 },
+    px: { xs: 0, xl: 3 },
   }}
 >
-  <JobBanner isWebView={isWebView} />
+
+
+<Box
+  sx={{
+    display: { xs: "none", md: "flex" },
+    flex: { md: 1, xl: 1 },
+    maxWidth: { md: 420, lg: 520, xl: 760 },
+    minHeight: { md: "auto", lg: "80vh" },
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <Box
+    sx={{
+      width: "100%",
+      borderRadius: { md: "16px", xl: "20px" },
+      overflow: "hidden",
+      boxShadow: "0 16px 50px rgba(16,24,40,0.10)",
+      bgcolor: "#fff",
+    }}
+  >
+    <JobBanner isWebView={isWebView} />
+  </Box>
 </Box>
 
+  {/* Right Form */}
 <Container
   maxWidth="sm"
   disableGutters
@@ -569,7 +596,10 @@ return (
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    mt: 0
+    mt: 0,
+    flexShrink: 0,
+    ml: 0,
+    mr: 0,
   }}
 >
     <Box
@@ -1683,6 +1713,7 @@ return (
           </Dialog>
         </Box>
       </Container>
+      </Box>
     </Box>
   </>
 );

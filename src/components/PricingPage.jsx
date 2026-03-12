@@ -21,10 +21,10 @@ import config from "../config"; // adjust path if needed
 const EMPLOYER_PRIORITY = ["industry", "agency", "contractor", "individual"];
 
 const EMPLOYER_PRICING = {
-  individual: { "1m": 99, "6m": 499, "12m": 999 },
-  contractor: { "1m": 199, "6m": 1099, "12m": 1999 },
-  agency: { "1m": 299, "6m": 1499, "12m": 2900 },
-  industry: { "1m": 499, "6m": 2499, "12m": 4499 },
+  individual: { "1m": 199, "6m": 999, "12m": 1999 },
+  contractor: { "1m": 599, "6m": 2900, "12m": 4999 },
+  agency: { "1m": 599, "6m": 2900, "12m": 4999 },
+  industry: { "1m": 999, "6m": 3999, "12m": 5999 },
 };
 
 const EMPLOYER_LABELS = {

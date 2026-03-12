@@ -46,7 +46,7 @@ export default function JobBanner({ isWebView }) {
         </Box>
 
         {/* ORANGE SLANTED STRIP */}
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             right: "-40px",
@@ -57,7 +57,7 @@ export default function JobBanner({ isWebView }) {
             transform: "skewX(-30deg)",
             display: { xs: "none", md: "block" },
           }}
-        />
+        /> */}
       </Box>
 
       {/* RIGHT SECTION */}
