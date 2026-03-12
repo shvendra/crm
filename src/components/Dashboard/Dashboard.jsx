@@ -1215,185 +1215,208 @@ const isPageLoading = requirementsLoading || agentsLoading;
               <Grid item xs={12}>
                 <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
                   <CardContent className="dash-card-content">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexWrap: "wrap",
-                        pt: "6px",
-                      }}
-                    >
-                      <Location />
-                      {/* <DiwaliPopup /> */}
-                      {/* <RoleTabs
-                        availableRoles={availableRoles}
-                        currentUser={user}
-                        setUser={setUser}
-                      /> */}
-                     {/* <a
-                        href="tel:+917389791873"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            gap: 0.2,
-                            px: 1,
-                            py: 0.4,
-                            borderRadius: "12px",
-                            backgroundColor: "rgba(25,118,210,0.08)",
-                            transition: "0.3s",
-                            "&:hover": {
-                              backgroundColor: "rgba(25,118,210,0.15)",
-                            },
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1,
-                            }}
-                          >
-                            <SupportAgentIcon sx={{ color: "#1976d2" }} />
-                          
-                          
-                          </Box>
-                        </Box>
-                      </a>
-                      <a
-                        href="https://wa.me/15557193421"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            gap: 0.2,
-                            px: 1,
-                            py: 0.4,
-                            borderRadius: "12px",
-                            backgroundColor: "rgba(37, 211, 102, 0.08)",
-                            transition: "0.3s",
-                            "&:hover": {
-                              backgroundColor: "rgba(37, 211, 102, 0.15)",
-                            },
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1,
-                            }}
-                          >
-                            <WhatsAppIcon sx={{ color: "#25D366" }} />
-                           
-                           
-                          </Box>
-                        </Box>
-                      </a> */}
-                      {/* <a
-                        href="https://wa.me/15557193421"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            gap: 0.2,
-                            px: 1,
-                            py: 0.4,
-                            borderRadius: "12px",
-                            backgroundColor: "rgba(37, 211, 102, 0.08)",
-                            transition: "0.3s",
-                            "&:hover": {
-                              backgroundColor: "rgba(37, 211, 102, 0.15)",
-                            },
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              fontSize: 11,
-                              color: "#25D366",
-                              opacity: 0.8,
-                            }}
-                          >
-                            10:00 AM – 5:30 PM
-                          </Typography>
-                        </Box>
-                      </a> */}
-                    </Box>
-                    {user?.isSubscribed && user?.subscriptionExpery && (
-                      <SubscriptionPatti expiry={user.subscriptionExpery} />
-                    )}{" "}
-                    {user?.status === "Unverified" && (
-                      <>
-                        <Alert
-                          severity="error"
-                          sx={{
-                            mt: "4px",
-                            mb: "2px",
-                            backgroundColor: "#fff3cd",
-                            color: "#795548",
-                            borderLeft: "6px solid #ffa000",
-                            fontSize: "0.875rem",
-                            p: "6px 8px",
-                            display: "flex",
-                            alignItems: "center", // Center icon + text vertically
-                            "& .MuiAlert-icon": {
-                              alignItems: "center",
-                              marginTop: "0px",
-                            },
-                            "& .MuiAlert-message": {
-                              width: "100%",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center", // Center text horizontally
-                              gap: "4px",
-                              p: 0,
-                            },
-                          }}
-                        >
-                          {t("kycNotVerifiedMessage")}{" "}
-                          {t("kycVerificationInstructions")}{" "}
-                          <a
-                            onClick={() => navigateTo("/my/profile")}
-                            style={{
-                              color: "#d84315",
-                              fontWeight: "bold",
-                              textDecoration: "none",
-                              cursor: "pointer",
-                              transition: "color 0.3s ease",
-                              animation: "blink 1.5s infinite",
-                              textTransform: "none",
-                              "@keyframes blink": {
-                                "0%": { opacity: 1 },
-                                "50%": { opacity: 0.4 },
-                                "100%": { opacity: 1 },
-                              },
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.target.style.color = "#bf360c")
-                            }
-                            onMouseLeave={(e) =>
-                              (e.target.style.color = "#d84315")
-                            }
-                          >
-                            {t("upload")}
-                          </a>
-                        </Alert>
-                      </>
-                    )}
+                 <Box
+  sx={{
+    mt: 1,
+    mb: 1,
+    px: { xs: 1, sm: 1.2 },
+  }}
+>
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      gap: 1,
+      pt: "6px",
+      pb: 0.8,
+      px: 1,
+      borderRadius: 3,
+      background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+      border: "1px solid #dbeafe",
+      boxShadow: "0 8px 24px rgba(25, 118, 210, 0.08)",
+    }}
+  >
+    <Location />
+    {/* <DiwaliPopup /> */}
+    {/* <RoleTabs
+      availableRoles={availableRoles}
+      currentUser={user}
+      setUser={setUser}
+    /> */}
+    {/* <a
+      href="tel:+917389791873"
+      style={{ textDecoration: "none" }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.2,
+          px: 1,
+          py: 0.4,
+          borderRadius: "12px",
+          backgroundColor: "rgba(25,118,210,0.08)",
+          transition: "0.3s",
+          "&:hover": {
+            backgroundColor: "rgba(25,118,210,0.15)",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <SupportAgentIcon sx={{ color: "#1976d2" }} />
+        </Box>
+      </Box>
+    </a>
+    <a
+      href="https://wa.me/15557193421"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: "none" }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.2,
+          px: 1,
+          py: 0.4,
+          borderRadius: "12px",
+          backgroundColor: "rgba(37, 211, 102, 0.08)",
+          transition: "0.3s",
+          "&:hover": {
+            backgroundColor: "rgba(37, 211, 102, 0.15)",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <WhatsAppIcon sx={{ color: "#25D366" }} />
+        </Box>
+      </Box>
+    </a> */}
+    {/* <a
+      href="https://wa.me/15557193421"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: "none" }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.2,
+          px: 1,
+          py: 0.4,
+          borderRadius: "12px",
+          backgroundColor: "rgba(37, 211, 102, 0.08)",
+          transition: "0.3s",
+          "&:hover": {
+            backgroundColor: "rgba(37, 211, 102, 0.15)",
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: 11,
+            color: "#25D366",
+            opacity: 0.8,
+          }}
+        >
+          10:00 AM – 5:30 PM
+        </Typography>
+      </Box>
+    </a> */}
+  </Box>
+
+  {user?.isSubscribed && user?.subscriptionExpery && (
+    <Box sx={{ mt: 1 }}>
+      <SubscriptionPatti expiry={user.subscriptionExpery} />
+    </Box>
+  )}
+
+  {user?.status === "Unverified" && (
+    <Alert
+      severity="warning"
+      sx={{
+        mt: 1,
+        mb: 0.5,
+        borderRadius: 3,
+        border: "1px solid #fde68a",
+        borderLeft: "6px solid #f59e0b",
+        background:
+          "linear-gradient(90deg, rgba(255,248,220,1) 0%, rgba(255,251,235,1) 100%)",
+        color: "#7c2d12",
+        fontSize: "0.88rem",
+        boxShadow: "0 8px 20px rgba(245, 158, 11, 0.10)",
+        py: 0.8,
+        px: 1.2,
+        display: "flex",
+        alignItems: "center",
+        "& .MuiAlert-icon": {
+          alignItems: "center",
+          mt: "1px",
+          color: "#f59e0b",
+        },
+        "& .MuiAlert-message": {
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: "4px",
+          p: 0,
+          textAlign: "center",
+          lineHeight: 1.6,
+        },
+      }}
+    >
+      {t("kycNotVerifiedMessage")} {t("kycVerificationInstructions")}{" "}
+      <Box
+        component="span"
+        onClick={() => navigateTo("/my/profile")}
+        sx={{
+          color: "#d84315",
+          fontWeight: 800,
+          cursor: "pointer",
+          textDecoration: "none",
+          px: 0.6,
+          py: 0.15,
+          borderRadius: 1.5,
+          backgroundColor: "rgba(216, 67, 21, 0.08)",
+          animation: "blinkUpload 1.5s infinite",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            color: "#bf360c",
+            backgroundColor: "rgba(216, 67, 21, 0.14)",
+          },
+          "@keyframes blinkUpload": {
+            "0%": { opacity: 1 },
+            "50%": { opacity: 0.45 },
+            "100%": { opacity: 1 },
+          },
+        }}
+      >
+        {t("upload")}
+      </Box>
+    </Alert>
+  )}
+</Box>
                     <ServiceBoxGrid />
                     
                     <Box
