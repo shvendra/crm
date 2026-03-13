@@ -768,7 +768,6 @@ return (
     maxWidth: { xs: "100%", md: 460 },
     bgcolor: "#fff",
     borderRadius: { xs: 0, md: "14px" },
-    boxShadow: { xs: "none", md: "0 10px 40px rgba(16,24,40,0.08)" },
     px: { xs: 0, sm: 0, md: 0 },
     py: { xs: 0, sm: 0, md: 0 },
     minHeight: { xs: "auto", md: "auto" },
