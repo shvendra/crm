@@ -1351,70 +1351,73 @@ const isPageLoading = requirementsLoading || agentsLoading;
   )}
 
   {user?.status === "Unverified" && (
-    <Alert
-      severity="warning"
-      sx={{
-        mt: 1,
-        mb: 0.5,
-        borderRadius: 3,
-        border: "1px solid #fde68a",
-        borderLeft: "6px solid #f59e0b",
-        background:
-          "linear-gradient(90deg, rgba(255,248,220,1) 0%, rgba(255,251,235,1) 100%)",
-        color: "#7c2d12",
-        fontSize: "0.88rem",
-        boxShadow: "0 8px 20px rgba(245, 158, 11, 0.10)",
-        py: 0.8,
-        px: 1.2,
-        display: "flex",
-        alignItems: "center",
-        "& .MuiAlert-icon": {
-          alignItems: "center",
-          mt: "1px",
-          color: "#f59e0b",
-        },
-        "& .MuiAlert-message": {
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: "4px",
-          p: 0,
-          textAlign: "center",
-          lineHeight: 1.6,
-        },
-      }}
-    >
-      {t("kycNotVerifiedMessage")} {t("kycVerificationInstructions")}{" "}
-      <Box
-        component="span"
-        onClick={() => navigateTo("/my/profile")}
-        sx={{
-          color: "#d84315",
-          fontWeight: 800,
-          cursor: "pointer",
-          textDecoration: "none",
-          px: 0.6,
-          py: 0.15,
-          borderRadius: 1.5,
-          backgroundColor: "rgba(216, 67, 21, 0.08)",
-          animation: "blinkUpload 1.5s infinite",
-          transition: "all 0.3s ease",
-          "&:hover": {
-            color: "#bf360c",
-            backgroundColor: "rgba(216, 67, 21, 0.14)",
-          },
-          "@keyframes blinkUpload": {
-            "0%": { opacity: 1 },
-            "50%": { opacity: 0.45 },
-            "100%": { opacity: 1 },
-          },
-        }}
-      >
-        {t("upload")}
-      </Box>
-    </Alert>
+<Alert
+  severity="warning"
+  sx={{
+    mt: 1,
+    mb: 0.5,
+    borderRadius: 3,
+    border: "1px solid #fde68a",
+    borderLeft: "6px solid #f59e0b",
+    background:
+      "linear-gradient(90deg, rgba(255,248,220,1) 0%, rgba(255,251,235,1) 100%)",
+    color: "#7c2d12",
+    fontSize: "0.88rem",
+    boxShadow: "0 8px 20px rgba(245, 158, 11, 0.10)",
+    py: 0.8,
+    px: 1.2,
+    display: "flex",
+    alignItems: "center",
+
+    "& .MuiAlert-icon": {
+      alignItems: "center",
+      mt: "1px",
+      color: "#f59e0b",
+    },
+
+    "& .MuiAlert-message": {
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-start",   // ✅ left aligned
+      flexWrap: "nowrap",             // ✅ prevent line break
+      gap: "6px",
+      p: 0,
+      textAlign: "left",
+      lineHeight: 1.6,
+    },
+  }}
+>
+  {t("kycNotVerifiedMessage")} {t("kycVerificationInstructions")}
+
+  <Box
+    component="span"
+    onClick={() => navigateTo("/my/profile")}
+    sx={{
+      color: "#d84315",
+      fontWeight: 800,
+      cursor: "pointer",
+      textDecoration: "none",
+      px: 0.6,
+      py: 0.15,
+      borderRadius: 1.5,
+      backgroundColor: "rgba(216, 67, 21, 0.08)",
+      animation: "blinkUpload 1.5s infinite",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: "#bf360c",
+        backgroundColor: "rgba(216, 67, 21, 0.14)",
+      },
+      "@keyframes blinkUpload": {
+        "0%": { opacity: 1 },
+        "50%": { opacity: 0.45 },
+        "100%": { opacity: 1 },
+      },
+    }}
+  >
+    {t("upload")}
+  </Box>
+</Alert>
   )}
 </Box>
                     <ServiceBoxGrid />

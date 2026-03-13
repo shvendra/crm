@@ -76,7 +76,7 @@ const buildPlans = (employerType) => {
       title: "Starter",
       duration: "1 Month",
       price: `₹${pricing["1m"]}`,
-      workers: 50,
+      workers: 100,
       posts: 25,
       benefits: [
         "Filter workers by a specific location",
@@ -90,7 +90,7 @@ const buildPlans = (employerType) => {
       title: "Growth",
       duration: "6 Months",
       price: `₹${pricing["6m"]}`,
-      workers: 300,
+      workers: 800,
       posts: 50,
       popular: true,
       benefits: [
@@ -105,7 +105,7 @@ const buildPlans = (employerType) => {
       title: "Premium",
       duration: "12 Months",
       price: `₹${pricing["12m"]}`,
-      workers: 600,
+      workers: 1600,
       posts: 75,
       benefits: [
         "Filter workers from any location across India",

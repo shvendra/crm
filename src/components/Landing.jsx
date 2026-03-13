@@ -71,18 +71,29 @@ const handleDecline = () => {
     if (isAuthorized && user) navigate("/dashboard");
   }, [isAuthorized, user, navigate]);
 
-const sliderImages = [
-  `${config.FILE_BASE_URL}/ImagesWeb/Industrial_Workers.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Construction_Workers.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Electrical_and_Wiring.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Painting_and_Finishing.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Fabrication_and_Welding.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Cleaning_and_Maintenance.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Household_Domestic.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Household_Services.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/Agriculture_Farm_Workers.jpg`,
-  `${config.FILE_BASE_URL}/ImagesWeb/General.jpg`,
-];
+const isDesktop = window.innerWidth >= 1024;
+
+const sliderImages = isDesktop
+  ? [
+      `${config.FILE_BASE_URL}/ImagesWeb/la.png`,
+      `${config.FILE_BASE_URL}/ImagesWeb/lb.png`,
+      `${config.FILE_BASE_URL}/ImagesWeb/lc.png`,
+      `${config.FILE_BASE_URL}/ImagesWeb/ld.png`,
+      `${config.FILE_BASE_URL}/ImagesWeb/le.png`,
+      `${config.FILE_BASE_URL}/ImagesWeb/lf.png`,
+    ]
+  : [
+      `${config.FILE_BASE_URL}/ImagesWeb/Industrial_Workers.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Construction_Workers.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Electrical_and_Wiring.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Painting_and_Finishing.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Fabrication_and_Welding.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Cleaning_and_Maintenance.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Household_Domestic.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Household_Services.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/Agriculture_Farm_Workers.jpg`,
+      `${config.FILE_BASE_URL}/ImagesWeb/General.jpg`,
+    ];
 
 
   const sliderSettings = {
@@ -144,7 +155,7 @@ const sliderImages = [
           sx={{
             width: "100%",
             height: "100%",
-            objectFit: { xs: "contain", md: "cover" },
+            // objectFit: { xs: "contain", md: "cover" },
             objectPosition: "center",
           }}
         />
