@@ -553,7 +553,7 @@ return (
 >
 <Box
   sx={{
-    // width: "100%",
+    width: "100%",
     maxWidth: "1400px",
     mx: "auto",
     display: "flex",
@@ -593,14 +593,13 @@ return (
 <Container
   maxWidth="sm"
   disableGutters
-  
   sx={{
     display: "flex",
     mt: 0,
     flexShrink: 0,
     ml: 0,
     mr: 0,
-    width: "fit-content",
+    width: { xs: "100%", md: "fit-content" },
     maxWidth: "none",
   }}
 >
@@ -763,16 +762,16 @@ return (
             style={{ display: "flex", flexDirection: "column" }}
           >
             {step === 1 && (
-             <Box
+<Box
   sx={{
     width: "100%",
     maxWidth: { xs: "100%", md: 460 },
     bgcolor: "#fff",
-    borderRadius: { xs: 0, md: "14px" }, // no rounded corners on phone
+    borderRadius: { xs: 0, md: "14px" },
     boxShadow: { xs: "none", md: "0 10px 40px rgba(16,24,40,0.08)" },
-    px: { xs: 2, sm: 3.5 },
-    py: { xs: 2.5, sm: 3.5 },
-    minHeight: { xs: "100vh", md: "auto" }, // full screen mobile
+    px: { xs: 0, sm: 0, md: 0 },
+    py: { xs: 0, sm: 0, md: 0 },
+    minHeight: { xs: "auto", md: "auto" },
     position: "relative",
   }}
 >
