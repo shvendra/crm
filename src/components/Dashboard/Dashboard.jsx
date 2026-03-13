@@ -6002,17 +6002,17 @@ backgroundImage: {
       borderBottom: "1px solid rgba(255,255,255,0.1)",
     }}
   >
-    <DialogTitle
-      sx={{
-        p: 0,
-        fontWeight: 800,
-        fontSize: { xs: "1.05rem", sm: "1.15rem" },
-        color: "#fff",
-        lineHeight: 1.2,
-      }}
-    >
-      {t("selectRequirementType")}
-    </DialogTitle>
+  <DialogTitle
+  sx={{
+    p: 0,
+    fontWeight: 800,
+    fontSize: { xs: "1.05rem", sm: "1.15rem" },
+    color: "#fff !important",
+    lineHeight: 1.2,
+  }}
+>
+  {t("selectRequirementType")}
+</DialogTitle>
 
     <Typography
       sx={{
