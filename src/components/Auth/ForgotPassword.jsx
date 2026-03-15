@@ -173,7 +173,7 @@ const ForgotPassword = () => {
         borderColor: '#b8c0cc',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#2bb7bb',
+        borderColor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
         borderWidth: '1px',
       },
     },
@@ -193,7 +193,7 @@ const ForgotPassword = () => {
       borderColor: '#b8c0cc',
     },
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#2bb7bb',
+      borderColor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
       borderWidth: '1px',
     },
   };
@@ -255,7 +255,7 @@ const ForgotPassword = () => {
                 fontSize: '1rem',
                 fontWeight: 700,
                 textTransform: 'none',
-                bgcolor: '#2bb7bb',
+                bgcolor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                 boxShadow: 'none',
                 '&:hover': {
                   bgcolor: '#24a3a7',
@@ -297,7 +297,7 @@ const ForgotPassword = () => {
                   component="button"
                   onClick={handleSendOtp}
                   sx={{
-                    color: '#2bb7bb',
+                    color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
                     fontWeight: 600,
@@ -321,7 +321,7 @@ const ForgotPassword = () => {
                 fontSize: '1rem',
                 fontWeight: 700,
                 textTransform: 'none',
-                bgcolor: '#2bb7bb',
+                bgcolor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                 boxShadow: 'none',
                 '&:hover': {
                   bgcolor: '#24a3a7',
@@ -397,7 +397,7 @@ const ForgotPassword = () => {
                 fontSize: '1rem',
                 fontWeight: 700,
                 textTransform: 'none',
-                bgcolor: '#2bb7bb',
+                bgcolor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                 boxShadow: 'none',
                 '&:hover': {
                   bgcolor: '#24a3a7',
@@ -542,12 +542,12 @@ const ForgotPassword = () => {
               If you face any issues while using the application, feel free to reach out:
               <br />
               Phone:{' '}
-              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+              <span style={{ color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)', fontWeight: 700 }}>
                 +91 7389791873
               </span>
               <br />
               Email:{' '}
-              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+              <span style={{ color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)', fontWeight: 700 }}>
                 support@bookmyworkers.com
               </span>
             </Typography>

@@ -496,7 +496,7 @@ minHeight: { xs: 46, md: 48 },
       borderColor: "#b8c0cc",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#2bb7bb",
+      borderColor: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
       borderWidth: "1px",
     },
   },
@@ -516,12 +516,12 @@ const authSelectSx = {
     borderColor: "#b8c0cc",
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#2bb7bb",
+    borderColor: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
     borderWidth: "1px",
   },
 };
 
-const roleCardSx = (selected, accent = "#2bb7bb") => ({
+const roleCardSx = (selected, accent = "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)") => ({
   mb: 1,
   p: 1.4,
   cursor: "pointer",
@@ -688,7 +688,17 @@ return (
               {step === 1 ? t("chooseCategory") : t("fillBasicInfo")}
             </Typography>
           </Box>
-{isWebView && (
+
+
+          <form
+            onSubmit={handleRegister}
+            id="employerRegistrationForm"
+            autoComplete="off"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            {step === 1 && (
+              <>
+              {isWebView && (
   <Box
     sx={{
       mb: 2.5,
@@ -754,14 +764,6 @@ return (
     </Typography>
   </Box>
 )}
-
-          <form
-            onSubmit={handleRegister}
-            id="employerRegistrationForm"
-            autoComplete="off"
-            style={{ display: "flex", flexDirection: "column" }}
-          >
-            {step === 1 && (
 <Box
   sx={{
     width: "100%",
@@ -787,7 +789,7 @@ return (
                             mr: 1.5,
                             color:
                               selectedUserType === "Job Seeker"
-                                ? "#2bb7bb"
+                                ? "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "#475467",
                           }}
                         />
@@ -845,8 +847,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -857,7 +859,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.skilledWorker
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.skilledWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -878,8 +880,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -890,7 +892,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.unskilledWorker
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.unskilledWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -911,8 +913,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -923,7 +925,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.domesticWorker
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.domesticWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -944,8 +946,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -956,7 +958,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.industrialWorker
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.industrialWorker ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -978,7 +980,7 @@ return (
                           sx={{
                             fontSize: 34,
                             mr: 1.5,
-                            color: selectedUserType === "Agent" ? "#2bb7bb" : "#475467",
+                            color: selectedUserType === "Agent" ? "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" : "#475467",
                           }}
                         />
                         <Typography
@@ -1033,8 +1035,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -1045,7 +1047,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.groupLabourSupplier
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.groupLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -1066,8 +1068,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -1078,7 +1080,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.skilledLabourSupplier
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.skilledLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -1099,8 +1101,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -1111,7 +1113,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.unskilledLabourSupplier
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.unskilledLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -1132,8 +1134,8 @@ return (
                                   }))
                                 }
                                 sx={{
-                                  color: "#2bb7bb",
-                                  "&.Mui-checked": { color: "#2bb7bb" },
+                                  color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                                  "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                                 }}
                               />
                             }
@@ -1144,7 +1146,7 @@ return (
                               py: 0.5,
                               borderRadius: "10px",
                               border: employerType.contractLabourSupplier
-                                ? "1px solid #2bb7bb"
+                                ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                                 : "1px solid #eaecf0",
                               bgcolor: employerType.contractLabourSupplier ? "#f0fbfb" : "#fff",
                               "& .MuiTypography-root": {
@@ -1171,7 +1173,7 @@ return (
                             fontSize: 34,
                             mr: 1.5,
                             color:
-                              selectedUserType === "Employer" ? "#2bb7bb" : "#475467",
+                              selectedUserType === "Employer" ? "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" : "#475467",
                           }}
                         />
                         <Typography
@@ -1228,8 +1230,8 @@ return (
                               }))
                             }
                             sx={{
-                              color: "#2bb7bb",
-                              "&.Mui-checked": { color: "#2bb7bb" },
+                              color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                              "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                             }}
                           />
                         }
@@ -1240,7 +1242,7 @@ return (
                           py: 0.5,
                           borderRadius: "10px",
                           border: employerType.individual
-                            ? "1px solid #2bb7bb"
+                            ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                             : "1px solid #eaecf0",
                           bgcolor: employerType.individual ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
@@ -1261,8 +1263,8 @@ return (
                               }))
                             }
                             sx={{
-                              color: "#2bb7bb",
-                              "&.Mui-checked": { color: "#2bb7bb" },
+                              color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                              "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                             }}
                           />
                         }
@@ -1273,7 +1275,7 @@ return (
                           py: 0.5,
                           borderRadius: "10px",
                           border: employerType.contractor
-                            ? "1px solid #2bb7bb"
+                            ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                             : "1px solid #eaecf0",
                           bgcolor: employerType.contractor ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
@@ -1294,8 +1296,8 @@ return (
                               }))
                             }
                             sx={{
-                              color: "#2bb7bb",
-                              "&.Mui-checked": { color: "#2bb7bb" },
+                              color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                              "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                             }}
                           />
                         }
@@ -1306,7 +1308,7 @@ return (
                           py: 0.5,
                           borderRadius: "10px",
                           border: employerType.agency
-                            ? "1px solid #2bb7bb"
+                            ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                             : "1px solid #eaecf0",
                           bgcolor: employerType.agency ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
@@ -1327,8 +1329,8 @@ return (
                               }))
                             }
                             sx={{
-                              color: "#2bb7bb",
-                              "&.Mui-checked": { color: "#2bb7bb" },
+                              color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
+                              "&.Mui-checked": { color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)" },
                             }}
                           />
                         }
@@ -1339,7 +1341,7 @@ return (
                           py: 0.5,
                           borderRadius: "10px",
                           border: employerType.industry
-                            ? "1px solid #2bb7bb"
+                            ? "1px solid linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)"
                             : "1px solid #eaecf0",
                           bgcolor: employerType.industry ? "#f0fbfb" : "#fff",
                           "& .MuiTypography-root": {
@@ -1389,7 +1391,7 @@ return (
   fontSize: "1rem",
   fontWeight: 700,
   textTransform: "none",
-  bgcolor: "#2bb7bb",
+  bgcolor: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
 }}
                 >
                   {t("next")}
@@ -1420,17 +1422,18 @@ return (
                     }}
                   >
                     Phone:{" "}
-                    <span style={{ color: "#2bb7bb", fontWeight: 700 }}>
+                    <span style={{ color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)", fontWeight: 700 }}>
                       +91 7389791873
                     </span>
                     <br />
                     Email:{" "}
-                    <span style={{ color: "#2bb7bb", fontWeight: 700 }}>
+                    <span style={{ color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)", fontWeight: 700 }}>
                       support@bookmyworkers.com
                     </span>
                   </Typography>
                 </Box>
               </Box>
+              </>
             )}
 
             {step === 2 && (
@@ -1493,7 +1496,7 @@ return (
                             minWidth: "auto",
                             px: 1.2,
                             fontSize: "0.8rem",
-                            color: isOtpVerified ? "#12b76a" : "#2bb7bb",
+                            color: isOtpVerified ? "#12b76a" : "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
                             fontWeight: 700,
                             textTransform: "none",
                           }}
@@ -1696,7 +1699,7 @@ return (
                     fontSize: "1rem",
                     fontWeight: 700,
                     textTransform: "none",
-                    bgcolor: "#2bb7bb",
+                    bgcolor: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
                     boxShadow: "none",
                     "&:hover": {
                       bgcolor: "#24a3a7",
@@ -1732,7 +1735,7 @@ return (
                     {t("byRegistering")}{" "}
                     <span
                       style={{
-                        color: "#2bb7bb",
+                        color: "linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)",
                         cursor: "pointer",
                         fontWeight: 600,
                       }}

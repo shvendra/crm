@@ -86,7 +86,7 @@ const Login = () => {
         borderColor: '#b8c0cc',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#2bb7bb',
+        borderColor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
         borderWidth: '1px',
       },
     },
@@ -229,7 +229,7 @@ const Login = () => {
               <Link
                 to="/forgot-password"
                 style={{
-                  color: '#2bb7bb',
+                  color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                   textDecoration: 'none',
                   fontSize: '0.88rem',
                   fontWeight: 600,
@@ -249,7 +249,7 @@ const Login = () => {
                 fontSize: '1rem',
                 fontWeight: 700,
                 textTransform: 'none',
-                bgcolor: '#2bb7bb',
+                bgcolor: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)',
                 boxShadow: 'none',
                 mb: 2.2,
                 '&:hover': {
@@ -290,12 +290,12 @@ const Login = () => {
               {t('contactsupport')}
               <br />
               Phone:{' '}
-              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+              <span style={{ color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)', fontWeight: 700 }}>
                 +91 7389791873
               </span>
               <br />
               Email:{' '}
-              <span style={{ color: '#2bb7bb', fontWeight: 700 }}>
+              <span style={{ color: 'linear-gradient(90deg, rgb(27, 118, 211) 0%, rgb(24, 90, 157) 100%)', fontWeight: 700 }}>
                 support@bookmyworkers.com
               </span>
             </Typography>
