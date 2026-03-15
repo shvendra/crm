@@ -208,11 +208,11 @@ const bottomNavItemStyle = {
     position="fixed"
   >
     <Toolbar
-      sx={{
-        pl: 0,
-        minHeight: { xs: 60, sm: 68 },
-        px: { xs: 1, sm: 2 },
-      }}
+      // sx={{
+      //   pl: 0,
+      //   minHeight: { xs: 60, sm: 68 },
+      //   px: { xs: 1, sm: 2 },
+      // }}
     >
       {/* Brand Name */}
       <Typography

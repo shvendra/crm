@@ -469,11 +469,11 @@ return (
             <Box
               sx={{
                 textAlign: "center",
-                mt: 4,
+                mt: 1,
                 mb: 8,
                 maxWidth: "340px",
                 mx: "auto",
-                p: 2,
+                p: 1,
                 borderRadius: "20px",
                 background:
                   "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%)",
@@ -487,15 +487,13 @@ return (
                   color: "#334155",
                   fontSize: "0.85rem",
                   fontWeight: 600,
-                  mb: 1.5,
-                  lineHeight: 1.5,
                 }}
               >
                 If you face any issues while using the application, feel free to
                 reach out:
               </Typography>
 
-              <Typography variant="body2" sx={{ fontSize: "0.82rem", lineHeight: 1.7 }}>
+              <Typography variant="body2" sx={{ fontSize: "0.82rem", }}>
                 <br />
                 Phone:{" "}
                 <span style={{ color: "#0f766e", fontWeight: 800 }}>
