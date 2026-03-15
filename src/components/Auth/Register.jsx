@@ -540,7 +540,7 @@ return (
   <>
   <Box
   sx={{
-    // minHeight: "100vh",
+    minHeight: "100vh",
     width: "100%",
     // bgcolor: { xs: "#fff", md: "#f2f4f7" },
     display: "flex",
@@ -549,6 +549,7 @@ return (
     justifyContent: { xs: "flex-start", md: "center" },
     px: { xs: 0, md: 2 },
     py: { xs: 0, md: 1 },
+    mb: 8,
   }}
 >
 <Box
