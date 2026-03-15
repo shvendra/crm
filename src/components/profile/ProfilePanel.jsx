@@ -387,104 +387,126 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
         </Grid>
       </Grid>
       <Dialog
-        open={openVerifyDialog}
-        onClose={() => setOpenVerifyDialog(false)}
-        maxWidth="lg"
-        fullWidth
-        sx={{
-          "& .MuiDialog-paper": {
-            width: "auto", // removes calc(100% - 64px)
-            maxWidth: "1200px", // or any value you want
-            m: "7px",
-          },
-        }}
-      >
-        {" "}
-        <DialogContent sx={{ textAlign: "center", p: 2 }}>
-          {/* <Box
+  open={openVerifyDialog}
+  onClose={() => setOpenVerifyDialog(false)}
+  maxWidth="lg"
+  fullWidth
+  sx={{
+    "& .MuiDialog-paper": {
+      width: "100%",
+      maxWidth: "980px",
+      m: { xs: 2, md: 3 },
+      borderRadius: "28px",
+      overflow: "hidden",
+      background:
+        "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+      boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
+      border: "1px solid rgba(148, 163, 184, 0.18)",
+    },
+  }}
+>
+  <DialogContent sx={{ p: 0 }}>
+    <Box
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
+        color: "#fff",
+      }}
+    >
+      <Box
         sx={{
           position: "absolute",
-          top: 12,
-          right: 12,
-          display: "flex",
-          gap: 1
+          inset: 0,
+          background:
+            "radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 28%), radial-gradient(circle at bottom left, rgba(255,255,255,0.10), transparent 30%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <Box
+        sx={{
+          position: "relative",
+          px: { xs: 2.5, md: 4 },
+          py: { xs: 3, md: 4 },
         }}
       >
-        <Button
-          size="small"
-          variant={popupLang === "hi" ? "contained" : "outlined"}
-          onClick={() => setPopupLang("hi")}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "center", md: "flex-start" },
+            gap: 3,
+          }}
         >
-          हिंदी
-        </Button>
-      
-        <Button
-          size="small"
-          variant={popupLang === "en" ? "contained" : "outlined"}
-          onClick={() => setPopupLang("en")}
-        >
-          EN
-        </Button>
-      </Box> */}
-
-          {/* Badge Icon */}
-
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2, mt: 2 }}>
+          {/* Left: Avatar + badge */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              minWidth: { md: 170 },
+            }}
+          >
             <Box
               sx={{
                 position: "relative",
-                p: 1,
+                p: 1.2,
                 borderRadius: "50%",
                 backdropFilter: "blur(12px)",
-                background: "rgba(255,255,255,0.25)",
-                border: "1px solid rgba(255,255,255,0.3)",
-                boxShadow: "0 12px 30px rgba(0,0,0,0.25)",
+                background: "rgba(255,255,255,0.12)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                boxShadow: "0 16px 40px rgba(0,0,0,0.28)",
               }}
             >
               <Avatar
                 src="/usericon.png"
                 sx={{
-                  width: 80,
-                  height: 80,
-                  border: "3px solid #4caf50",
+                  width: 96,
+                  height: 96,
+                  border: "4px solid rgba(255,255,255,0.95)",
+                  boxShadow: "0 10px 24px rgba(0,0,0,0.24)",
                 }}
               />
 
-              {/* Floating Verified Tag */}
               <Box
                 sx={{
                   position: "absolute",
                   top: -8,
-                  right: -10,
-                  background: "linear-gradient(135deg, #43cea2, #185a9d)",
-                  px: 1.2,
-                  py: 0.4,
-                  borderRadius: 12,
+                  right: -14,
+                  background:
+                    "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: "999px",
                   color: "#fff",
                   fontSize: 11,
-                  fontWeight: 700,
-                  boxShadow: "0 6px 14px rgba(0,0,0,0.3)",
+                  fontWeight: 800,
+                  letterSpacing: ".05em",
+                  boxShadow: "0 8px 18px rgba(0,0,0,0.28)",
                 }}
               >
                 VERIFIED
               </Box>
+
               <Box
                 sx={{
                   position: "absolute",
-                  bottom: -2,
-                  right: -2,
-                  backgroundColor: "#4caf50",
+                  bottom: 0,
+                  right: 0,
+                  width: 32,
+                  height: 32,
                   borderRadius: "50%",
-                  width: 28,
-                  height: 28,
+                  background:
+                    "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  border: "2px solid white",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
                   color: "#fff",
+                  border: "3px solid #fff",
+                  boxShadow: "0 8px 18px rgba(0,0,0,0.24)",
                   fontSize: 16,
-                  fontWeight: 700,
+                  fontWeight: 800,
                 }}
               >
                 ✔
@@ -492,118 +514,359 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
             </Box>
           </Box>
 
-          <Typography variant="body2" color="text.secondary" mb={2}>
-            {t("getVerifiedSubtitle")}
-          </Typography>
-
-          <Typography fontWeight={600}>{t("whyGetVerified")}</Typography>
-
-          {/* Benefits */}
-          <Box sx={{ textAlign: "left", mt: 2 }}>
-           <ul className="no-bullets">
-  <li>{t("verifiedBenefits.b1")}</li>
-  <li>{t("verifiedBenefits.b2")}</li>
-  <li>{t("verifiedBenefits.b3")}</li>
-  <li>{t("verifiedBenefits.b4")}</li>
-  <li>{t("verifiedBenefits.b5")}</li>
-  <li>{t("verifiedBenefits.b6")}</li>
-    <li>{t("verifiedBenefits.b7")}</li>
-  <li>{t("verifiedBenefits.b8")}</li>
-
-</ul>
-          </Box>
-
-
-{/* Price */}
-<Box
-  sx={{
-    mt: 2,
-    p: 1.5,
-    borderRadius: 2,
-    bgcolor: "#e8f5e9",
-    fontWeight: 700,
-    color: "success.main",
-    display: "flex",
-    alignItems: "center",
-    gap: 1,
-  }}
->
-  {t("verifiedFeeBox")}
-
-  {user?.role === "Agent" ? (
-    <>
-      {/* Old price */}
-      <span
-        style={{
-          textDecoration: "line-through",
-          color: "#9e9e9e",
-          fontWeight: 500,
-        }}
-      >
-        ₹499
-      </span>
-
-      {/* New price */}
-      <span
-        style={{
-          color: "#2e7d32",
-          fontWeight: 800,
-          fontSize: "1.1rem",
-        }}
-      >
-        ₹199
-      </span>
-    </>
-  ) : (
-<>      <span
-        style={{
-          textDecoration: "line-through",
-          color: "#9e9e9e",
-          fontWeight: 500,
-        }}
-      >
-        ₹199
-      </span>
-    <span
-      style={{
-        color: "#2e7d32",
-        fontWeight: 800,
-        fontSize: "1.1rem",
-      }}
-    >
-      ₹49
-    </span>
-    </>
-  )}
-</Box>
-
-
-          <Typography
-            variant="caption"
-            display="block"
-            mt={1}
-            color="text.secondary"
-          >
-            {t("verifiedFeeNote")}
-          </Typography>
-
-          {/* Action Buttons */}
-          <Box sx={{ display: "flex", gap: 1.5, mt: 3 }}>
-            <Button fullWidth variant="outlined" onClick={handleClose}>
-              {t("maybeLater")}
-            </Button>
-
-            <Button
-              fullWidth
-              variant="contained"
-              color="success"
-              onClick={handlePayment}
+          {/* Right: Content */}
+          <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
+            <Typography
+              sx={{
+                fontSize: { xs: "1.65rem", md: "2.1rem" },
+                fontWeight: 800,
+                lineHeight: 1.15,
+                mb: 1,
+              }}
             >
               {t("getVerifiedNow")}
-            </Button>
+            </Typography>
+
+            <Typography
+              sx={{
+                fontSize: { xs: ".95rem", md: "1rem" },
+                color: "rgba(255,255,255,0.84)",
+                maxWidth: 620,
+                mx: { xs: "auto", md: 0 },
+              }}
+            >
+              {t("getVerifiedSubtitle")}
+            </Typography>
+
+            <Box
+              sx={{
+                mt: 2.5,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                px: 1.5,
+                py: 0.9,
+                borderRadius: "999px",
+                background: "rgba(255,255,255,0.12)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <Box
+                sx={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  bgcolor: "#4ade80",
+                }}
+              />
+              <Typography sx={{ fontSize: ".88rem", fontWeight: 600 }}>
+                {t("whyGetVerified")}
+              </Typography>
+            </Box>
           </Box>
-        </DialogContent>
-      </Dialog>
+        </Box>
+      </Box>
+    </Box>
+
+    {/* Body */}
+    <Box
+      sx={{
+        px: { xs: 2.5, md: 4 },
+        py: { xs: 2.5, md: 3.5 },
+        background:
+          "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+      }}
+    >
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1.15fr 0.85fr" },
+          gap: 3,
+          alignItems: "start",
+        }}
+      >
+        {/* Benefits */}
+        <Box
+          sx={{
+            borderRadius: "22px",
+            border: "1px solid #e2e8f0",
+            background: "#fff",
+            p: { xs: 2, md: 2.5 },
+            boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "1.02rem",
+              fontWeight: 700,
+              color: "#0f172a",
+              mb: 2,
+            }}
+          >
+            {t("whyGetVerified")}
+          </Typography>
+
+          <Box
+            component="ul"
+            sx={{
+              listStyle: "none",
+              p: 0,
+              m: 0,
+              display: "grid",
+              gap: 1.2,
+            }}
+          >
+            {[
+              t("verifiedBenefits.b1"),
+              t("verifiedBenefits.b2"),
+              t("verifiedBenefits.b3"),
+              t("verifiedBenefits.b4"),
+              t("verifiedBenefits.b5"),
+              t("verifiedBenefits.b6"),
+              t("verifiedBenefits.b7"),
+              t("verifiedBenefits.b8"),
+            ].map((item, index) => (
+              <Box
+                component="li"
+                key={index}
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 1.2,
+                  p: 1.2,
+                  borderRadius: "14px",
+                  background:
+                    "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+                  border: "1px solid #e2e8f0",
+                }}
+              >
+                <Box
+                  sx={{
+                    minWidth: 24,
+                    width: 24,
+                    height: 24,
+                    borderRadius: "50%",
+                    background:
+                      "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                    color: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    mt: "2px",
+                    boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
+                  }}
+                >
+                  ✓
+                </Box>
+                <Typography
+                  sx={{
+                    color: "#334155",
+                    fontSize: ".95rem",
+                    lineHeight: 1.55,
+                    fontWeight: 500,
+                  }}
+                >
+                  {item}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Price card */}
+        <Box
+          sx={{
+            borderRadius: "22px",
+            overflow: "hidden",
+            border: "1px solid #dbeafe",
+            background: "#fff",
+            boxShadow: "0 12px 34px rgba(37, 99, 235, 0.08)",
+          }}
+        >
+          <Box
+            sx={{
+              p: 2.2,
+              background:
+                "linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%)",
+              borderBottom: "1px solid #dbeafe",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: "#0f172a",
+                mb: 0.5,
+              }}
+            >
+              {t("verifiedFeeBox")}
+            </Typography>
+
+            <Typography
+              sx={{
+                color: "#64748b",
+                fontSize: ".92rem",
+              }}
+            >
+              Unlock premium trust and better response from employers.
+            </Typography>
+          </Box>
+
+          <Box sx={{ p: 2.4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 1.2,
+                flexWrap: "wrap",
+                mb: 1.2,
+              }}
+            >
+              {user?.role === "Agent" ? (
+                <>
+                  <Typography
+                    component="span"
+                    sx={{
+                      textDecoration: "line-through",
+                      color: "#94a3b8",
+                      fontWeight: 600,
+                      fontSize: "1.05rem",
+                    }}
+                  >
+                    ₹499
+                  </Typography>
+
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: "#15803d",
+                      fontWeight: 900,
+                      fontSize: { xs: "2rem", md: "2.35rem" },
+                      lineHeight: 1,
+                    }}
+                  >
+                    ₹199
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    component="span"
+                    sx={{
+                      textDecoration: "line-through",
+                      color: "#94a3b8",
+                      fontWeight: 600,
+                      fontSize: "1.05rem",
+                    }}
+                  >
+                    ₹199
+                  </Typography>
+
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: "#15803d",
+                      fontWeight: 900,
+                      fontSize: { xs: "2rem", md: "2.35rem" },
+                      lineHeight: 1,
+                    }}
+                  >
+                    ₹49
+                  </Typography>
+                </>
+              )}
+            </Box>
+
+            <Typography
+              sx={{
+                color: "#475569",
+                fontSize: ".9rem",
+                lineHeight: 1.6,
+              }}
+            >
+              {t("verifiedFeeNote")}
+            </Typography>
+
+            <Box
+              sx={{
+                mt: 2.2,
+                p: 1.4,
+                borderRadius: "16px",
+                background:
+                  "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+                border: "1px dashed #cbd5e1",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: ".9rem",
+                  color: "#334155",
+                  fontWeight: 600,
+                  mb: 0.6,
+                }}
+              >
+                What you get:
+              </Typography>
+              <Typography sx={{ fontSize: ".88rem", color: "#64748b" }}>
+                Verified badge, better visibility, more trust, stronger profile
+                impression, and higher chances of getting direct connections.
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1.5,
+                mt: 3,
+                flexDirection: { xs: "column", sm: "row" },
+              }}
+            >
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={handleClose}
+                sx={{
+                  height: 48,
+                  borderRadius: "14px",
+                  textTransform: "none",
+                  fontWeight: 700,
+                  borderColor: "#cbd5e1",
+                  color: "#334155",
+                }}
+              >
+                {t("maybeLater")}
+              </Button>
+
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={handlePayment}
+                sx={{
+                  height: 48,
+                  borderRadius: "14px",
+                  textTransform: "none",
+                  fontWeight: 800,
+                  background:
+                    "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)",
+                  boxShadow: "0 14px 30px rgba(34,197,94,0.26)",
+                  "&:hover": {
+                    background:
+                      "linear-gradient(135deg, #15803d 0%, #16a34a 100%)",
+                  },
+                }}
+              >
+                {t("getVerifiedNow")}
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  </DialogContent>
+</Dialog>
     </Card>
   );
 }
