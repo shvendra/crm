@@ -302,6 +302,7 @@
   "TotalIncentive": "एकूण प्रोत्साहन",
   "incentive": "प्रोत्साहन",
   "BankAccount": "बँक खाते",
+      "BankInformation": "बँक माहिती",
   "IFSCCode": "IFSC कोड",
   "Withdraw": "पैसे काढा",
   "AddBankDetailsWarning": "कृपया पैसे काढण्यापूर्वी बँक तपशील जोडा व KYC पूर्ण करा.",

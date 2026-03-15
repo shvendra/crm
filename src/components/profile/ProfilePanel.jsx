@@ -466,7 +466,7 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
                     /([^:]\/)\/+/g,
                     "$1"
                   )
-                : ""
+                : "/usericon.png"
             }
                 sx={{
                   width: 96,

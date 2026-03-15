@@ -296,6 +296,7 @@
   "TotalIncentive": "उपलब्ध प्रोत्साहन",
   "incentive": "प्रोत्साहन",
   "BankAccount": "बैंक खाता",
+      "BankInformation": "बैंक जानकारी",
   "IFSCCode": "आईएफएससी कोड",
   "Withdraw": "निकासी करें",
   "AddBankDetailsWarning": "कृपया बैंक विवरण जोड़ें और निकासी से पहले केवाईसी पूरा करें।",

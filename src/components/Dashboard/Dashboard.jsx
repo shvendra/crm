@@ -6614,7 +6614,7 @@ src={
                     /([^:]\/)\/+/g,
                     "$1"
                   )
-                : ""
+                : "/usericon.png"
             }                        sx={{
                           width: 96,
                           height: 96,

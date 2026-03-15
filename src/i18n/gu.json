@@ -74,6 +74,7 @@
   "balance": "બેલેન્સ",
   "withdraw": "પૈસા ઉપાડો",
   "bankDetails": "બેંક વિગતો",
+    "BankInformation": "બેંક માહિતી",
   "ifscCode": "IFSC કોડ",
   "accountNumber": "એકાઉન્ટ નંબર",
   "maskedBankInfo": "તમારી બેંકની વિગતો સુરક્ષિત રીતે છુપાવવામાં આવી છે",
