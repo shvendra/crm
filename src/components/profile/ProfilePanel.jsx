@@ -460,7 +460,14 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
               }}
             >
               <Avatar
-                src="/usericon.png"
+                src={
+              user?.profilePhoto
+                ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
+                    /([^:]\/)\/+/g,
+                    "$1"
+                  )
+                : ""
+            }
                 sx={{
                   width: 96,
                   height: 96,
@@ -596,7 +603,7 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
             boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
           }}
         >
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: "1.02rem",
               fontWeight: 700,
@@ -605,7 +612,7 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
             }}
           >
             {t("whyGetVerified")}
-          </Typography>
+          </Typography> */}
 
           <Box
             component="ul"
@@ -620,8 +627,8 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
             {[
               t("verifiedBenefits.b1"),
               t("verifiedBenefits.b2"),
-              t("verifiedBenefits.b3"),
-              t("verifiedBenefits.b4"),
+              // t("verifiedBenefits.b3"),
+              // t("verifiedBenefits.b4"),
               t("verifiedBenefits.b5"),
               t("verifiedBenefits.b6"),
               t("verifiedBenefits.b7"),
@@ -790,7 +797,7 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
               {t("verifiedFeeNote")}
             </Typography>
 
-            <Box
+            {/* <Box
               sx={{
                 mt: 2.2,
                 p: 1.4,
@@ -814,7 +821,7 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
                 Verified badge, better visibility, more trust, stronger profile
                 impression, and higher chances of getting direct connections.
               </Typography>
-            </Box>
+            </Box> */}
 
             <Box
               sx={{
