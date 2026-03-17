@@ -49,6 +49,7 @@ import { SupportAgent } from "@mui/icons-material";
 import { keyframes } from "@emotion/react";
 import InviteForWorkHeader from "./InviteForWorkHeader";
 import Location from "../Location";
+import Collapse from "@mui/material/Collapse";
 const blink = keyframes`
   0%, 100% { background-color: transparent; }
   50% { background-color: rgba(9, 37, 35, 0.1); }
@@ -114,7 +115,7 @@ const Dashboard = ({ stream, index }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+const [showBenefits, setShowBenefits] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const availableRoles = JSON.parse(
     localStorage.getItem("availableRoles") || "[]",
@@ -6694,20 +6695,22 @@ src={
                       {t("getVerifiedSubtitle")}
                     </Typography>
 
-                    <Box
-                      sx={{
-                        mt: 2.5,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 1,
-                        px: 1.5,
-                        py: 0.9,
-                        borderRadius: "999px",
-                        background: "rgba(255,255,255,0.12)",
-                        border: "1px solid rgba(255,255,255,0.16)",
-                        backdropFilter: "blur(8px)",
-                      }}
-                    >
+<Box
+  sx={{
+    mt: 2.5,
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 1,
+    px: 1.5,
+    py: 0.9,
+    borderRadius: "999px",
+    background: "rgba(255,255,255,0.12)",
+    border: "1px solid rgba(255,255,255,0.16)",
+    backdropFilter: "blur(8px)",
+    cursor: isMobile ? "pointer" : "default",
+  }}
+  onClick={() => isMobile && setShowBenefits(!showBenefits)}
+>
                       <Box
                         sx={{
                           width: 10,
@@ -6716,9 +6719,9 @@ src={
                           bgcolor: "#4ade80",
                         }}
                       />
-                      <Typography sx={{ fontSize: ".88rem", fontWeight: 600 }}>
-                        {t("whyGetVerified")}
-                      </Typography>
+                    <Typography sx={{ fontSize: ".88rem", fontWeight: 600 }}>
+  {t("whyGetVerified")} {isMobile && (showBenefits ? "▲" : "▼")}
+</Typography>
                     </Box>
                   </Box>
                 </Box>
@@ -6751,84 +6754,163 @@ src={
                     boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
                   }}
                 >
-                  {/* <Typography
-                    sx={{
-                      fontSize: "1.02rem",
-                      fontWeight: 700,
-                      color: "#0f172a",
-                      mb: 2,
-                    }}
-                  >
-                    {t("whyGetVerified")}
-                  </Typography> */}
-
-                  <Box
-                    component="ul"
-                    sx={{
-                      listStyle: "none",
-                      p: 0,
-                      m: 0,
-                      display: "grid",
-                      gap: 1.2,
-                    }}
-                  >
-                    {[
-                      t("verifiedBenefits.b1"),
-                      t("verifiedBenefits.b2"),
-                      // t("verifiedBenefits.b3"),
-                      // t("verifiedBenefits.b4"),
-                      t("verifiedBenefits.b5"),
-                      t("verifiedBenefits.b6"),
-                      t("verifiedBenefits.b7"),
-                      t("verifiedBenefits.b8"),
-                    ].map((item, index) => (
-                      <Box
-                        component="li"
-                        key={index}
-                        sx={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: 1.2,
-                          p: 1.2,
-                          borderRadius: "14px",
-                          background:
-                            "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
-                          border: "1px solid #e2e8f0",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            minWidth: 24,
-                            width: 24,
-                            height: 24,
-                            borderRadius: "50%",
-                            background:
-                              "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
-                            color: "#fff",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 13,
-                            fontWeight: 800,
-                            mt: "2px",
-                            boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
-                          }}
-                        >
-                          ✓
-                        </Box>
-                        <Typography
-                          sx={{
-                            color: "#334155",
-                            fontSize: ".95rem",
-                            lineHeight: 1.55,
-                            fontWeight: 500,
-                          }}
-                        >
-                          {item}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Box>
+                 
+{isMobile ? (
+  <Collapse in={showBenefits} unmountOnExit>
+    <Box
+      sx={{
+        borderRadius: "22px",
+        border: "1px solid #e2e8f0",
+        background: "#fff",
+        p: 2,
+        boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+      }}
+    >
+      <Box
+        component="ul"
+        sx={{
+          listStyle: "none",
+          p: 0,
+          m: 0,
+          display: "grid",
+          gap: 1.2,
+        }}
+      >
+        {[
+          t("verifiedBenefits.b1"),
+          t("verifiedBenefits.b2"),
+          t("verifiedBenefits.b5"),
+          t("verifiedBenefits.b6"),
+          t("verifiedBenefits.b7"),
+          t("verifiedBenefits.b8"),
+        ].map((item, index) => (
+          <Box
+            component="li"
+            key={index}
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 1.2,
+              p: 1.2,
+              borderRadius: "14px",
+              background:
+                "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+              border: "1px solid #e2e8f0",
+            }}
+          >
+            <Box
+              sx={{
+                minWidth: 24,
+                width: 24,
+                height: 24,
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 13,
+                fontWeight: 800,
+                mt: "2px",
+                boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
+              }}
+            >
+              ✓
+            </Box>
+            <Typography
+              sx={{
+                color: "#334155",
+                fontSize: ".95rem",
+                lineHeight: 1.55,
+                fontWeight: 500,
+              }}
+            >
+              {item}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  </Collapse>
+) : (
+  <Box
+    sx={{
+      borderRadius: "22px",
+      border: "1px solid #e2e8f0",
+      background: "#fff",
+      p: { xs: 2, md: 2.5 },
+      boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+    }}
+  >
+    <Box
+      component="ul"
+      sx={{
+        listStyle: "none",
+        p: 0,
+        m: 0,
+        display: "grid",
+        gap: 1.2,
+      }}
+    >
+      {[
+        t("verifiedBenefits.b1"),
+        t("verifiedBenefits.b2"),
+        t("verifiedBenefits.b5"),
+        t("verifiedBenefits.b6"),
+        t("verifiedBenefits.b7"),
+        t("verifiedBenefits.b8"),
+      ].map((item, index) => (
+        <Box
+          component="li"
+          key={index}
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 1.2,
+            p: 1.2,
+            borderRadius: "14px",
+            background:
+              "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+            border: "1px solid #e2e8f0",
+          }}
+        >
+          <Box
+            sx={{
+              minWidth: 24,
+              width: 24,
+              height: 24,
+              borderRadius: "50%",
+              background:
+                "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 13,
+              fontWeight: 800,
+              mt: "2px",
+              boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
+            }}
+          >
+            ✓
+          </Box>
+          <Typography
+            sx={{
+              color: "#334155",
+              fontSize: ".95rem",
+              lineHeight: 1.55,
+              fontWeight: 500,
+            }}
+          >
+            {item}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+  </Box>
+)}
+               
                 </Box>
 
                 {/* Price card */}

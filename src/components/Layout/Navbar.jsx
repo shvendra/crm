@@ -208,11 +208,11 @@ const bottomNavItemStyle = {
     position="fixed"
   >
     <Toolbar
-      // sx={{
-      //   pl: 0,
-      //   minHeight: { xs: 60, sm: 68 },
-      //   px: { xs: 1, sm: 2 },
-      // }}
+      sx={{
+        pl: 0,
+        minHeight: { xs: 60, sm: 68 },
+        px: { xs: 1, sm: 2 },
+      }}
     >
       {/* Brand Name */}
       <Typography
@@ -222,7 +222,7 @@ const bottomNavItemStyle = {
           alignItems: "center",
           flexGrow: 1,
           color: "white",
-          marginLeft: 1,
+          // marginLeft: 1,
         }}
       >
         {isAuthorized && (
@@ -314,6 +314,7 @@ const bottomNavItemStyle = {
           aria-label="menu"
           onClick={toggleDrawer}
           sx={{
+            mr: 0,
             bgcolor: "rgba(255,255,255,0.08)",
             border: "1px solid rgba(255,255,255,0.12)",
             "&:hover": {
