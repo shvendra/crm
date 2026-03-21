@@ -2,7 +2,7 @@ const config = {
   API_BASE_URL:
     window.location.hostname === "localhost"
       ? "http://localhost:5000"
-      : "https://www.bookmyworkers.com",
+      : "https://api.www.bookmyworkers.com",
 
 FILE_BASE_URL:
   window.location.hostname === "localhost"
