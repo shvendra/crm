@@ -733,57 +733,97 @@ function ProfilePanel({ userData, user, profilePreview, handleFileChange }) {
               }}
             >
               {user?.role === "Agent" ? (
-                <>
-                  <Typography
-                    component="span"
-                    sx={{
-                      textDecoration: "line-through",
-                      color: "#94a3b8",
-                      fontWeight: 600,
-                      fontSize: "1.05rem",
-                    }}
-                  >
-                    ₹499
-                  </Typography>
+             <>
+  {/* Old Price */}
+  <Typography
+    component="span"
+    sx={{
+      textDecoration: "line-through",
+      color: "#94a3b8",
+      fontWeight: 600,
+      fontSize: "1.05rem",
+      mr: 1,
+    }}
+  >
+    ₹499
+  </Typography>
 
-                  <Typography
-                    component="span"
-                    sx={{
-                      color: "#15803d",
-                      fontWeight: 900,
-                      fontSize: { xs: "2rem", md: "2.35rem" },
-                      lineHeight: 1,
-                    }}
-                  >
-                    ₹199
-                  </Typography>
-                </>
+  {/* New Price */}
+  <Typography
+    component="span"
+    sx={{
+      color: "#15803d",
+      fontWeight: 900,
+      fontSize: { xs: "2rem", md: "2.35rem" },
+      lineHeight: 1,
+      mr: 1,
+    }}
+  >
+    ₹199
+  </Typography>
+
+  {/* Discount Badge */}
+  <Typography
+    component="span"
+    sx={{
+      backgroundColor: "#dcfce7",
+      color: "#15803d",
+      fontWeight: 700,
+      fontSize: "0.85rem",
+      px: 1.2,
+      py: 0.3,
+      borderRadius: "999px",
+    }}
+  >
+    60% OFF
+  </Typography>
+</>
               ) : (
-                <>
-                  <Typography
-                    component="span"
-                    sx={{
-                      textDecoration: "line-through",
-                      color: "#94a3b8",
-                      fontWeight: 600,
-                      fontSize: "1.05rem",
-                    }}
-                  >
-                    ₹199
-                  </Typography>
+           <>
+  {/* Old Price */}
+  <Typography
+    component="span"
+    sx={{
+      textDecoration: "line-through",
+      color: "#94a3b8",
+      fontWeight: 600,
+      fontSize: "1.05rem",
+      mr: 1,
+    }}
+  >
+    ₹199
+  </Typography>
 
-                  <Typography
-                    component="span"
-                    sx={{
-                      color: "#15803d",
-                      fontWeight: 900,
-                      fontSize: { xs: "2rem", md: "2.35rem" },
-                      lineHeight: 1,
-                    }}
-                  >
-                    ₹49
-                  </Typography>
-                </>
+  {/* New Price */}
+  <Typography
+    component="span"
+    sx={{
+      color: "#15803d",
+      fontWeight: 900,
+      fontSize: { xs: "2rem", md: "2.35rem" },
+      lineHeight: 1,
+      mr: 1,
+    }}
+  >
+    ₹49
+  </Typography>
+
+  {/* Discount Badge */}
+  <Typography
+    component="span"
+    sx={{
+      backgroundColor: "#dcfce7",
+      color: "#15803d",
+      fontWeight: 700,
+      fontSize: "0.85rem",
+      px: 1.2,
+      py: 0.3,
+      borderRadius: "999px",
+    }}
+  >
+    75% OFF • Save ₹150
+  </Typography>
+</>
               )}
             </Box>
 
