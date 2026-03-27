@@ -420,7 +420,15 @@ const ForgotPassword = () => {
       sx={{
         minHeight: '100vh',
         width: '100%',
-        bgcolor: { xs: '#fff', md: '#f2f4f7' },
+              // 👇 background logic
+    backgroundColor: { xs: "#fff", md: "transparent" },
+    backgroundImage: {
+      xs: "none",
+      md: "url('/app/images/background/urgent_worker.png')", // your image path
+    },
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
         display: 'flex',
         alignItems: { xs: 'flex-start', md: 'center' },
         justifyContent: 'center',

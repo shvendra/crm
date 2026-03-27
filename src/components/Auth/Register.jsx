@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../utils/axiosConfig";
 import TermsAndConditions from "./TermsAndConditions";
 import JobBanner from "./JobBanner";
+import Swal from "sweetalert2";
+
 import {
   Visibility,
   VisibilityOff,
@@ -13,7 +15,7 @@ import {
   Language,
 } from "@mui/icons-material";
 import CircularProgress from "@mui/material/CircularProgress";
-import toast from "react-hot-toast";
+import toast from "../../utils/toast"
 import { Context } from "../../main";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslation } from "react-i18next";
@@ -103,6 +105,7 @@ const Register = () => {
     return () => clearTimeout(timer);
   }, [cooldownTimer, isCooldown]);
   useEffect(() => {
+    
     i18n.changeLanguage("hi");
   }, []);
 
@@ -253,7 +256,7 @@ const handleVerifyPhone = async () => {
   }
 
   if (!name) {
-    toast.error(t("enterNameFirst"));
+    toast.warning(t("enterNameFirst"));
     return;
   }
 
@@ -542,7 +545,16 @@ return (
   sx={{
     minHeight: "100vh",
     width: "100%",
-    // bgcolor: { xs: "#fff", md: "#f2f4f7" },
+       // 👇 background logic
+    backgroundColor: { xs: "#fff", md: "transparent" },
+    backgroundImage: {
+      xs: "none",
+      md: "url('/app/images/background/urgent_worker.png')", // your image path
+    },
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    
     display: "flex",
     flexDirection: "column", // important
     alignItems: "center",
@@ -1374,6 +1386,7 @@ return (
                       toast.error(
                         roleTypeMap[selectedUserType] || t("subcategoryRequired")
                       );
+
                       return;
                     }
 

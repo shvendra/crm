@@ -8,7 +8,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Box, CircularProgress, Container, CssBaseline } from "@mui/material";
-import { Toaster } from "react-hot-toast";
 import axios from "./utils/axiosConfig";
 import { HelmetProvider } from "react-helmet-async";
 import Navbar from "./components/Layout/Navbar";
@@ -59,6 +58,7 @@ const Unveryfied = lazy(() => import("./components/UnverifiedUsers"));
 const Leads = lazy(() => import("./components/Leads"));
 const HistoryPage = lazy(() => import("./components/History/WorkTable"));
 const KycUpload = lazy(() => import("./components/KycUploadPage"));
+import { Toaster } from "sonner";
 
 import { useTranslation } from "react-i18next";
 import { Context } from "./main";
@@ -191,6 +191,7 @@ const App = () => {
           px: 2,
         }}
       >
+        
         {authError ? (
           <>
             <Box sx={{ textAlign: "center", mb: 3 }}>
@@ -404,7 +405,8 @@ const AppContent = () => {
           </Suspense>
         </ErrorBoundary>
       </Container>
-      <Toaster />
+                <Toaster position="top-right" richColors />
+
     </MobileLayout>
   );
 };

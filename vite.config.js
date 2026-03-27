@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
         '@components': path.resolve(__dirname, './src/components'),
         '@utils': path.resolve(__dirname, './src/utils'),
         '@assets': path.resolve(__dirname, './src/assets'),
+        'react-hot-toast': path.resolve(__dirname, './src/utils/toast.js'),
       },
     },
 

@@ -167,8 +167,15 @@ return (
   <Box
     sx={{
       minHeight: "100vh",
-      background:
-        "linear-gradient(135deg, #eaf2ff 0%, #f8fbff 45%, #eef2f7 100%)",
+       // 👇 background logic
+    backgroundColor: { xs: "#fff", md: "transparent" },
+    backgroundImage: {
+      xs: "none",
+      md: "url('/app/images/background/urgent_worker.png')", // your image path
+    },
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

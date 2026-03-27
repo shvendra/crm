@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "/app",  
+  "homepage": "/app",
   "scripts": {
     "start": "vite --host",
     "dev": "vite --host",
@@ -70,6 +70,8 @@
     "recharts": "^3.2.1",
     "slick-carousel": "1.8.1",
     "socket.io-client": "4.8.1",
+    "sonner": "^2.0.7",
+    "sweetalert2": "^11.26.24",
     "web-vitals": "5.1.0"
   },
   "devDependencies": {
