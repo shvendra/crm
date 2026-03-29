@@ -697,7 +697,8 @@ useEffect(() => {
                               alignItems="center"
                               sx={{
                                 mb: 1.2,
-                                p: 1,
+                                pl: 1,
+                                pr: 1,
                                 borderRadius: "14px",
                                 background: "rgba(255,255,255,0.08)",
                                 backdropFilter: "blur(8px)",

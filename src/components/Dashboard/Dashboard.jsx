@@ -50,6 +50,8 @@ import { keyframes } from "@emotion/react";
 import InviteForWorkHeader from "./InviteForWorkHeader";
 import Location from "../Location";
 import Collapse from "@mui/material/Collapse";
+import EmployerSubscriptionDialog from "./EmployerSubscriptionDialog";
+
 const blink = keyframes`
   0%, 100% { background-color: transparent; }
   50% { background-color: rgba(9, 37, 35, 0.1); }
@@ -115,7 +117,7 @@ const Dashboard = ({ stream, index }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-const [showBenefits, setShowBenefits] = useState(false);
+  const [showBenefits, setShowBenefits] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const availableRoles = JSON.parse(
     localStorage.getItem("availableRoles") || "[]",
@@ -140,7 +142,7 @@ const [showBenefits, setShowBenefits] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryActive, setSearchQueryActive] = useState("");
   const [searchQueryAll, setSearchQueryAll] = useState("");
-  const [subscriptionOpen, setSubscriptionOpen] = useState(false);
+  const [subscriptionOpen, setSubscriptionOpen] = useState(true);
   const [myJobsCount, setMyJobsCount] = useState(0); // default is 0
   const [requirementTypeOpen, setRrequirementTypeOpen] = useState(false);
   const [limits] = useState(10);
@@ -157,6 +159,7 @@ const [showBenefits, setShowBenefits] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(1000); // Number of rows to display per page
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState(0); // Active tab state
+  const [openSubscriptionDialog, setOpenSubscriptionDialog] = useState(false);
 
   const handleSubscriptionClose = () => {
     setSubscriptionOpen(false);
@@ -560,6 +563,7 @@ ERN નંબર: ${ern}`,
   const handleClose = async () => {
     setOpen(false);
     setOpenVerifyDialog(false);
+    setSubscriptionOpen(false);
   };
 
   const [wagesMap, setWagesMap] = useState({});
@@ -1232,109 +1236,6 @@ ERN નંબર: ${ern}`,
                         }}
                       >
                         <Location />
-                        {/* <DiwaliPopup /> */}
-                        {/* <RoleTabs
-      availableRoles={availableRoles}
-      currentUser={user}
-      setUser={setUser}
-    /> */}
-                        {/* <a
-      href="tel:+917389791873"
-      style={{ textDecoration: "none" }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 0.2,
-          px: 1,
-          py: 0.4,
-          borderRadius: "12px",
-          backgroundColor: "rgba(25,118,210,0.08)",
-          transition: "0.3s",
-          "&:hover": {
-            backgroundColor: "rgba(25,118,210,0.15)",
-          },
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <SupportAgentIcon sx={{ color: "#1976d2" }} />
-        </Box>
-      </Box>
-    </a>
-    <a
-      href="https://wa.me/15557193421"
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{ textDecoration: "none" }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 0.2,
-          px: 1,
-          py: 0.4,
-          borderRadius: "12px",
-          backgroundColor: "rgba(37, 211, 102, 0.08)",
-          transition: "0.3s",
-          "&:hover": {
-            backgroundColor: "rgba(37, 211, 102, 0.15)",
-          },
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <WhatsAppIcon sx={{ color: "#25D366" }} />
-        </Box>
-      </Box>
-    </a> */}
-                        {/* <a
-      href="https://wa.me/15557193421"
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{ textDecoration: "none" }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 0.2,
-          px: 1,
-          py: 0.4,
-          borderRadius: "12px",
-          backgroundColor: "rgba(37, 211, 102, 0.08)",
-          transition: "0.3s",
-          "&:hover": {
-            backgroundColor: "rgba(37, 211, 102, 0.15)",
-          },
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: 11,
-            color: "#25D366",
-            opacity: 0.8,
-          }}
-        >
-          10:00 AM – 5:30 PM
-        </Typography>
-      </Box>
-    </a> */}
                       </Box>
 
                       {user?.isSubscribed && user?.subscriptionExpery && (
@@ -1675,1480 +1576,1632 @@ ERN નંબર: ${ern}`,
                         </Typography>
                       </Box>
                     ) : (
-                     <Grid sx={{ mt: 0.5 }} container spacing={2}>
-  {currentReq.length === 0 ||
-  currentReq.every((req) => req.status === "Assigned") ? (
-    <Grid item xs={12}>
-      <Box
-        sx={{
-          borderRadius: "28px",
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
-          border: "1px solid #e2e8f0",
-          boxShadow: "0 20px 60px rgba(15, 23, 42, 0.08)",
-          px: { xs: 1.5, sm: 2.5, md: 3 },
-          py: { xs: 2, sm: 2.5, md: 3 },
-          overflow: "hidden",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            mb: 2.5,
-            flexWrap: "wrap",
-            gap: 1.2,
-          }}
-        >
-          <Box>
-            <Typography
-              sx={{
-                fontSize: { xs: "1.05rem", sm: "1.2rem" },
-                fontWeight: 800,
-                color: "#0f172a",
-                lineHeight: 1.2,
-              }}
-            >
-              Verified Agents/Workers
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              px: 1.5,
-              py: 0.75,
-              borderRadius: "999px",
-              background:
-                "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
-              color: "#1d4ed8",
-              fontSize: "0.8rem",
-              fontWeight: 800,
-              border: "1px solid #bfdbfe",
-            }}
-          >
-            {totalAgents + 300}+ Agents/Workers
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "repeat(4, minmax(0, 1fr))",
-              sm: "repeat(5, minmax(0, 1fr))",
-              md: "repeat(6, minmax(0, 1fr))",
-              lg: "repeat(8, minmax(0, 1fr))",
-              xl: "repeat(10, minmax(0, 1fr))",
-            },
-            gap: { xs: 1, sm: 1.2, md: 1.5 },
-          }}
-        >
-          {agentloading && (
-            <Box
-              sx={{
-                gridColumn: "1 / -1",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: 150,
-                borderRadius: "20px",
-                border: "1px solid #e2e8f0",
-                background: "#fff",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
-
-          {displayedAgents.map((agent, idx) => (
-            <Box
-              key={idx}
-              onClick={() =>
-                navigate("/verified-agents", {
-                  state: {
-                    agentId: agent._id,
-                    source: "verified_agents",
-                  },
-                })
-              }
-              sx={{
-                cursor: "pointer",
-                borderRadius: "20px",
-                p: { xs: 1, sm: 1.2 },
-                background: "#fff",
-                border: "1px solid #e2e8f0",
-                boxShadow: "0 8px 22px rgba(15, 23, 42, 0.06)",
-                transition: "all 0.25s ease",
-                textAlign: "center",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 16px 32px rgba(37, 99, 235, 0.16)",
-                  borderColor: "#93c5fd",
-                },
-              }}
-            >
-              <Stack alignItems="center" spacing={0.9} sx={{ position: "relative" }}>
-                <Box sx={{ position: "relative" }}>
-                  <Avatar
-                    src={
-                      agent?.profilePhoto
-                        ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
-                            /([^:]\/)\/+/g,
-                            "$1"
-                          )
-                        : "/usericon.png"
-                    }
-                    alt={agent.name}
-                    sx={{
-                      width: { xs: 54, sm: 60 },
-                      height: { xs: 54, sm: 60 },
-                      border: "3px solid #2563eb",
-                      boxShadow: "0 10px 24px rgba(37, 99, 235, 0.18)",
-                    }}
-                  />
-
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: -3,
-                      right: -3,
-                      background:
-                        "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-                      borderRadius: "50%",
-                      width: 22,
-                      height: 22,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "2px solid white",
-                      boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
-                      color: "#fff",
-                      fontSize: 13,
-                      fontWeight: 800,
-                    }}
-                  >
-                    ✔
-                  </Box>
-                </Box>
-
-                <Typography
-                  variant="body2"
-                  fontWeight={800}
-                  noWrap
-                  sx={{
-                    color: "#166534",
-                    fontSize: { xs: "0.72rem", sm: "0.76rem" },
-                    maxWidth: "100%",
-                  }}
-                >
-                  {agent.name?.split(" ")[0]?.slice(0, 8) || "-"}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: "#2563eb",
-                    fontSize: { xs: "0.66rem", sm: "0.7rem" },
-                    wordBreak: "break-word",
-                    fontWeight: 700,
-                  }}
-                >
-                  {getRandom10DigitNumber()}
-                </Typography>
-
-                <Box
-                  mt={0.2}
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    px: 0.8,
-                    py: 0.4,
-                    borderRadius: "999px",
-                    bgcolor: "#f8fafc",
-                    border: "1px solid #e2e8f0",
-                  }}
-                >
-                  {Array.from({ length: 5 }, (_, i) => {
-                    const rating = +(4 + Math.random()).toFixed(1);
-                    const fullStar = i + 1 <= Math.floor(rating);
-                    const halfStar =
-                      rating % 1 !== 0 && i + 1 === Math.ceil(rating);
-
-                    return (
-                      <StarIcon
-                        key={i}
-                        sx={{
-                          fontSize: "12px",
-                          color: fullStar
-                            ? rating >= 4
-                              ? "#22c55e"
-                              : "#f59e0b"
-                            : halfStar
-                            ? "#fbbf24"
-                            : "#e5e7eb",
-                        }}
-                      />
-                    );
-                  })}
-                </Box>
-              </Stack>
-            </Box>
-          ))}
-
-          {!showAll && verifiedAgents.length > 20 && (
-            <Box
-              onClick={() => navigate("/verified-agents")}
-              sx={{
-                cursor: "pointer",
-                borderRadius: "20px",
-                p: { xs: 1, sm: 1.2 },
-                background:
-                  "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
-                border: "1px dashed #60a5fa",
-                boxShadow: "0 8px 22px rgba(37, 99, 235, 0.10)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-                minHeight: { xs: 118, sm: 132 },
-                transition: "all 0.25s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 16px 32px rgba(37, 99, 235, 0.16)",
-                  background:
-                    "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
-                },
-              }}
-            >
-              <Box>
-                <Typography
-                  sx={{
-                    fontSize: { xs: "1rem", sm: "1.15rem" },
-                    fontWeight: 800,
-                    color: "#1d4ed8",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  +{totalAgents + 300 - 8} More
-                </Typography>
-                <Typography
-                  sx={{
-                    mt: 0.5,
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    color: "#475569",
-                  }}
-                >
-                  Verified Agents
-                </Typography>
-              </Box>
-            </Box>
-          )}
-        </Box>
-
-        {hasMore && (
-          <Box sx={{ textAlign: "center", mt: 3 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleLoadMore}
-              disabled={loading}
-              sx={{
-                minWidth: 170,
-                borderRadius: "999px",
-                textTransform: "none",
-                fontWeight: 800,
-                fontSize: "0.95rem",
-                px: 4,
-                py: 1.2,
-                background:
-                  "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-                boxShadow: "0 12px 24px rgba(37, 99, 235, 0.24)",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  boxShadow: "0 18px 36px rgba(37, 99, 235, 0.30)",
-                  transform: "translateY(-2px)",
-                  background:
-                    "linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)",
-                },
-                "&:active": {
-                  transform: "scale(0.98)",
-                },
-              }}
-            >
-              {loading ? "Loading…" : "Load More"}
-            </Button>
-          </Box>
-        )}
-      </Box>
-    </Grid>
-  ) : (
-    currentReq
-      .filter(
-        (stream) =>
-          stream?.isAgentAccepted === "No" ||
-          stream?.status !== "Assigned"
-      )
-      .map((stream, index) => (
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={6}
-          key={index}
-          sx={{
-            pt: "10px !important",
-            pb: 0,
-            mt: 0,
-            mb: 0,
-          }}
-        >
-          <Card
-            sx={{
-              position: "relative",
-              overflow: "hidden",
-              borderRadius: "24px",
-              p: "4px",
-              m: "2px",
-              backgroundImage: `url(${getBestMatchingImage(stream?.workType)})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              border: "1px solid rgba(148,163,184,0.18)",
-              boxShadow: "0 18px 50px rgba(15, 23, 42, 0.10)",
-              transition: "all .25s ease",
-              "&:hover": {
-                transform: "translateY(-4px)",
-                boxShadow: "0 24px 60px rgba(15, 23, 42, 0.14)",
-              },
-
-              "& > *": {
-                position: "relative",
-                zIndex: 2,
-              },
-
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(180deg, rgba(2,6,23,0.72) 0%, rgba(2,6,23,0.88) 100%)",
-                zIndex: 1,
-              },
-
-              "&::after": {
-                content: '"BookMyWorker"',
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                fontSize: "2.8rem",
-                fontWeight: 800,
-                color: "rgba(255,255,255,0.05)",
-                zIndex: 0,
-                pointerEvents: "none",
-                whiteSpace: "nowrap",
-              },
-            }}
-          >
-            <>
-              <CardContent className="dash-card-content">
-                <Box sx={{ mb: 1 }}>
-                  <Grid spacing={2}>
-                    <Grid item xs={12}>
-                      <Box
-                        sx={{
-                          borderRadius: 2,
-                          flexDirection: "column",
-                          minHeight: "170px",
-                          width: "100%",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                            rowGap: 1,
-                            mb: 1.2,
-                            p: 1,
-                            borderRadius: "14px",
-                            background: "rgba(255,255,255,0.08)",
-                            backdropFilter: "blur(8px)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                          }}
-                        >
-                          {stream.status === "Approved" ? (
-                            <Typography
-                              variant="body2"
+                      <Grid sx={{ mt: 0.5 }} container spacing={2}>
+                        {currentReq.length === 0 ||
+                        currentReq.every((req) => req.status === "Assigned") ? (
+                          <Grid item xs={12}>
+                            <Box
                               sx={{
-                                fontWeight: 700,
-                                cursor: "pointer",
-                                color: "#aeeaff",
-                                whiteSpace: "nowrap",
+                                borderRadius: "28px",
+                                background:
+                                  "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+                                border: "1px solid #e2e8f0",
+                                boxShadow: "0 20px 60px rgba(15, 23, 42, 0.08)",
+                                px: { xs: 1.5, sm: 2.5, md: 3 },
+                                py: { xs: 2, sm: 2.5, md: 3 },
                                 overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                fontSize: "14px",
-                                flex: "1 1 auto",
-                                minWidth: 0,
                               }}
                             >
-                              {t("ernLabel")}: {stream.ern_num}
-                            </Typography>
-                          ) : (
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                fontWeight: 700,
-                                cursor: "pointer",
-                                color: "#aeeaff",
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                fontSize: "15px",
-                                flex: "1 1 auto",
-                                minWidth: 0,
-                              }}
-                              onClick={() =>
-                                handleAssignOpenModal(
-                                  stream.ern_num,
-                                  stream.city,
-                                  stream?.intrestedAgents
-                                )
-                              }
-                            >
-                              {t("ernLabel")}: {stream.ern_num}{" "}
-                              <span className="blink-clickView">
-                                {t("clickView")}
-                              </span>
-                            </Typography>
-                          )}
-
-                          <Stack
-                            direction="row"
-                            alignItems="center"
-                            spacing={1}
-                            sx={{
-                              flexShrink: 0,
-                              flexWrap: "wrap",
-                            }}
-                          >
-                            <Button
-                              variant="contained"
-                              color="success"
-                              size="small"
-                              sx={{
-                                padding: "0 8px",
-                                minHeight: "26px",
-                                height: "26px",
-                                fontSize: "0.68rem",
-                                lineHeight: 1,
-                                borderRadius: "8px",
-                                textTransform: "none",
-                                display: "flex",
-                                alignItems: "center",
-                                fontWeight: 700,
-                                "@media (max-width:600px)": {
-                                  padding: "0 5px",
-                                  minHeight: "22px",
-                                  height: "22px",
-                                  fontSize: "0.6rem",
-                                },
-                              }}
-                              startIcon={
-                                <Badge
-                                  badgeContent={unreadCounts[stream._id] || 0}
-                                  color="error"
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "space-between",
+                                  mb: 2.5,
+                                  flexWrap: "wrap",
+                                  gap: 1.2,
+                                }}
+                              >
+                                <Box>
+                                  <Typography
+                                    sx={{
+                                      fontSize: { xs: "1.05rem", sm: "1.2rem" },
+                                      fontWeight: 800,
+                                      color: "#0f172a",
+                                      lineHeight: 1.2,
+                                    }}
+                                  >
+                                    Verified Agents/Workers
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  onClick={() => navigate("/verified-agents")}
                                   sx={{
-                                    "& .MuiBadge-badge": {
-                                      minWidth: "13px",
-                                      height: "13px",
-                                      fontSize: "0.55rem",
+                                    px: 1.5,
+                                    py: 0.75,
+                                    borderRadius: "999px",
+                                    background:
+                                      "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
+                                    color: "#1d4ed8",
+                                    fontSize: "0.8rem",
+                                    fontWeight: 800,
+                                    border: "1px solid #bfdbfe",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {totalAgents + 300} Agents/Workers
+                                </Box>
+                              </Box>
+
+                              <Box
+                                sx={{
+                                  display: "grid",
+                                  gridTemplateColumns: {
+                                    xs: "repeat(4, minmax(0, 1fr))",
+                                    sm: "repeat(5, minmax(0, 1fr))",
+                                    md: "repeat(6, minmax(0, 1fr))",
+                                    lg: "repeat(8, minmax(0, 1fr))",
+                                    xl: "repeat(10, minmax(0, 1fr))",
+                                  },
+                                  gap: { xs: 1, sm: 1.2, md: 1.5 },
+                                }}
+                              >
+                                {agentloading && (
+                                  <Box
+                                    sx={{
+                                      gridColumn: "1 / -1",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      minHeight: 150,
+                                      borderRadius: "20px",
+                                      border: "1px solid #e2e8f0",
+                                      background: "#fff",
+                                    }}
+                                  >
+                                    <CircularProgress />
+                                  </Box>
+                                )}
+
+                                {displayedAgents.map((agent, idx) => (
+                                  <Box
+                                    key={idx}
+                                    onClick={() =>
+                                      navigate("/verified-agents", {
+                                        state: {
+                                          agentId: agent._id,
+                                          source: "verified_agents",
+                                        },
+                                      })
+                                    }
+                                    sx={{
+                                      cursor: "pointer",
+                                      borderRadius: "20px",
+                                      p: { xs: 1, sm: 1.2 },
+                                      background: "#fff",
+                                      border: "1px solid #e2e8f0",
+                                      boxShadow:
+                                        "0 8px 22px rgba(15, 23, 42, 0.06)",
+                                      transition: "all 0.25s ease",
+                                      textAlign: "center",
+                                      "&:hover": {
+                                        transform: "translateY(-4px)",
+                                        boxShadow:
+                                          "0 16px 32px rgba(37, 99, 235, 0.16)",
+                                        borderColor: "#93c5fd",
+                                      },
+                                    }}
+                                  >
+                                    <Stack
+                                      alignItems="center"
+                                      spacing={0.9}
+                                      sx={{ position: "relative" }}
+                                    >
+                                      <Box sx={{ position: "relative" }}>
+                                        <Avatar
+                                          src={
+                                            agent?.profilePhoto
+                                              ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
+                                                  /([^:]\/)\/+/g,
+                                                  "$1",
+                                                )
+                                              : "/usericon.png"
+                                          }
+                                          alt={agent.name}
+                                          sx={{
+                                            width: { xs: 54, sm: 60 },
+                                            height: { xs: 54, sm: 60 },
+                                            border: "3px solid #2563eb",
+                                            boxShadow:
+                                              "0 10px 24px rgba(37, 99, 235, 0.18)",
+                                          }}
+                                        />
+
+                                        <Box
+                                          sx={{
+                                            position: "absolute",
+                                            bottom: -3,
+                                            right: -3,
+                                            background:
+                                              "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+                                            borderRadius: "50%",
+                                            width: 22,
+                                            height: 22,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            border: "2px solid white",
+                                            boxShadow:
+                                              "0 4px 10px rgba(0,0,0,0.25)",
+                                            color: "#fff",
+                                            fontSize: 13,
+                                            fontWeight: 800,
+                                          }}
+                                        >
+                                          ✔
+                                        </Box>
+                                      </Box>
+
+                                      <Typography
+                                        variant="body2"
+                                        fontWeight={800}
+                                        noWrap
+                                        sx={{
+                                          color: "#166534",
+                                          fontSize: {
+                                            xs: "0.72rem",
+                                            sm: "0.76rem",
+                                          },
+                                          maxWidth: "100%",
+                                        }}
+                                      >
+                                        {agent.name
+                                          ?.split(" ")[0]
+                                          ?.slice(0, 8) || "-"}
+                                      </Typography>
+
+                                      <Typography
+                                        variant="caption"
+                                        sx={{
+                                          color: "#2563eb",
+                                          fontSize: {
+                                            xs: "0.66rem",
+                                            sm: "0.7rem",
+                                          },
+                                          wordBreak: "break-word",
+                                          fontWeight: 700,
+                                        }}
+                                      >
+                                        {getRandom10DigitNumber()}
+                                      </Typography>
+
+                                      <Box
+                                        mt={0.2}
+                                        display="flex"
+                                        justifyContent="center"
+                                        sx={{
+                                          px: 0.8,
+                                          py: 0.4,
+                                          borderRadius: "999px",
+                                          bgcolor: "#f8fafc",
+                                          border: "1px solid #e2e8f0",
+                                        }}
+                                      >
+                                        {Array.from({ length: 5 }, (_, i) => {
+                                          const rating = +(
+                                            4 + Math.random()
+                                          ).toFixed(1);
+                                          const fullStar =
+                                            i + 1 <= Math.floor(rating);
+                                          const halfStar =
+                                            rating % 1 !== 0 &&
+                                            i + 1 === Math.ceil(rating);
+
+                                          return (
+                                            <StarIcon
+                                              key={i}
+                                              sx={{
+                                                fontSize: "12px",
+                                                color: fullStar
+                                                  ? rating >= 4
+                                                    ? "#22c55e"
+                                                    : "#f59e0b"
+                                                  : halfStar
+                                                    ? "#fbbf24"
+                                                    : "#e5e7eb",
+                                              }}
+                                            />
+                                          );
+                                        })}
+                                      </Box>
+                                    </Stack>
+                                  </Box>
+                                ))}
+
+                                {!showAll && verifiedAgents.length > 20 && (
+                                  <Box
+                                    onClick={() => navigate("/verified-agents")}
+                                    sx={{
+                                      cursor: "pointer",
+                                      borderRadius: "20px",
+                                      p: { xs: 1, sm: 1.2 },
+                                      background:
+                                        "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
+                                      border: "1px dashed #60a5fa",
+                                      boxShadow:
+                                        "0 8px 22px rgba(37, 99, 235, 0.10)",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      textAlign: "center",
+                                      minHeight: { xs: 118, sm: 132 },
+                                      transition: "all 0.25s ease",
+                                      "&:hover": {
+                                        transform: "translateY(-4px)",
+                                        boxShadow:
+                                          "0 16px 32px rgba(37, 99, 235, 0.16)",
+                                        background:
+                                          "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
+                                      },
+                                    }}
+                                  >
+                                    <Box>
+                                      <Typography
+                                        sx={{
+                                          fontSize: {
+                                            xs: "1rem",
+                                            sm: "1.15rem",
+                                          },
+                                          fontWeight: 800,
+                                          color: "#1d4ed8",
+                                          lineHeight: 1.2,
+                                        }}
+                                      >
+                                        +{totalAgents + 300 - 8} More
+                                      </Typography>
+                                      <Typography
+                                        sx={{
+                                          mt: 0.5,
+                                          fontSize: "0.72rem",
+                                          fontWeight: 700,
+                                          color: "#475569",
+                                        }}
+                                      >
+                                        Verified Agents
+                                      </Typography>
+                                    </Box>
+                                  </Box>
+                                )}
+                              </Box>
+
+                              {hasMore && (
+                                <Box sx={{ textAlign: "center", mt: 3 }}>
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleLoadMore}
+                                    disabled={loading}
+                                    sx={{
+                                      minWidth: 170,
+                                      borderRadius: "999px",
+                                      textTransform: "none",
+                                      fontWeight: 800,
+                                      fontSize: "0.95rem",
+                                      px: 4,
+                                      py: 1.2,
+                                      background:
+                                        "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+                                      boxShadow:
+                                        "0 12px 24px rgba(37, 99, 235, 0.24)",
+                                      transition: "all 0.3s ease",
+                                      "&:hover": {
+                                        boxShadow:
+                                          "0 18px 36px rgba(37, 99, 235, 0.30)",
+                                        transform: "translateY(-2px)",
+                                        background:
+                                          "linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)",
+                                      },
+                                      "&:active": {
+                                        transform: "scale(0.98)",
+                                      },
+                                    }}
+                                  >
+                                    {loading ? "Loading…" : "Load More"}
+                                  </Button>
+                                </Box>
+                              )}
+                            </Box>
+                          </Grid>
+                        ) : (
+                          currentReq
+                            .filter(
+                              (stream) =>
+                                stream?.isAgentAccepted === "No" ||
+                                stream?.status !== "Assigned",
+                            )
+                            .map((stream, index) => (
+                              <Grid
+                                item
+                                xs={12}
+                                sm={6}
+                                md={6}
+                                key={index}
+                                sx={{
+                                  pt: "10px !important",
+                                  pb: 0,
+                                  mt: 0,
+                                  mb: 0,
+                                }}
+                              >
+                                <Card
+                                  sx={{
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    borderRadius: "24px",
+                                    p: "4px",
+                                    m: "2px",
+                                    backgroundImage: `url(${getBestMatchingImage(stream?.workType)})`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center",
+                                    border: "1px solid rgba(148,163,184,0.18)",
+                                    boxShadow:
+                                      "0 18px 50px rgba(15, 23, 42, 0.10)",
+                                    transition: "all .25s ease",
+                                    "&:hover": {
+                                      transform: "translateY(-4px)",
+                                      boxShadow:
+                                        "0 24px 60px rgba(15, 23, 42, 0.14)",
+                                    },
+
+                                    "& > *": {
+                                      position: "relative",
+                                      zIndex: 2,
+                                    },
+
+                                    "&::before": {
+                                      content: '""',
+                                      position: "absolute",
+                                      inset: 0,
+                                      background:
+                                        "linear-gradient(180deg, rgba(2,6,23,0.72) 0%, rgba(2,6,23,0.88) 100%)",
+                                      zIndex: 1,
+                                    },
+
+                                    "&::after": {
+                                      content: '"BookMyWorker"',
+                                      position: "absolute",
+                                      top: "50%",
+                                      left: "50%",
+                                      transform: "translate(-50%, -50%)",
+                                      fontSize: "2.8rem",
+                                      fontWeight: 800,
+                                      color: "rgba(255,255,255,0.05)",
+                                      zIndex: 0,
+                                      pointerEvents: "none",
+                                      whiteSpace: "nowrap",
                                     },
                                   }}
                                 >
-                                  <ChatIcon
-                                    sx={{
-                                      fontSize: "13px",
-                                    }}
-                                  />
-                                </Badge>
-                              }
-                              onClick={() => toggleChat(stream._id)}
-                            >
-                              Chat
-                            </Button>
+                                  <>
+                                    <CardContent className="dash-card-content">
+                                      <Box sx={{ mb: 1 }}>
+                                        <Grid spacing={2}>
+                                          <Grid item xs={12}>
+                                            <Box
+                                              sx={{
+                                                borderRadius: 2,
+                                                flexDirection: "column",
+                                                minHeight: "170px",
+                                                width: "100%",
+                                              }}
+                                            >
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  justifyContent:
+                                                    "space-between",
+                                                  alignItems: "center",
+                                                  flexWrap: "wrap",
+                                                  rowGap: 1,
+                                                  mb: 1.2,
+                                                  p: 1,
+                                                  borderRadius: "14px",
+                                                  background:
+                                                    "rgba(255,255,255,0.08)",
+                                                  backdropFilter: "blur(8px)",
+                                                  border:
+                                                    "1px solid rgba(255,255,255,0.08)",
+                                                }}
+                                              >
+                                                {stream.status ===
+                                                "Approved" ? (
+                                                  <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                      fontWeight: 700,
+                                                      cursor: "pointer",
+                                                      color: "#aeeaff",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textOverflow: "ellipsis",
+                                                      fontSize: "14px",
+                                                      flex: "1 1 auto",
+                                                      minWidth: 0,
+                                                    }}
+                                                  >
+                                                    {t("ernLabel")}:{" "}
+                                                    {stream.ern_num}
+                                                  </Typography>
+                                                ) : (
+                                                  <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                      fontWeight: 700,
+                                                      cursor: "pointer",
+                                                      color: "#aeeaff",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textOverflow: "ellipsis",
+                                                      fontSize: "15px",
+                                                      flex: "1 1 auto",
+                                                      minWidth: 0,
+                                                    }}
+                                                    onClick={() =>
+                                                      handleAssignOpenModal(
+                                                        stream.ern_num,
+                                                        stream.city,
+                                                        stream?.intrestedAgents,
+                                                      )
+                                                    }
+                                                  >
+                                                    {t("ernLabel")}:{" "}
+                                                    {stream.ern_num}{" "}
+                                                    <span className="blink-clickView">
+                                                      {t("clickView")}
+                                                    </span>
+                                                  </Typography>
+                                                )}
 
-                            {stream.status === "Approved" ? (
-                              <Button
-                                variant="contained"
-                                color="warning"
-                                size="small"
-                                sx={{
-                                  padding: "0 8px",
-                                  minHeight: "26px",
-                                  height: "26px",
-                                  fontSize: "0.68rem",
-                                  lineHeight: 1,
-                                  borderRadius: "8px",
-                                  textTransform: "none",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  color: "#fff",
-                                  fontWeight: 700,
-                                  "@media (max-width:600px)": {
-                                    padding: "0 5px",
-                                    minHeight: "22px",
-                                    height: "22px",
-                                    fontSize: "0.6rem",
-                                  },
-                                  "&:hover": {
-                                    backgroundColor: "#15803d",
-                                  },
-                                }}
-                                startIcon={
-                                  <CheckIcon
-                                    sx={{
-                                      color: "white",
-                                      fontSize: "13px",
-                                    }}
-                                  />
-                                }
-                              >
-                                {t("Approved")}
-                              </Button>
-                            ) : (
-                              <Button
-                                variant="contained"
-                                color="error"
-                                size="small"
-                                sx={{
-                                  padding: "0 8px",
-                                  minHeight: "26px",
-                                  height: "26px",
-                                  fontSize: "0.68rem",
-                                  lineHeight: 1,
-                                  borderRadius: "8px",
-                                  textTransform: "none",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  color: "#fff",
-                                  fontWeight: 700,
-                                  "@media (max-width:600px)": {
-                                    padding: "0 5px",
-                                    minHeight: "22px",
-                                    height: "22px",
-                                    fontSize: "0.6rem",
-                                  },
-                                  "&:hover": {
-                                    backgroundColor: "#b71c1c",
-                                  },
-                                }}
-                                startIcon={
-                                  <CloseIcon
-                                    sx={{
-                                      color: "#fff",
-                                      fontSize: "13px",
-                                    }}
-                                  />
-                                }
-                                onClick={() =>
-                                  handleCloseRequirement(stream._id)
-                                }
-                              >
-                                {t("close")}
-                              </Button>
-                            )}
-                          </Stack>
+                                                <Stack
+                                                  direction="row"
+                                                  alignItems="center"
+                                                  spacing={1}
+                                                  sx={{
+                                                    flexShrink: 0,
+                                                    flexWrap: "wrap",
+                                                  }}
+                                                >
+                                                  <Button
+                                                    variant="contained"
+                                                    color="success"
+                                                    size="small"
+                                                    sx={{
+                                                      padding: "0 8px",
+                                                      minHeight: "26px",
+                                                      height: "26px",
+                                                      fontSize: "0.68rem",
+                                                      lineHeight: 1,
+                                                      borderRadius: "8px",
+                                                      textTransform: "none",
+                                                      display: "flex",
+                                                      alignItems: "center",
+                                                      fontWeight: 700,
+                                                      "@media (max-width:600px)":
+                                                        {
+                                                          padding: "0 5px",
+                                                          minHeight: "22px",
+                                                          height: "22px",
+                                                          fontSize: "0.6rem",
+                                                        },
+                                                    }}
+                                                    startIcon={
+                                                      <Badge
+                                                        badgeContent={
+                                                          unreadCounts[
+                                                            stream._id
+                                                          ] || 0
+                                                        }
+                                                        color="error"
+                                                        sx={{
+                                                          "& .MuiBadge-badge": {
+                                                            minWidth: "13px",
+                                                            height: "13px",
+                                                            fontSize: "0.55rem",
+                                                          },
+                                                        }}
+                                                      >
+                                                        <ChatIcon
+                                                          sx={{
+                                                            fontSize: "13px",
+                                                          }}
+                                                        />
+                                                      </Badge>
+                                                    }
+                                                    onClick={() =>
+                                                      toggleChat(stream._id)
+                                                    }
+                                                  >
+                                                    Chat
+                                                  </Button>
 
-                          {openChatIds.has(stream._id) && (
-                            <Chat
-                              postId={stream?._id}
-                              senderId={user?._id}
-                              senderRole={user?.role}
-                              employerName={"Admin"}
-                              onClose={() => toggleChat(stream?._id)}
-                              onUnreadCountChange={handleUnreadCountChange}
-                            />
-                          )}
-                        </Box>
+                                                  {stream.status ===
+                                                  "Approved" ? (
+                                                    <Button
+                                                      variant="contained"
+                                                      color="warning"
+                                                      size="small"
+                                                      sx={{
+                                                        padding: "0 8px",
+                                                        minHeight: "26px",
+                                                        height: "26px",
+                                                        fontSize: "0.68rem",
+                                                        lineHeight: 1,
+                                                        borderRadius: "8px",
+                                                        textTransform: "none",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        color: "#fff",
+                                                        fontWeight: 700,
+                                                        "@media (max-width:600px)":
+                                                          {
+                                                            padding: "0 5px",
+                                                            minHeight: "22px",
+                                                            height: "22px",
+                                                            fontSize: "0.6rem",
+                                                          },
+                                                        "&:hover": {
+                                                          backgroundColor:
+                                                            "#15803d",
+                                                        },
+                                                      }}
+                                                      startIcon={
+                                                        <CheckIcon
+                                                          sx={{
+                                                            color: "white",
+                                                            fontSize: "13px",
+                                                          }}
+                                                        />
+                                                      }
+                                                    >
+                                                      {t("Approved")}
+                                                    </Button>
+                                                  ) : (
+                                                    <Button
+                                                      variant="contained"
+                                                      color="error"
+                                                      size="small"
+                                                      sx={{
+                                                        padding: "0 8px",
+                                                        minHeight: "26px",
+                                                        height: "26px",
+                                                        fontSize: "0.68rem",
+                                                        lineHeight: 1,
+                                                        borderRadius: "8px",
+                                                        textTransform: "none",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        color: "#fff",
+                                                        fontWeight: 700,
+                                                        "@media (max-width:600px)":
+                                                          {
+                                                            padding: "0 5px",
+                                                            minHeight: "22px",
+                                                            height: "22px",
+                                                            fontSize: "0.6rem",
+                                                          },
+                                                        "&:hover": {
+                                                          backgroundColor:
+                                                            "#b71c1c",
+                                                        },
+                                                      }}
+                                                      startIcon={
+                                                        <CloseIcon
+                                                          sx={{
+                                                            color: "#fff",
+                                                            fontSize: "13px",
+                                                          }}
+                                                        />
+                                                      }
+                                                      onClick={() =>
+                                                        handleCloseRequirement(
+                                                          stream._id,
+                                                        )
+                                                      }
+                                                    >
+                                                      {t("close")}
+                                                    </Button>
+                                                  )}
+                                                </Stack>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            mb: 0.8,
-                          }}
-                        >
-                          <LocationCityIcon
-                            sx={{ color: "#81d4fa" }}
-                            fontSize="small"
-                          />
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: 700,
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {t("district") || "District"}:
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {stream.district}
-                          </Typography>
-                        </Box>
+                                                {openChatIds.has(
+                                                  stream._id,
+                                                ) && (
+                                                  <Chat
+                                                    postId={stream?._id}
+                                                    senderId={user?._id}
+                                                    senderRole={user?.role}
+                                                    employerName={"Admin"}
+                                                    onClose={() =>
+                                                      toggleChat(stream?._id)
+                                                    }
+                                                    onUnreadCountChange={
+                                                      handleUnreadCountChange
+                                                    }
+                                                  />
+                                                )}
+                                              </Box>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            mb: 0.8,
-                          }}
-                        >
-                          <PlaceIcon
-                            sx={{ color: "#ffcc80" }}
-                            fontSize="small"
-                          />
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: 700,
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {t("site")}:
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: "white",
-                              whiteSpace: "normal",
-                              wordBreak: "break-word",
-                            }}
-                          >
-                            {stream.tehsil + " "}
-                            {stream.site}
-                          </Typography>
-                        </Box>
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: 1,
+                                                  mb: 0.8,
+                                                }}
+                                              >
+                                                <LocationCityIcon
+                                                  sx={{ color: "#81d4fa" }}
+                                                  fontSize="small"
+                                                />
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {t("district") || "District"}:
+                                                </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {stream.district}
+                                                </Typography>
+                                              </Box>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            gap: 1,
-                            mb: 0.8,
-                          }}
-                        >
-                          <BusinessIcon
-                            sx={{ color: "#c4b5fd" }}
-                            fontSize="small"
-                          />
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: 700,
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {t("workType")}:
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: "white",
-                              whiteSpace: "normal",
-                              wordBreak: "break-word",
-                              overflowWrap: "anywhere",
-                              flexGrow: 1,
-                            }}
-                          >
-                            {translateFromJson(stream?.workType, i18n.language)} -{" "}
-                            {translateFromJson(stream?.subCategory, i18n.language)}
-                          </Typography>
-                        </Box>
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: 1,
+                                                  mb: 0.8,
+                                                }}
+                                              >
+                                                <PlaceIcon
+                                                  sx={{ color: "#ffcc80" }}
+                                                  fontSize="small"
+                                                />
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {t("site")}:
+                                                </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    color: "white",
+                                                    whiteSpace: "normal",
+                                                    wordBreak: "break-word",
+                                                  }}
+                                                >
+                                                  {stream.tehsil + " "}
+                                                  {stream.site}
+                                                </Typography>
+                                              </Box>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            mb: 0.8,
-                          }}
-                        >
-                          <GroupsIcon
-                            sx={{ color: "#fde68a" }}
-                            fontSize="small"
-                          />
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: 700,
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {t("requiredWorkers")}:
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {stream.totalWorkers}
-                          </Typography>
-                        </Box>
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  gap: 1,
+                                                  mb: 0.8,
+                                                }}
+                                              >
+                                                <BusinessIcon
+                                                  sx={{ color: "#c4b5fd" }}
+                                                  fontSize="small"
+                                                />
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {t("workType")}:
+                                                </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    color: "white",
+                                                    whiteSpace: "normal",
+                                                    wordBreak: "break-word",
+                                                    overflowWrap: "anywhere",
+                                                    flexGrow: 1,
+                                                  }}
+                                                >
+                                                  {translateFromJson(
+                                                    stream?.workType,
+                                                    i18n.language,
+                                                  )}{" "}
+                                                  -{" "}
+                                                  {translateFromJson(
+                                                    stream?.subCategory,
+                                                    i18n.language,
+                                                  )}
+                                                </Typography>
+                                              </Box>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            mb: 2,
-                          }}
-                        >
-                          <CurrencyRupeeIcon
-                            sx={{ color: "#bbf7d0" }}
-                            fontSize="small"
-                          />
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: 700,
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {t("perHeadWages")}:
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: "white",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            ₹{" "}
-                            {getPerHeadWages(
-                              stream,
-                              stream?.finalAgentRequiredWage ??
-                                stream?.max_wages,
-                              stream?.assignedAgentId
-                            )}
-                          </Typography>
-                        </Box>
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: 1,
+                                                  mb: 0.8,
+                                                }}
+                                              >
+                                                <GroupsIcon
+                                                  sx={{ color: "#fde68a" }}
+                                                  fontSize="small"
+                                                />
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {t("requiredWorkers")}:
+                                                </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {stream.totalWorkers}
+                                                </Typography>
+                                              </Box>
 
-                        <Grid item xs={12}>
-                          {[
-                            {
-                              key: "accommodationAvailable",
-                              label: t("accommodationAvailable"),
-                            },
-                            {
-                              key: "foodAvailable",
-                              label: t("foodAvailable"),
-                            },
-                            {
-                              key: "incentive",
-                              label: t("incentive"),
-                            },
-                            {
-                              key: "bonus",
-                              label: t("bonus"),
-                            },
-                            {
-                              key: "transportProvided",
-                              label: t("transportProvided"),
-                            },
-                            {
-                              key: "weeklyOff",
-                              label: t("weeklyOff"),
-                            },
-                            {
-                              key: "overtimeAvailable",
-                              label: t("overtimeAvailable"),
-                            },
-                            {
-                              key: "insuranceAvailable",
-                              label: t("insuranceAvailable"),
-                            },
-                            {
-                              key: "pfAvailable",
-                              label: t("pfAvailable"),
-                            },
-                            {
-                              key: "esicAvailable",
-                              label: t("esicAvailable"),
-                            },
-                          ]
-                            .filter((item) => stream?.[item.key] === true)
-                            .map((item) => (
-                              <Box
-                                key={item.key}
-                                sx={{
-                                  display: "inline-block",
-                                  background:
-                                    "linear-gradient(135deg, rgba(34,197,94,0.95) 0%, rgba(22,163,74,0.95) 100%)",
-                                  color: "#fff",
-                                  px: 1.4,
-                                  py: 0.7,
-                                  borderRadius: "999px",
-                                  mr: 1,
-                                  mb: 1,
-                                  fontSize: "0.76rem",
-                                  fontWeight: 700,
-                                  boxShadow:
-                                    "0 8px 18px rgba(34,197,94,0.22)",
-                                }}
-                              >
-                                {item.label}
-                              </Box>
-                            ))}
-                        </Grid>
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: 1,
+                                                  mb: 2,
+                                                }}
+                                              >
+                                                <CurrencyRupeeIcon
+                                                  sx={{ color: "#bbf7d0" }}
+                                                  fontSize="small"
+                                                />
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  {t("perHeadWages")}:
+                                                </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    color: "white",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                  }}
+                                                >
+                                                  ₹{" "}
+                                                  {getPerHeadWages(
+                                                    stream,
+                                                    stream?.finalAgentRequiredWage ??
+                                                      stream?.max_wages,
+                                                    stream?.assignedAgentId,
+                                                  )}
+                                                </Typography>
+                                              </Box>
 
-                        <Box sx={{ mt: 1 }}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              gap: 1,
-                              borderRadius: "18px",
-                              background: "rgba(255,255,255,0.10)",
-                              border: "1px solid rgba(255,255,255,0.10)",
-                              p: 1,
-                            }}
-                          >
-                            <Button
-                              fullWidth
-                              startIcon={<SupportAgent />}
-                              sx={{
-                                backgroundColor: "#e0f7fa",
-                                color: "#00796b",
-                                borderRadius: "14px",
-                                textTransform: "none",
-                                fontWeight: 700,
-                                "&:hover": {
-                                  backgroundColor: "#b2ebf2",
-                                },
-                              }}
-                            >
-                              {t("support")}:{" "}
-                              <IconButton
-                                color="primary"
-                                component="a"
-                                href="tel:7389791873"
-                              >
-                                <CallIcon titleAccess="Call" />
-                              </IconButton>
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </CardContent>
+                                              <Grid item xs={12}>
+                                                {[
+                                                  {
+                                                    key: "accommodationAvailable",
+                                                    label: t(
+                                                      "accommodationAvailable",
+                                                    ),
+                                                  },
+                                                  {
+                                                    key: "foodAvailable",
+                                                    label: t("foodAvailable"),
+                                                  },
+                                                  {
+                                                    key: "incentive",
+                                                    label: t("incentive"),
+                                                  },
+                                                  {
+                                                    key: "bonus",
+                                                    label: t("bonus"),
+                                                  },
+                                                  {
+                                                    key: "transportProvided",
+                                                    label:
+                                                      t("transportProvided"),
+                                                  },
+                                                  {
+                                                    key: "weeklyOff",
+                                                    label: t("weeklyOff"),
+                                                  },
+                                                  {
+                                                    key: "overtimeAvailable",
+                                                    label:
+                                                      t("overtimeAvailable"),
+                                                  },
+                                                  {
+                                                    key: "insuranceAvailable",
+                                                    label:
+                                                      t("insuranceAvailable"),
+                                                  },
+                                                  {
+                                                    key: "pfAvailable",
+                                                    label: t("pfAvailable"),
+                                                  },
+                                                  {
+                                                    key: "esicAvailable",
+                                                    label: t("esicAvailable"),
+                                                  },
+                                                ]
+                                                  .filter(
+                                                    (item) =>
+                                                      stream?.[item.key] ===
+                                                      true,
+                                                  )
+                                                  .map((item) => (
+                                                    <Box
+                                                      key={item.key}
+                                                      sx={{
+                                                        display: "inline-block",
+                                                        background:
+                                                          "linear-gradient(135deg, rgba(34,197,94,0.95) 0%, rgba(22,163,74,0.95) 100%)",
+                                                        color: "#fff",
+                                                        px: 1.4,
+                                                        py: 0.7,
+                                                        borderRadius: "999px",
+                                                        mr: 1,
+                                                        mb: 1,
+                                                        fontSize: "0.76rem",
+                                                        fontWeight: 700,
+                                                        boxShadow:
+                                                          "0 8px 18px rgba(34,197,94,0.22)",
+                                                      }}
+                                                    >
+                                                      {item.label}
+                                                    </Box>
+                                                  ))}
+                                              </Grid>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                {/* kept empty intentionally */}
-              </Box>
+                                              <Box sx={{ mt: 1 }}>
+                                                <Box
+                                                  sx={{
+                                                    display: "flex",
+                                                    gap: 1,
+                                                    borderRadius: "18px",
+                                                    background:
+                                                      "rgba(255,255,255,0.10)",
+                                                    border:
+                                                      "1px solid rgba(255,255,255,0.10)",
+                                                    p: 1,
+                                                  }}
+                                                >
+                                                  <Button
+                                                    fullWidth
+                                                    startIcon={<SupportAgent />}
+                                                    sx={{
+                                                      backgroundColor:
+                                                        "#e0f7fa",
+                                                      color: "#00796b",
+                                                      borderRadius: "14px",
+                                                      textTransform: "none",
+                                                      fontWeight: 700,
+                                                      "&:hover": {
+                                                        backgroundColor:
+                                                          "#b2ebf2",
+                                                      },
+                                                    }}
+                                                  >
+                                                    {t("support")}:{" "}
+                                                    <IconButton
+                                                      color="primary"
+                                                      component="a"
+                                                      href="tel:7389791873"
+                                                    >
+                                                      <CallIcon titleAccess="Call" />
+                                                    </IconButton>
+                                                  </Button>
+                                                </Box>
+                                              </Box>
+                                            </Box>
+                                          </Grid>
+                                        </Grid>
+                                      </Box>
+                                    </CardContent>
 
-              {stream?.isAgentAccepted === "No" &&
-                stream?.status === "Assigned" &&
-                stream?.employerId === user?._id && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      background:
-                        "linear-gradient(180deg, rgba(2,6,23,0.50) 0%, rgba(2,6,23,0.82) 100%)",
-                      zIndex: 10,
-                      color: "#fff",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "24px",
-                    }}
-                  >
-                    <Alert
-                      icon={false}
-                      severity="warning"
-                      sx={{
-                        borderRadius: "18px",
-                        boxShadow: "0 20px 40px rgba(15,23,42,0.20)",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontWeight: 800,
-                          color: "#5a0000",
-                        }}
-                      >
-                        {t("suspendalert")}
-                      </Typography>
-                    </Alert>
-                  </Box>
-                )}
-            </>
-          </Card>
-        </Grid>
-      ))
-  )}
-</Grid>
+                                    <Box
+                                      sx={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      {/* kept empty intentionally */}
+                                    </Box>
+
+                                    {stream?.isAgentAccepted === "No" &&
+                                      stream?.status === "Assigned" &&
+                                      stream?.employerId === user?._id && (
+                                        <Box
+                                          sx={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            width: "100%",
+                                            height: "100%",
+                                            background:
+                                              "linear-gradient(180deg, rgba(2,6,23,0.50) 0%, rgba(2,6,23,0.82) 100%)",
+                                            zIndex: 10,
+                                            color: "#fff",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            p: 3,
+                                            textAlign: "center",
+                                            borderRadius: "24px",
+                                          }}
+                                        >
+                                          <Alert
+                                            icon={false}
+                                            severity="warning"
+                                            sx={{
+                                              borderRadius: "18px",
+                                              boxShadow:
+                                                "0 20px 40px rgba(15,23,42,0.20)",
+                                            }}
+                                          >
+                                            <Typography
+                                              sx={{
+                                                fontWeight: 800,
+                                                color: "#5a0000",
+                                              }}
+                                            >
+                                              {t("suspendalert")}
+                                            </Typography>
+                                          </Alert>
+                                        </Box>
+                                      )}
+                                  </>
+                                </Card>
+                              </Grid>
+                            ))
+                        )}
+                      </Grid>
                     )}
-                    {/* { currentReq.length > visibleCount && (
-                      <Box sx={{ textAlign: "center", mt: 1 }}>
-                        <Button variant="outlined" onClick={handleLoadMore}>
-                          {t("loadMore") || "Load More"}
-                        </Button>
-                      </Box>
-                    )} */}
                   </CardContent>
                 </Card>
-              </Grid>
-              {currentReq.filter((stream) => stream?.isAgentAccepted !== "No")
-                .length !== 0 ? (
-                <div>
-                  <Grid item sx={{ mb: 0 }} xs={12}>
-                    <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
-                      <CardContent className="dash-card-content">
-                        <Divider
+                {currentReq.filter((stream) => stream?.isAgentAccepted !== "No")
+                  .length !== 0 ? (
+                  <div>
+                    <Grid item sx={{ mb: 0 }} xs={12}>
+                      <Box sx={{ mb: 1 }}>
+                        {/* Top soft divider */}
+                        <Box
                           sx={{
-                            borderColor: "#1876d2",
-                            borderBottomWidth: "5px",
-                            opacity: 1.25,
+                            height: "3px",
+                            width: "100%",
+                            borderRadius: "999px",
+                            background:
+                              "linear-gradient(90deg, transparent, #1876d2, #60a5fa, #1876d2, transparent)",
+                            opacity: 0.7,
+                            mb: 1,
                           }}
                         />
+
+                        {/* Heading */}
                         <Box
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
-                          sx={{ p: 0, m: 0 }}
+                          sx={{ px: 1 }}
                         >
                           <Typography
                             className="dash-head"
                             variant="h6"
-                            sx={{ mb: 0, p: 0 }}
+                            sx={{
+                              fontWeight: 700,
+                              color: "#1e293b",
+                              letterSpacing: "0.3px",
+                            }}
                           >
                             {t("activeWorkStream")}
                           </Typography>
                         </Box>
 
-                        <Divider
+                        {/* Bottom soft divider */}
+                        <Box
                           sx={{
-                            borderColor: "#1876d2",
-                            borderBottomWidth: "5px",
-                            opacity: 1.25,
+                            height: "3px",
+                            width: "100%",
+                            borderRadius: "999px",
+                            background:
+                              "linear-gradient(90deg, transparent, #1876d2, #60a5fa, #1876d2, transparent)",
+                            opacity: 0.7,
+                            mt: 1,
                           }}
                         />
-                        <Grid sx={{ mt: 0.5 }} container spacing={0.5}>
-                          {currentReq.filter(
-                            (stream) => stream?.isAgentAccepted !== "No",
-                          ).length === 0 ? (
-                            <Grid item xs={12}>
-                              <Box
-                                sx={{
-                                  height: "280px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  backgroundImage: {
-                                    xs: `url("${config.FILE_BASE_URL}/ImagesWeb/emp-head-mob.jpg")`, // Mobile view
-                                    sm: `url("${config.FILE_BASE_URL}/ImagesWeb/emp_head.png")`, // Tablets and up
-                                  },
-                                  backgroundSize: {
-                                    xs: "cover",
-                                    sm: "initial",
-                                  },
-                                  // or "contain" depending on your need
-                                  backgroundPosition: "center",
-                                  backgroundRepeat: "no-repeat",
-                                  borderRadius: 2,
-                                }}
-                              >
-                                <Typography
-                                  variant="h6"
-                                  color="text.secondary"
-                                  sx={{ fontSize: "0.875rem" }} // Adjust font size as needed
+                      </Box>
+                      <Card sx={{ boxShadow: 0, borderRadius: 2 }}>
+                        <CardContent
+                          sx={{ p: 0 }}
+                          className="dash-card-content"
+                        >
+                          <Grid sx={{ mt: 0.5 }} container spacing={0.5}>
+                            {currentReq.filter(
+                              (stream) => stream?.isAgentAccepted !== "No",
+                            ).length === 0 ? (
+                              <Grid item xs={12}>
+                                <Box
+                                  sx={{
+                                    height: "280px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    backgroundImage: {
+                                      xs: `url("${config.FILE_BASE_URL}/ImagesWeb/emp-head-mob.jpg")`, // Mobile view
+                                      sm: `url("${config.FILE_BASE_URL}/ImagesWeb/emp_head.png")`, // Tablets and up
+                                    },
+                                    backgroundSize: {
+                                      xs: "cover",
+                                      sm: "initial",
+                                    },
+                                    // or "contain" depending on your need
+                                    backgroundPosition: "center",
+                                    backgroundRepeat: "no-repeat",
+                                    borderRadius: 2,
+                                  }}
                                 >
-                                  {/* {t("detailsNotAvailable")} */}
-                                </Typography>
-                              </Box>
-                            </Grid>
-                          ) : (
-                            currentReq
-                              .filter(
-                                (stream) =>
-                                  stream.status === "Assigned" &&
-                                  stream?.isAgentAccepted === "Yes",
-                              )
-                              .map((stream, index) => {
-                                const reqStats =
-                                  attendanceStats?.[String(stream._id)]?.[0];
-                                return (
-                             <Grid
-  item
-  xs={12}
-  sm={6}
-  md={6}
-  key={index}
-  sx={{
-    pt: "10px !important",
-    pb: 0,
-    mt: 0,
-    mb: 0,
-  }}
->
-  <Card
-    sx={{
-      position: "relative",
-      overflow: "hidden",
-      borderRadius: "24px",
-      p: "4px",
-      backgroundImage: `url(${getBestMatchingImage(stream?.workType)})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      border: "1px solid rgba(148,163,184,0.18)",
-      boxShadow: "0 18px 50px rgba(15, 23, 42, 0.10)",
-      transition: "all .25s ease",
-      "&:hover": {
-        transform: "translateY(-4px)",
-        boxShadow: "0 24px 60px rgba(15, 23, 42, 0.14)",
-      },
+                                  <Typography
+                                    variant="h6"
+                                    color="text.secondary"
+                                    sx={{ fontSize: "0.875rem" }} // Adjust font size as needed
+                                  >
+                                    {/* {t("detailsNotAvailable")} */}
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                            ) : (
+                              currentReq
+                                .filter(
+                                  (stream) =>
+                                    stream.status === "Assigned" &&
+                                    stream?.isAgentAccepted === "Yes",
+                                )
+                                .map((stream, index) => {
+                                  const reqStats =
+                                    attendanceStats?.[String(stream._id)]?.[0];
+                                  return (
+                                    <Grid
+                                      item
+                                      xs={12}
+                                      sm={6}
+                                      md={6}
+                                      key={index}
+                                      sx={{
+                                        pt: "10px !important",
+                                        pb: 0,
+                                        mt: 0,
+                                        mb: 0,
+                                      }}
+                                    >
+                                      <Card
+                                        sx={{
+                                          position: "relative",
+                                          overflow: "hidden",
+                                          borderRadius: "24px",
+                                          p: "4px",
+                                          backgroundImage: `url(${getBestMatchingImage(stream?.workType)})`,
+                                          backgroundSize: "cover",
+                                          backgroundPosition: "center",
+                                          border:
+                                            "1px solid rgba(148,163,184,0.18)",
+                                          boxShadow:
+                                            "0 18px 50px rgba(15, 23, 42, 0.10)",
+                                          transition: "all .25s ease",
+                                          "&:hover": {
+                                            transform: "translateY(-4px)",
+                                            boxShadow:
+                                              "0 24px 60px rgba(15, 23, 42, 0.14)",
+                                          },
 
-      "& > *": {
-        position: "relative",
-        zIndex: 2,
-      },
+                                          "& > *": {
+                                            position: "relative",
+                                            zIndex: 2,
+                                          },
 
-      "&::before": {
-        content: '""',
-        position: "absolute",
-        inset: 0,
-        background:
-          "linear-gradient(180deg, rgba(2,6,23,0.72) 0%, rgba(2,6,23,0.88) 100%)",
-        zIndex: 1,
-        pointerEvents: "none",
-      },
+                                          "&::before": {
+                                            content: '""',
+                                            position: "absolute",
+                                            inset: 0,
+                                            background:
+                                              "linear-gradient(180deg, rgba(2,6,23,0.72) 0%, rgba(2,6,23,0.88) 100%)",
+                                            zIndex: 1,
+                                            pointerEvents: "none",
+                                          },
 
-      "&::after": {
-        content: '"BookMyWorker"',
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        fontSize: "2.8rem",
-        fontWeight: 800,
-        color: "rgba(255,255,255,0.05)",
-        zIndex: 0,
-        pointerEvents: "none",
-        whiteSpace: "nowrap",
-      },
-    }}
-  >
-    <>
-      <CardContent
-        className="dash-card-content"
-        sx={{
-          color: "#fff",
-          position: "relative",
-          zIndex: 2,
-        }}
-      >
-        <Box sx={{ mb: 0 }}>
-          {/* ERN and top actions */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-              mb: 1.2,
-              p: 1,
-              borderRadius: "14px",
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}
-          >
-            <Tooltip title={t("clickToViewDetails")} arrow>
-              <ButtonBase
-                onClick={() =>
-                  handleCardClick(
-                    stream?._id,
-                    stream?.finalAgentRequiredWage
-                  )
-                }
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  px: 1,
-                  py: 0.5,
-                  borderRadius: 1,
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    backgroundColor: "rgba(255,255,255,0.08)",
-                    textDecoration: "underline",
-                  },
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontWeight: 700,
-                    color: "#aeeaff",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  <InfoOutlinedIcon fontSize="small" />
-                  {t("ernLabel")}: {stream.ern_num}
-                  {stream.req_type !== "Contract_Based" && (
-                    <span className="blink-clickView">{t("clickView")}</span>
-                  )}
-                </Typography>
-              </ButtonBase>
-            </Tooltip>
+                                          "&::after": {
+                                            content: '"BookMyWorker"',
+                                            position: "absolute",
+                                            top: "50%",
+                                            left: "50%",
+                                            transform: "translate(-50%, -50%)",
+                                            fontSize: "2.8rem",
+                                            fontWeight: 800,
+                                            color: "rgba(255,255,255,0.05)",
+                                            zIndex: 0,
+                                            pointerEvents: "none",
+                                            whiteSpace: "nowrap",
+                                          },
+                                        }}
+                                      >
+                                        <>
+                                          <CardContent
+                                            className="dash-card-content"
+                                            sx={{
+                                              color: "#fff",
+                                              position: "relative",
+                                              zIndex: 2,
+                                            }}
+                                          >
+                                            <Box sx={{ mb: 0 }}>
+                                              {/* ERN and top actions */}
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  justifyContent:
+                                                    "space-between",
+                                                  alignItems: "center",
+                                                  width: "100%",
+                                                  mb: 1.2,
+                                                  borderRadius: "14px",
+                                                  background:
+                                                    "rgba(255,255,255,0.08)",
+                                                  backdropFilter: "blur(8px)",
+                                                  border:
+                                                    "1px solid rgba(255,255,255,0.08)",
+                                                }}
+                                              >
+                                                <Tooltip
+                                                  title={t(
+                                                    "clickToViewDetails",
+                                                  )}
+                                                  arrow
+                                                >
+                                                  <ButtonBase
+                                                    onClick={() =>
+                                                      handleCardClick(
+                                                        stream?._id,
+                                                        stream?.finalAgentRequiredWage,
+                                                      )
+                                                    }
+                                                    sx={{
+                                                      display: "inline-flex",
+                                                      alignItems: "center",
+                                                      px: 1,
+                                                      py: 0.5,
+                                                      borderRadius: 1,
+                                                      transition:
+                                                        "all 0.3s ease",
+                                                      "&:hover": {
+                                                        backgroundColor:
+                                                          "rgba(255,255,255,0.08)",
+                                                        textDecoration:
+                                                          "underline",
+                                                      },
+                                                    }}
+                                                  >
+                                                    <Typography
+                                                      variant="body2"
+                                                      sx={{
+                                                        fontWeight: 700,
+                                                        color: "#aeeaff",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: "4px",
+                                                      }}
+                                                    >
+                                                      <InfoOutlinedIcon fontSize="small" />
+                                                      {t("ernLabel")}:{" "}
+                                                      {stream.ern_num}
+                                                      {stream.req_type !==
+                                                        "Contract_Based" && (
+                                                        <span className="blink-clickView">
+                                                          {t("clickView")}
+                                                        </span>
+                                                      )}
+                                                    </Typography>
+                                                  </ButtonBase>
+                                                </Tooltip>
 
-            <IconButton
-              onClick={() =>
-                handleLocationClick(stream?.latitude, stream?.longitude)
-              }
-              sx={{
-                p: 0.75,
-                m: 0,
-                minWidth: 34,
-                color: "#ffd180",
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.10)",
-                "&:hover": {
-                  background: "rgba(255,255,255,0.16)",
-                },
-              }}
-            >
-              <LocationOnIcon fontSize="small" />
-            </IconButton>
-          </Box>
+                                                <IconButton
+                                                  onClick={() =>
+                                                    handleLocationClick(
+                                                      stream?.latitude,
+                                                      stream?.longitude,
+                                                    )
+                                                  }
+                                                  sx={{
+                                                    p: 0.75,
+                                                    m: 0,
+                                                    minWidth: 34,
+                                                    color: "#ffd180",
+                                                    background:
+                                                      "rgba(255,255,255,0.08)",
+                                                    border:
+                                                      "1px solid rgba(255,255,255,0.10)",
+                                                    "&:hover": {
+                                                      background:
+                                                        "rgba(255,255,255,0.16)",
+                                                    },
+                                                  }}
+                                                >
+                                                  <LocationOnIcon fontSize="small" />
+                                                </IconButton>
+                                              </Box>
 
-          {/* Site & worker details */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 0.8,
-              mb: 1.2,
-            }}
-          >
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: 700,
-                color: "white",
-              }}
-            >
-              {t("city")}: {stream.city}
-            </Typography>
+                                              {/* Site & worker details */}
+                                              <Box
+                                                sx={{
+                                                  display: "flex",
+                                                  flexDirection: "column",
+                                                  gap: 0.8,
+                                                  mb: 1.2,
+                                                }}
+                                              >
+                                                <Typography
+                                                  variant="body1"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                  }}
+                                                >
+                                                  {t("city")}: {stream.city}
+                                                </Typography>
 
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: 700,
-                color: "white",
-              }}
-            >
-              {t("site")}: {stream?.tehsil + " "} {stream?.site}
-            </Typography>
-          </Box>
+                                                <Typography
+                                                  variant="body1"
+                                                  sx={{
+                                                    fontWeight: 700,
+                                                    color: "white",
+                                                  }}
+                                                >
+                                                  {t("site")}:{" "}
+                                                  {stream?.tehsil + " "}{" "}
+                                                  {stream?.site}
+                                                </Typography>
+                                              </Box>
 
-          {/* Stats */}
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "1fr 1fr",
-              },
-              gap: 1,
-              mt: 1,
-              mb: 1,
-            }}
-          >
-            {stream.req_type !== "Contract_Based" && (
-              <Typography
-                variant="body2"
-                sx={{
-                  p: 1,
-                  borderRadius: "14px",
-                  background: "#fff",
-                  color: "#0f172a",
-                  fontWeight: 800,
-                  boxShadow: "0 8px 20px rgba(15,23,42,0.08)",
-                }}
-              >
-                {t("workersReceivedToday")}:{" "}
-                {reqStats?.attendancedetails_workers_today ?? 0}
-              </Typography>
-            )}
+                                              {/* Stats */}
+                                              <Box
+                                                sx={{
+                                                  display: "grid",
+                                                  gridTemplateColumns: {
+                                                    xs: "1fr",
+                                                    sm: "1fr 1fr",
+                                                  },
+                                                  gap: 1,
+                                                  mt: 1,
+                                                  mb: 1,
+                                                }}
+                                              >
+                                                {stream.req_type !==
+                                                  "Contract_Based" && (
+                                                  <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                      p: 1,
+                                                      borderRadius: "14px",
+                                                      background: "#fff",
+                                                      color: "#0f172a",
+                                                      fontWeight: 800,
+                                                      boxShadow:
+                                                        "0 8px 20px rgba(15,23,42,0.08)",
+                                                    }}
+                                                  >
+                                                    {t("workersReceivedToday")}:{" "}
+                                                    {reqStats?.attendancedetails_workers_today ??
+                                                      0}
+                                                  </Typography>
+                                                )}
 
-            <Typography
-              variant="body2"
-              sx={{
-                p: 1,
-                borderRadius: "14px",
-                background: "#fff",
-                color: "#0f172a",
-                fontWeight: 800,
-                boxShadow: "0 8px 20px rgba(15,23,42,0.08)",
-              }}
-            >
-              {stream.req_type !== "Contract_Based"
-                ? `${t("quotePerHead")}: ₹ `
-                : `${t("BudgetContract")}: ₹ `}
-              {getPerHeadWages(
-                stream,
-                stream?.finalAgentRequiredWage,
-                stream?.assignedAgentId
-              )}
-            </Typography>
+                                                <Typography
+                                                  variant="body2"
+                                                  sx={{
+                                                    p: 1,
+                                                    borderRadius: "14px",
+                                                    background: "#fff",
+                                                    color: "#0f172a",
+                                                    fontWeight: 800,
+                                                    boxShadow:
+                                                      "0 8px 20px rgba(15,23,42,0.08)",
+                                                  }}
+                                                >
+                                                  {stream.req_type !==
+                                                  "Contract_Based"
+                                                    ? `${t("quotePerHead")}: ₹ `
+                                                    : `${t("BudgetContract")}: ₹ `}
+                                                  {getPerHeadWages(
+                                                    stream,
+                                                    stream?.finalAgentRequiredWage,
+                                                    stream?.assignedAgentId,
+                                                  )}
+                                                </Typography>
 
-            {stream.req_type !== "Contract_Based" && (
-              <>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    p: 1,
-                    borderRadius: "14px",
-                    background: "#fff",
-                    color: "#0f172a",
-                    fontWeight: 800,
-                    boxShadow: "0 8px 20px rgba(15,23,42,0.08)",
-                  }}
-                >
-                  {t("totalWorkersReceived")}:{" "}
-                  {reqStats?.attendancedetails_total_workers ?? 0}
-                </Typography>
+                                                {stream.req_type !==
+                                                  "Contract_Based" && (
+                                                  <>
+                                                    <Typography
+                                                      variant="body2"
+                                                      sx={{
+                                                        p: 1,
+                                                        borderRadius: "14px",
+                                                        background: "#fff",
+                                                        color: "#0f172a",
+                                                        fontWeight: 800,
+                                                        boxShadow:
+                                                          "0 8px 20px rgba(15,23,42,0.08)",
+                                                      }}
+                                                    >
+                                                      {t(
+                                                        "totalWorkersReceived",
+                                                      )}
+                                                      :{" "}
+                                                      {reqStats?.attendancedetails_total_workers ??
+                                                        0}
+                                                    </Typography>
 
-                <Typography
-                  variant="body2"
-                  sx={{
-                    p: 1,
-                    borderRadius: "14px",
-                    background: "#fff",
-                    color: "#0f172a",
-                    fontWeight: 800,
-                    boxShadow: "0 8px 20px rgba(15,23,42,0.08)",
-                  }}
-                >
-                  {t("workDaysLabel")}:{" "}
-                  {reqStats?.attendancedetails_total_work_days ?? 0}
-                </Typography>
-              </>
-            )}
-          </Box>
+                                                    <Typography
+                                                      variant="body2"
+                                                      sx={{
+                                                        p: 1,
+                                                        borderRadius: "14px",
+                                                        background: "#fff",
+                                                        color: "#0f172a",
+                                                        fontWeight: 800,
+                                                        boxShadow:
+                                                          "0 8px 20px rgba(15,23,42,0.08)",
+                                                      }}
+                                                    >
+                                                      {t("workDaysLabel")}:{" "}
+                                                      {reqStats?.attendancedetails_total_work_days ??
+                                                        0}
+                                                    </Typography>
+                                                  </>
+                                                )}
+                                              </Box>
 
-          {/* Contact buttons */}
-          {(stream?.assignedAgentName || stream?.assignedAgentPhone) && (
-            <Box sx={{ mt: 1 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1.2,
-                  flexWrap: "wrap",
-                  borderRadius: "18px",
-                  background: "rgba(255,255,255,0.10)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  p: 1,
-                }}
-              >
-                <Button
-                  fullWidth
-                  startIcon={<SupportAgent />}
-                  sx={{
-                    flex: 1,
-                    minWidth: 180,
-                    borderRadius: "14px",
-                    backgroundColor: "#e0f7fa",
-                    color: "#00796b",
-                    textTransform: "none",
-                    fontWeight: 700,
-                    "&:hover": {
-                      backgroundColor: "#b2ebf2",
-                    },
-                  }}
-                  href={`tel:${stream?.assignedAgentPhone ?? ""}`}
-                >
-                  {t("Agent")}:
-                  <IconButton
-                    color="primary"
-                    component="a"
-                    href={`tel:${stream?.assignedAgentPhone ?? ""}`}
-                    onClick={(e) => e.stopPropagation()}
-                    sx={{ ml: 0.5, p: 0.4 }}
-                  >
-                    <CallIcon titleAccess="Call" />
-                  </IconButton>
-                </Button>
+                                              {/* Contact buttons */}
+                                              {(stream?.assignedAgentName ||
+                                                stream?.assignedAgentPhone) && (
+                                                <Box sx={{ mt: 1 }}>
+                                                  <Box
+                                                    sx={{
+                                                      display: "flex",
+                                                      gap: 1.2,
+                                                      flexWrap: "wrap",
+                                                      borderRadius: "18px",
+                                                      background:
+                                                        "rgba(255,255,255,0.10)",
+                                                      border:
+                                                        "1px solid rgba(255,255,255,0.10)",
+                                                      p: 1,
+                                                    }}
+                                                  >
+                                                    <Button
+                                                      fullWidth
+                                                      startIcon={
+                                                        <SupportAgent />
+                                                      }
+                                                      sx={{
+                                                        flex: 1,
+                                                        minWidth: 180,
+                                                        borderRadius: "14px",
+                                                        backgroundColor:
+                                                          "#e0f7fa",
+                                                        color: "#00796b",
+                                                        textTransform: "none",
+                                                        fontWeight: 700,
+                                                        "&:hover": {
+                                                          backgroundColor:
+                                                            "#b2ebf2",
+                                                        },
+                                                      }}
+                                                      href={`tel:${stream?.assignedAgentPhone ?? ""}`}
+                                                    >
+                                                      {t("Agent")}:
+                                                      <IconButton
+                                                        color="primary"
+                                                        component="a"
+                                                        href={`tel:${stream?.assignedAgentPhone ?? ""}`}
+                                                        onClick={(e) =>
+                                                          e.stopPropagation()
+                                                        }
+                                                        sx={{ ml: 0.5, p: 0.4 }}
+                                                      >
+                                                        <CallIcon titleAccess="Call" />
+                                                      </IconButton>
+                                                    </Button>
 
-                <Button
-                  fullWidth
-                  startIcon={<SupportAgent />}
-                  sx={{
-                    flex: 1,
-                    minWidth: 180,
-                    borderRadius: "14px",
-                    backgroundColor: "#e0f7fa",
-                    color: "#00796b",
-                    textTransform: "none",
-                    fontWeight: 700,
-                    "&:hover": {
-                      backgroundColor: "#b2ebf2",
-                    },
-                  }}
-                  href="tel:7389791873"
-                >
-                  {t("support")}:
-                  <IconButton
-                    color="primary"
-                    component="a"
-                    href="tel:7389791873"
-                    onClick={(e) => e.stopPropagation()}
-                    sx={{ ml: 0.5, p: 0.4 }}
-                  >
-                    <CallIcon titleAccess="Call" />
-                  </IconButton>
-                </Button>
-              </Box>
-            </Box>
-          )}
-        </Box>
-      </CardContent>
+                                                    <Button
+                                                      fullWidth
+                                                      startIcon={
+                                                        <SupportAgent />
+                                                      }
+                                                      sx={{
+                                                        flex: 1,
+                                                        minWidth: 180,
+                                                        borderRadius: "14px",
+                                                        backgroundColor:
+                                                          "#e0f7fa",
+                                                        color: "#00796b",
+                                                        textTransform: "none",
+                                                        fontWeight: 700,
+                                                        "&:hover": {
+                                                          backgroundColor:
+                                                            "#b2ebf2",
+                                                        },
+                                                      }}
+                                                      href="tel:7389791873"
+                                                    >
+                                                      {t("support")}:
+                                                      <IconButton
+                                                        color="primary"
+                                                        component="a"
+                                                        href="tel:7389791873"
+                                                        onClick={(e) =>
+                                                          e.stopPropagation()
+                                                        }
+                                                        sx={{ ml: 0.5, p: 0.4 }}
+                                                      >
+                                                        <CallIcon titleAccess="Call" />
+                                                      </IconButton>
+                                                    </Button>
+                                                  </Box>
+                                                </Box>
+                                              )}
+                                            </Box>
+                                          </CardContent>
 
-      {/* Footer buttons */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          px: 1,
-          pb: 1,
-          pt: 0.2,
-          flexWrap: "wrap",
-        }}
-      >
-        <Button
-          variant="contained"
-          color="success"
-          size="small"
-          sx={{
-            margin: 0.5,
-            borderRadius: "12px",
-            textTransform: "none",
-            fontWeight: 800,
-            px: 2,
-          }}
-          startIcon={
-            <Badge
-              badgeContent={unreadCounts[stream._id] || 0}
-              color="error"
-            >
-              <ChatIcon />
-            </Badge>
-          }
-          onClick={() => toggleChat(stream._id)}
-        >
-          Chat
-        </Button>
+                                          {/* Footer buttons */}
+                                          <Box
+                                            sx={{
+                                              display: "flex",
+                                              alignItems: "center",
+                                              gap: 1,
+                                              px: 1,
+                                              pb: 1,
+                                              pt: 0.2,
+                                              flexWrap: "wrap",
+                                            }}
+                                          >
+                                            <Button
+                                              variant="contained"
+                                              color="success"
+                                              size="small"
+                                              sx={{
+                                                margin: 0.5,
+                                                borderRadius: "12px",
+                                                textTransform: "none",
+                                                fontWeight: 800,
+                                                px: 2,
+                                              }}
+                                              startIcon={
+                                                <Badge
+                                                  badgeContent={
+                                                    unreadCounts[stream._id] ||
+                                                    0
+                                                  }
+                                                  color="error"
+                                                >
+                                                  <ChatIcon />
+                                                </Badge>
+                                              }
+                                              onClick={() =>
+                                                toggleChat(stream._id)
+                                              }
+                                            >
+                                              Chat
+                                            </Button>
 
-        {openChatIds.has(stream._id) && (
-          <Chat
-            postId={stream._id}
-            senderId={user._id}
-            senderRole={user.role}
-            employerName={t("Admin")}
-            onClose={() => toggleChat(stream._id)}
-            onUnreadCountChange={handleUnreadCountChange}
-          />
-        )}
+                                            {openChatIds.has(stream._id) && (
+                                              <Chat
+                                                postId={stream._id}
+                                                senderId={user._id}
+                                                senderRole={user.role}
+                                                employerName={t("Admin")}
+                                                onClose={() =>
+                                                  toggleChat(stream._id)
+                                                }
+                                                onUnreadCountChange={
+                                                  handleUnreadCountChange
+                                                }
+                                              />
+                                            )}
 
-        <Button
-          variant="contained"
-          color="info"
-          size="small"
-          sx={{
-            margin: 0.5,
-            borderRadius: "12px",
-            textTransform: "none",
-            fontWeight: 800,
-            px: 2,
-            boxShadow: "0 12px 24px rgba(37,99,235,0.22)",
-          }}
-          onClick={() =>
-            handleOpenCloserModal(
-              stream?._id,
-              stream?.finalAgentRequiredWage,
-              stream?.req_type,
-              stream?.assignedAgentId,
-              "Assigned",
-              stream?.ern_num
-            )
-          }
-          startIcon={<PaymentIcon />}
-        >
-          {t("pay")}
-        </Button>
-      </Box>
-    </>
-  </Card>
-</Grid>
-                                );
-                              })
-                          )}
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                </div>
-              ) : null}
-
-              {/* Active work stream */}
+                                            <Button
+                                              variant="contained"
+                                              color="info"
+                                              size="small"
+                                              sx={{
+                                                margin: 0.5,
+                                                borderRadius: "12px",
+                                                textTransform: "none",
+                                                fontWeight: 800,
+                                                px: 2,
+                                                boxShadow:
+                                                  "0 12px 24px rgba(37,99,235,0.22)",
+                                              }}
+                                              onClick={() =>
+                                                handleOpenCloserModal(
+                                                  stream?._id,
+                                                  stream?.finalAgentRequiredWage,
+                                                  stream?.req_type,
+                                                  stream?.assignedAgentId,
+                                                  "Assigned",
+                                                  stream?.ern_num,
+                                                )
+                                              }
+                                              startIcon={<PaymentIcon />}
+                                            >
+                                              {t("pay")}
+                                            </Button>
+                                          </Box>
+                                        </>
+                                      </Card>
+                                    </Grid>
+                                  );
+                                })
+                            )}
+                          </Grid>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </div>
+                ) : null}
+              </Grid>
             </>
           )}
           {(user?.role === "Agent" || user?.role === "SelfWorker") && (
@@ -4830,7 +4883,8 @@ ERN નંબર: ${ern}`,
                                           alignItems="center"
                                           sx={{
                                             mb: 1.2,
-                                            p: 1,
+                                            pl: 1,
+                                            pr: 1,
                                             borderRadius: "14px",
                                             background:
                                               "rgba(255,255,255,0.08)",
@@ -5815,727 +5869,774 @@ ERN નંબર: ${ern}`,
         </Grid>
         {/* Modal Dialog for showing the details */}
 
-      <Dialog
-  disablePortal
-  open={open}
-  onClose={handleClose}
-  fullWidth
-  maxWidth="md"
-  TransitionComponent={Transition}
-  keepMounted
-  fullScreen={isMobile}
-  sx={{
-    "& .MuiPaper-root": {
-      borderRadius: isMobile ? 0 : "28px",
-      mt: isMobile ? 0 : "110px",
-      p: 0,
-      overflow: "hidden",
-      border: "1px solid rgba(148,163,184,0.18)",
-      boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
-      background:
-        "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
-    },
-  }}
->
-  <DialogTitle
-    sx={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      py: 1.6,
-      px: { xs: 2, sm: 2.5, md: 3 },
-      background:
-        "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
-      color: "white",
-      position: "relative",
-      overflow: "hidden",
-    }}
-  >
-    <Box
-      sx={{
-        position: "absolute",
-        inset: 0,
-        background:
-          "radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 30%), radial-gradient(circle at bottom left, rgba(255,255,255,0.08), transparent 30%)",
-        pointerEvents: "none",
-      }}
-    />
-    <Typography
-      fontSize="1.05rem"
-      fontWeight={800}
-      color="white"
-      sx={{ position: "relative", zIndex: 1 }}
-    >
-      {t("Statement of Work")}
-    </Typography>
-    <Tooltip title={t("close")}>
-      <IconButton
-        onClick={handleClose}
-        sx={{
-          color: "white",
-          position: "relative",
-          zIndex: 1,
-          bgcolor: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.12)",
-          "&:hover": {
-            bgcolor: "rgba(255,255,255,0.16)",
-          },
-        }}
-        size="small"
-      >
-        <CloseIcon />
-      </IconButton>
-    </Tooltip>
-  </DialogTitle>
-
-  <DialogContent sx={{ p: 0, background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)" }}>
-    <Box
-      sx={{
-        p: { xs: 1, sm: 1.5, md: 2 },
-      }}
-    >
-      <Box
-        sx={{
-          border: "1px solid #e2e8f0",
-          borderRadius: "20px",
-          overflowX: "auto",
-          background: "#fff",
-          boxShadow: "0 12px 30px rgba(15, 23, 42, 0.06)",
-          WebkitOverflowScrolling: "touch",
-        }}
-      >
-        <TableContainer>
-          <Table size="small" sx={{ minWidth: 720 }}>
-            <TableHead
-              sx={{
-                background:
-                  "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
-              }}
-            >
-              <TableRow>
-                <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                  {t("S.No")}
-                </TableCell>
-
-                {!["Employer", "Agent", "SelfWorker"].includes(user?.role) && (
-                  <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                    {t("ERN")}
-                  </TableCell>
-                )}
-
-                <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}></TableCell>
-
-                {!["Agent", "SelfWorker", "Employer"].includes(user?.role) && (
-                  <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                    {t("Agent")}
-                  </TableCell>
-                )}
-
-                {(user?.role === "Admin" || user?.role === "SuperAdmin") && (
-                  <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                    {t("Employer")}
-                  </TableCell>
-                )}
-
-                <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                  {t("Workers")}
-                </TableCell>
-
-                {(user?.role !== "SelfWorker" ||
-                  user?.role !== "Agent" ||
-                  user?.role === "Admin") && (
-                  <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                    {t("Wages")}
-                  </TableCell>
-                )}
-
-                <TableCell sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}>
-                  {t("Date")}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {statementOfWorkData.length > 0 ? (
-                statementOfWorkData
-                  .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-                  .map((row, index) => (
-                    <TableRow
-                      key={row._id || index}
-                      sx={{
-                        "&:nth-of-type(even)": {
-                          backgroundColor: "#f8fbff",
-                        },
-                        "&:hover": {
-                          backgroundColor: "#f1f5f9",
-                        },
-                      }}
-                    >
-                      <TableCell sx={{ py: 1.1 }}>
-                        {page * rowsPerPage + index + 1}
-                      </TableCell>
-
-                      {!["Employer", "Agent", "SelfWorker"].includes(user?.role) && (
-                        <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
-                          {row.ERN_number}
-                        </TableCell>
-                      )}
-
-                      <TableCell sx={{ py: 1.1 }}>
-                        {row.employer_accepted ? (
-                          <Typography
-                            color="success.main"
-                            fontWeight="bold"
-                            fontSize={12}
-                          >
-                            {t("Approved")}
-                          </Typography>
-                        ) : user?.role === "Agent" || user?.role === "SelfWorker" ? (
-                          <Typography
-                            color="error"
-                            fontWeight="bold"
-                            fontSize={12}
-                          >
-                            {t("Pending")}
-                          </Typography>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            color="info"
-                            size="small"
-                            sx={{
-                              minWidth: 68,
-                              minHeight: 28,
-                              textTransform: "none",
-                              fontSize: "0.7rem",
-                              px: 1.2,
-                              borderRadius: "10px",
-                              fontWeight: 700,
-                              animation: "blink 1s infinite",
-                              "@keyframes blink": {
-                                "0%,100%": { opacity: 1 },
-                                "50%": { opacity: 0.4 },
-                              },
-                            }}
-                            onClick={() => handleApproveClick(row._id)}
-                          >
-                            {t("Accept")}
-                          </Button>
-                        )}
-                      </TableCell>
-
-                      {!["Agent", "SelfWorker", "Employer"].includes(user?.role) && (
-                        <TableCell sx={{ py: 1.1 }}>{row.agent_name}</TableCell>
-                      )}
-
-                      {(user?.role === "Admin" || user?.role === "SuperAdmin") && (
-                        <TableCell sx={{ py: 1.1 }}>{row.employer_name}</TableCell>
-                      )}
-
-                      <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
-                        Count: {row.number_of_worker}
-                      </TableCell>
-
-                      {(user?.role === "Agent" ||
-                        user?.role === "SelfWorker" ||
-                        user?.role === "Employer" ||
-                        user?.role === "Admin" ||
-                        user?.role === "SuperAdmin") && (
-                        <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
-                          Rs.: {row.finalAgentRequiredWage || row.per_worker_rates}/-
-                        </TableCell>
-                      )}
-
-                      <TableCell sx={{ py: 1.1 }}>
-                        {row.send_date_time
-                          ? new Date(row.send_date_time).toLocaleDateString()
-                          : "-"}
-                      </TableCell>
-                    </TableRow>
-                  ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      {t("No attendance data")}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-    </Box>
-
-    <DialogActions
-      sx={{
-        justifyContent: "center",
-        pb: 2,
-        pt: 1,
-        backgroundColor: "#f8fafc",
-        borderTop: "1px solid #e2e8f0",
-      }}
-    >
-      <Button
-        size="small"
-        onClick={handleClose}
-        variant="outlined"
-        sx={{
-          textTransform: "none",
-          borderColor: "#2563eb",
-          color: "#2563eb",
-          borderRadius: "12px",
-          px: 2.5,
-          fontWeight: 700,
-          "&:hover": {
-            backgroundColor: "#eff6ff",
-            borderColor: "#2563eb",
-          },
-        }}
-      >
-        {t("Close")}
-      </Button>
-    </DialogActions>
-  </DialogContent>
-</Dialog>
-      <Dialog
-  disablePortal
-  open={openDialog}
-  onClose={handleCancel}
-  fullWidth
-  TransitionComponent={Transition}
-  keepMounted
-  maxWidth="xs"
-  PaperProps={{
-    sx: {
-      borderRadius: "24px",
-      p: 0,
-      overflow: "hidden",
-      border: "1px solid rgba(148,163,184,0.18)",
-      boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
-      background:
-        "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
-    },
-  }}
->
-  <DialogTitle
-    sx={{
-      fontSize: { xs: "1.05rem", sm: "1.2rem" },
-      fontWeight: 800,
-      textAlign: "center",
-      pb: 1.2,
-      pt: 2.2,
-      background:
-        "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
-      color: "#fff !important",
-    }}
-  >
-    Confirm Approval
-  </DialogTitle>
-
-  <DialogContent
-    sx={{
-      textAlign: "center",
-      fontSize: { xs: "0.95rem", sm: "1rem" },
-      px: { xs: 2, sm: 3 },
-      py: 3,
-      background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
-    }}
-  >
-    Are you sure you want to approve this action?
-  </DialogContent>
-
-  <DialogActions
-    sx={{
-      justifyContent: "center",
-      gap: 1.2,
-      pb: 2.2,
-      pt: 0.5,
-      background: "#fff",
-      borderTop: "1px solid #eef2f7",
-    }}
-  >
-    <Button
-      size="small"
-      onClick={handleCancel}
-      color="primary"
-      variant="outlined"
-      sx={{
-        textTransform: "none",
-        minWidth: 96,
-        borderRadius: "12px",
-        fontWeight: 700,
-      }}
-    >
-      Cancel
-    </Button>
-    <Button
-      size="small"
-      onClick={handleConfirm}
-      color="primary"
-      variant="contained"
-      sx={{
-        textTransform: "none",
-        minWidth: 96,
-        borderRadius: "12px",
-        fontWeight: 800,
-        background: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-        boxShadow: "0 12px 24px rgba(37,99,235,0.22)",
-      }}
-    >
-      Yes
-    </Button>
-  </DialogActions>
-</Dialog>
-
- <Dialog
-  fullScreen={fullScreen}
-  TransitionComponent={Transition}
-  fullWidth
-  maxWidth="md"
-  PaperProps={{
-    sx: {
-      borderRadius: fullScreen ? 0 : "24px",
-      boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
-      width: fullScreen ? "calc(100% - 0px)" : "calc(100vw - 64px)",
-      margin: fullScreen ? "0 auto" : "32px auto",
-      position: "relative",
-      maxHeight: fullScreen ? "100%" : "unset",
-      overflow: "hidden",
-      border: "1px solid rgba(148,163,184,0.18)",
-      background:
-        "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
-    },
-  }}
-  sx={{
-    "& .MuiDialog-paper": {
-      margin: 0,
-      borderRadius: fullScreen ? 0 : "24px",
-      height: fullScreen ? "auto" : "fit-content",
-    },
-  }}
-  open={requirementOpen}
-  onClose={handleRequirementClose}
->
-  <DialogContent
-    sx={{
-      p: 0,
-      m: 0,
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
-    }}
-  >
-    <RequestWorkers
-      typeOfReq={requirementType}
-      handleRequirementClose={handleRequirementClose}
-      setSubscriptionOpen={setSubscriptionOpen}
-    />
-  </DialogContent>
-</Dialog>
-
-     <Dialog
-  open={requirementTypeOpen}
-  onClose={handleRequirementClose}
-  fullScreen={fullScreen}
-  TransitionComponent={Transition}
-  fullWidth
-  maxWidth="xs"
-  PaperProps={{
-    sx: {
-      overflow: "hidden",
-      borderRadius: fullScreen ? 0 : "28px",
-      boxShadow: "0 24px 60px rgba(15, 23, 42, 0.22)",
-      bgcolor: "#ffffff",
-      width: fullScreen ? "100%" : 440,
-      border: "1px solid #e2e8f0",
-      ...(fullScreen
-        ? {
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            m: 0,
-            borderRadius: 0,
-          }
-        : {
-            m: "auto",
-            position: "relative",
-          }),
-    },
-  }}
->
-  <Box
-    sx={{
-      px: 3,
-      pt: 2.5,
-      pb: 2,
-      background:
-        "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
-      color: "#fff",
-      textAlign: "center",
-      borderBottom: "1px solid rgba(255,255,255,0.1)",
-      position: "relative",
-      overflow: "hidden",
-    }}
-  >
-    <Box
-      sx={{
-        position: "absolute",
-        inset: 0,
-        background:
-          "radial-gradient(circle at top right, rgba(255,255,255,0.14), transparent 30%)",
-        pointerEvents: "none",
-      }}
-    />
-
-    <DialogTitle
-      sx={{
-        p: 0,
-        fontWeight: 800,
-        fontSize: { xs: "1.05rem", sm: "1.15rem" },
-        color: "#fff !important",
-        lineHeight: 1.2,
-        position: "relative",
-        zIndex: 1,
-      }}
-    >
-      {t("selectRequirementType")}
-    </DialogTitle>
-
-    <Typography
-      sx={{
-        mt: 0.8,
-        fontSize: "0.84rem",
-        color: "rgba(255,255,255,0.88)",
-        position: "relative",
-        zIndex: 1,
-      }}
-    >
-      Choose the type of requirement you want to post
-    </Typography>
-  </Box>
-
-  <DialogContent
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 2,
-      mt: 0,
-      px: 3,
-      py: 2.5,
-      background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
-    }}
-  >
-    <RadioGroup
-      value={requirementType}
-      onChange={handleRequirementSelect}
-      sx={{ width: "100%", gap: 1.1 }}
-    >
-      {[
-        { label: t("dailyWages"), value: "Daily_Wages" },
-        { label: t("contractBased"), value: "Contract_Based" },
-        { label: t("SupplyBased"), value: "Supply_Based" },
-        { label: t("officeStaff"), value: "Office_Staff" },
-      ].map((option) => (
-        <FormControlLabel
-          key={option.value}
-          value={option.value}
-          control={
-            <Radio
-              sx={{
-                color: "#1976d2",
-                "&.Mui-checked": {
-                  color: "#1976d2",
-                },
-              }}
-            />
-          }
-          label={
-            <span
-              style={{
-                fontSize: "15px",
-                fontWeight: 700,
-                color: "#1e293b",
-              }}
-            >
-              {option.label}
-            </span>
-          }
+        <Dialog
+          disablePortal
+          open={open}
+          onClose={handleClose}
+          fullWidth
+          maxWidth="md"
+          TransitionComponent={Transition}
+          keepMounted
+          fullScreen={isMobile}
           sx={{
-            mx: 0,
-            borderRadius: "16px",
-            border:
-              requirementType === option.value
-                ? "1.5px solid #1976d2"
-                : "1px solid #e2e8f0",
-            background:
-              requirementType === option.value
-                ? "linear-gradient(90deg, #eff6ff 0%, #e3f2fd 100%)"
-                : "#ffffff",
-            px: 1.8,
-            py: 0.9,
-            transition: "all 0.28s ease",
-            boxShadow:
-              requirementType === option.value
-                ? "0 8px 20px rgba(25,118,210,0.12)"
-                : "0 2px 8px rgba(15,23,42,0.04)",
-            "&:hover": {
-              backgroundColor:
-                requirementType === option.value ? undefined : "#f8fafc",
-              borderColor: "#90caf9",
+            "& .MuiPaper-root": {
+              borderRadius: isMobile ? 0 : "28px",
+              mt: isMobile ? 0 : "110px",
+              p: 0,
+              overflow: "hidden",
+              border: "1px solid rgba(148,163,184,0.18)",
+              boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
             },
           }}
-        />
-      ))}
-    </RadioGroup>
+        >
+          <DialogTitle
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              py: 1.6,
+              px: { xs: 2, sm: 2.5, md: 3 },
+              background:
+                "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
+              color: "white",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 30%), radial-gradient(circle at bottom left, rgba(255,255,255,0.08), transparent 30%)",
+                pointerEvents: "none",
+              }}
+            />
+            <Typography
+              fontSize="1.05rem"
+              fontWeight={800}
+              color="white"
+              sx={{ position: "relative", zIndex: 1 }}
+            >
+              {t("Statement of Work")}
+            </Typography>
+            <Tooltip title={t("close")}>
+              <IconButton
+                onClick={handleClose}
+                sx={{
+                  color: "white",
+                  position: "relative",
+                  zIndex: 1,
+                  bgcolor: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  "&:hover": {
+                    bgcolor: "rgba(255,255,255,0.16)",
+                  },
+                }}
+                size="small"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
+          </DialogTitle>
 
-    <Box
-      sx={{
-        mt: 1,
-        p: 2.5,
-        borderRadius: "22px",
-        width: "100%",
-        background: (() => {
-          switch (requirementType) {
-            case "Daily_Wages":
-              return "linear-gradient(135deg, #e3f2fd, #bbdefb)";
-            case "Contract_Based":
-              return "linear-gradient(135deg, #fff3e0, #ffe0b2)";
-            case "Supply_Based":
-              return "linear-gradient(135deg, #e0f7fa, #b2ebf2)";
-            case "Office_Staff":
-              return "linear-gradient(135deg, #ede7f6, #d1c4e9)";
-            default:
-              return "linear-gradient(135deg, #f8fafc, #eef2f7)";
-          }
-        })(),
-        textAlign: "center",
-        minHeight: fullScreen ? 220 : 190,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "all 0.35s ease",
-        boxShadow: "0 12px 28px rgba(15,23,42,0.10)",
-        border: "1px solid rgba(255,255,255,0.55)",
-      }}
-    >
-      <Box
-        sx={{
-          mb: 1.2,
-          fontSize: 60,
-          lineHeight: 1,
-          filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.10))",
-        }}
-      >
-        {requirementType === "Daily_Wages" && "💪"}
-        {requirementType === "Contract_Based" && "📄"}
-        {requirementType === "Supply_Based" && "🚚"}
-        {requirementType === "Office_Staff" && "💼"}
-        {!requirementType && "🧠"}
-      </Box>
+          <DialogContent
+            sx={{
+              p: 0,
+              background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+            }}
+          >
+            <Box
+              sx={{
+                p: { xs: 1, sm: 1.5, md: 2 },
+              }}
+            >
+              <Box
+                sx={{
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "20px",
+                  overflowX: "auto",
+                  background: "#fff",
+                  boxShadow: "0 12px 30px rgba(15, 23, 42, 0.06)",
+                  WebkitOverflowScrolling: "touch",
+                }}
+              >
+                <TableContainer>
+                  <Table size="small" sx={{ minWidth: 720 }}>
+                    <TableHead
+                      sx={{
+                        background:
+                          "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+                      }}
+                    >
+                      <TableRow>
+                        <TableCell
+                          sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                        >
+                          {t("S.No")}
+                        </TableCell>
 
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: 800,
-          color: "#1f2937",
-          fontSize: { xs: "1rem", sm: "1.08rem" },
-        }}
-      >
-        {requirementType
-          ? {
-              Daily_Wages: "Daily Wage Workers",
-              Contract_Based: "Contract-Based Projects",
-              Supply_Based: "Supply and Labour Supply",
-              Office_Staff: "Office & Admin Staff",
-            }[requirementType]
-          : "Select Requirement Type"}
-      </Typography>
+                        {!["Employer", "Agent", "SelfWorker"].includes(
+                          user?.role,
+                        ) && (
+                          <TableCell
+                            sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                          >
+                            {t("ERN")}
+                          </TableCell>
+                        )}
 
-      <Typography
-        variant="body2"
-        sx={{
-          mt: 1,
-          color: "#475569",
-          maxWidth: 290,
-          lineHeight: 1.55,
-          fontSize: "0.88rem",
-          fontWeight: 500,
-        }}
-      >
-        {requirementType
-          ? {
-              Daily_Wages:
-                "Hire skilled or unskilled workers for daily site work and short-term labour needs.",
-              Contract_Based:
-                "Get manpower teams for time-bound projects, contracts, and planned work execution.",
-              Supply_Based:
-                "Connect for worker supply, bulk labour needs, and manpower arrangement support.",
-              Office_Staff:
-                "Hire professional office, admin, and support staff for business operations.",
-            }[requirementType]
-          : "Choose an option above to see details and continue with the right requirement type."}
-      </Typography>
-    </Box>
-  </DialogContent>
+                        <TableCell
+                          sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                        ></TableCell>
 
-  <DialogActions
-    sx={{
-      justifyContent: "space-between",
-      px: 3,
-      pb: 2.5,
-      pt: 1.2,
-      backgroundColor: "#fff",
-      borderTop: "1px solid #eef2f7",
-    }}
-  >
-    <Button
-      onClick={handleRequirementClose}
-      sx={{
-        color: "#475569",
-        backgroundColor: "#f8fafc",
-        borderRadius: "12px",
-        textTransform: "none",
-        px: 3,
-        py: 1,
-        fontWeight: 700,
-        border: "1px solid #e2e8f0",
-        "&:hover": {
-          backgroundColor: "#eef2f7",
-        },
-      }}
-    >
-      Cancel
-    </Button>
+                        {!["Agent", "SelfWorker", "Employer"].includes(
+                          user?.role,
+                        ) && (
+                          <TableCell
+                            sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                          >
+                            {t("Agent")}
+                          </TableCell>
+                        )}
 
-    <Button
-      onClick={handleConfirmReqType}
-      disabled={!requirementType}
-      variant="contained"
-      sx={{
-        borderRadius: "12px",
-        textTransform: "none",
-        px: 3,
-        py: 1,
-        fontWeight: 800,
-        background: "linear-gradient(90deg, #1976d2 0%, #185a9d 100%)",
-        boxShadow: "0 10px 24px rgba(25,118,210,0.24)",
-        "&:hover": {
-          background: "linear-gradient(90deg, #1669bb 0%, #144e87 100%)",
-        },
-      }}
-    >
-      Confirm
-    </Button>
-  </DialogActions>
-</Dialog>
-   <Dialog
+                        {(user?.role === "Admin" ||
+                          user?.role === "SuperAdmin") && (
+                          <TableCell
+                            sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                          >
+                            {t("Employer")}
+                          </TableCell>
+                        )}
+
+                        <TableCell
+                          sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                        >
+                          {t("Workers")}
+                        </TableCell>
+
+                        {(user?.role !== "SelfWorker" ||
+                          user?.role !== "Agent" ||
+                          user?.role === "Admin") && (
+                          <TableCell
+                            sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                          >
+                            {t("Wages")}
+                          </TableCell>
+                        )}
+
+                        <TableCell
+                          sx={{ fontWeight: 800, color: "#334155", py: 1.2 }}
+                        >
+                          {t("Date")}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                      {statementOfWorkData.length > 0 ? (
+                        statementOfWorkData
+                          .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+                          .map((row, index) => (
+                            <TableRow
+                              key={row._id || index}
+                              sx={{
+                                "&:nth-of-type(even)": {
+                                  backgroundColor: "#f8fbff",
+                                },
+                                "&:hover": {
+                                  backgroundColor: "#f1f5f9",
+                                },
+                              }}
+                            >
+                              <TableCell sx={{ py: 1.1 }}>
+                                {page * rowsPerPage + index + 1}
+                              </TableCell>
+
+                              {!["Employer", "Agent", "SelfWorker"].includes(
+                                user?.role,
+                              ) && (
+                                <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
+                                  {row.ERN_number}
+                                </TableCell>
+                              )}
+
+                              <TableCell sx={{ py: 1.1 }}>
+                                {row.employer_accepted ? (
+                                  <Typography
+                                    color="success.main"
+                                    fontWeight="bold"
+                                    fontSize={12}
+                                  >
+                                    {t("Approved")}
+                                  </Typography>
+                                ) : user?.role === "Agent" ||
+                                  user?.role === "SelfWorker" ? (
+                                  <Typography
+                                    color="error"
+                                    fontWeight="bold"
+                                    fontSize={12}
+                                  >
+                                    {t("Pending")}
+                                  </Typography>
+                                ) : (
+                                  <Button
+                                    variant="contained"
+                                    color="info"
+                                    size="small"
+                                    sx={{
+                                      minWidth: 68,
+                                      minHeight: 28,
+                                      textTransform: "none",
+                                      fontSize: "0.7rem",
+                                      px: 1.2,
+                                      borderRadius: "10px",
+                                      fontWeight: 700,
+                                      animation: "blink 1s infinite",
+                                      "@keyframes blink": {
+                                        "0%,100%": { opacity: 1 },
+                                        "50%": { opacity: 0.4 },
+                                      },
+                                    }}
+                                    onClick={() => handleApproveClick(row._id)}
+                                  >
+                                    {t("Accept")}
+                                  </Button>
+                                )}
+                              </TableCell>
+
+                              {!["Agent", "SelfWorker", "Employer"].includes(
+                                user?.role,
+                              ) && (
+                                <TableCell sx={{ py: 1.1 }}>
+                                  {row.agent_name}
+                                </TableCell>
+                              )}
+
+                              {(user?.role === "Admin" ||
+                                user?.role === "SuperAdmin") && (
+                                <TableCell sx={{ py: 1.1 }}>
+                                  {row.employer_name}
+                                </TableCell>
+                              )}
+
+                              <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
+                                Count: {row.number_of_worker}
+                              </TableCell>
+
+                              {(user?.role === "Agent" ||
+                                user?.role === "SelfWorker" ||
+                                user?.role === "Employer" ||
+                                user?.role === "Admin" ||
+                                user?.role === "SuperAdmin") && (
+                                <TableCell sx={{ py: 1.1, fontWeight: 600 }}>
+                                  Rs.:{" "}
+                                  {row.finalAgentRequiredWage ||
+                                    row.per_worker_rates}
+                                  /-
+                                </TableCell>
+                              )}
+
+                              <TableCell sx={{ py: 1.1 }}>
+                                {row.send_date_time
+                                  ? new Date(
+                                      row.send_date_time,
+                                    ).toLocaleDateString()
+                                  : "-"}
+                              </TableCell>
+                            </TableRow>
+                          ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
+                            <Typography
+                              variant="subtitle1"
+                              color="text.secondary"
+                            >
+                              {t("No attendance data")}
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </Box>
+
+            <DialogActions
+              sx={{
+                justifyContent: "center",
+                pb: 2,
+                pt: 1,
+                backgroundColor: "#f8fafc",
+                borderTop: "1px solid #e2e8f0",
+              }}
+            >
+              <Button
+                size="small"
+                onClick={handleClose}
+                variant="outlined"
+                sx={{
+                  textTransform: "none",
+                  borderColor: "#2563eb",
+                  color: "#2563eb",
+                  borderRadius: "12px",
+                  px: 2.5,
+                  fontWeight: 700,
+                  "&:hover": {
+                    backgroundColor: "#eff6ff",
+                    borderColor: "#2563eb",
+                  },
+                }}
+              >
+                {t("Close")}
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          disablePortal
+          open={openDialog}
+          onClose={handleCancel}
+          fullWidth
+          TransitionComponent={Transition}
+          keepMounted
+          maxWidth="xs"
+          PaperProps={{
+            sx: {
+              borderRadius: "24px",
+              p: 0,
+              overflow: "hidden",
+              border: "1px solid rgba(148,163,184,0.18)",
+              boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{
+              fontSize: { xs: "1.05rem", sm: "1.2rem" },
+              fontWeight: 800,
+              textAlign: "center",
+              pb: 1.2,
+              pt: 2.2,
+              background:
+                "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
+              color: "#fff !important",
+            }}
+          >
+            Confirm Approval
+          </DialogTitle>
+
+          <DialogContent
+            sx={{
+              textAlign: "center",
+              fontSize: { xs: "0.95rem", sm: "1rem" },
+              px: { xs: 2, sm: 3 },
+              py: 3,
+              background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+            }}
+          >
+            Are you sure you want to approve this action?
+          </DialogContent>
+
+          <DialogActions
+            sx={{
+              justifyContent: "center",
+              gap: 1.2,
+              pb: 2.2,
+              pt: 0.5,
+              background: "#fff",
+              borderTop: "1px solid #eef2f7",
+            }}
+          >
+            <Button
+              size="small"
+              onClick={handleCancel}
+              color="primary"
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                minWidth: 96,
+                borderRadius: "12px",
+                fontWeight: 700,
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="small"
+              onClick={handleConfirm}
+              color="primary"
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                minWidth: 96,
+                borderRadius: "12px",
+                fontWeight: 800,
+                background: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+                boxShadow: "0 12px 24px rgba(37,99,235,0.22)",
+              }}
+            >
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          fullScreen={fullScreen}
+          TransitionComponent={Transition}
+          fullWidth
+          maxWidth="md"
+          PaperProps={{
+            sx: {
+              borderRadius: fullScreen ? 0 : "24px",
+              boxShadow: "0 24px 80px rgba(15, 23, 42, 0.22)",
+              width: fullScreen ? "calc(100% - 0px)" : "calc(100vw - 64px)",
+              margin: fullScreen ? "0 auto" : "32px auto",
+              position: "relative",
+              maxHeight: fullScreen ? "100%" : "unset",
+              overflow: "hidden",
+              border: "1px solid rgba(148,163,184,0.18)",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+            },
+          }}
+          sx={{
+            "& .MuiDialog-paper": {
+              margin: 0,
+              borderRadius: fullScreen ? 0 : "24px",
+              height: fullScreen ? "auto" : "fit-content",
+            },
+          }}
+          open={requirementOpen}
+          onClose={handleRequirementClose}
+        >
+          <DialogContent
+            sx={{
+              p: 0,
+              m: 0,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+            }}
+          >
+            <RequestWorkers
+              typeOfReq={requirementType}
+              handleRequirementClose={handleRequirementClose}
+              setSubscriptionOpen={setSubscriptionOpen}
+            />
+          </DialogContent>
+        </Dialog>
+
+        <Dialog
+          open={requirementTypeOpen}
+          onClose={handleRequirementClose}
+          fullScreen={fullScreen}
+          TransitionComponent={Transition}
+          fullWidth
+          maxWidth="xs"
+          PaperProps={{
+            sx: {
+              overflow: "hidden",
+              borderRadius: fullScreen ? 0 : "28px",
+              boxShadow: "0 24px 60px rgba(15, 23, 42, 0.22)",
+              bgcolor: "#ffffff",
+              width: fullScreen ? "100%" : 440,
+              border: "1px solid #e2e8f0",
+              ...(fullScreen
+                ? {
+                    position: "fixed",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    m: 0,
+                    borderRadius: 0,
+                  }
+                : {
+                    m: "auto",
+                    position: "relative",
+                  }),
+            },
+          }}
+        >
+          <Box
+            sx={{
+              px: 3,
+              pt: 2.5,
+              pb: 2,
+              background:
+                "linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #2563eb 100%)",
+              color: "#fff",
+              textAlign: "center",
+              borderBottom: "1px solid rgba(255,255,255,0.1)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(circle at top right, rgba(255,255,255,0.14), transparent 30%)",
+                pointerEvents: "none",
+              }}
+            />
+
+            <DialogTitle
+              sx={{
+                p: 0,
+                fontWeight: 800,
+                fontSize: { xs: "1.05rem", sm: "1.15rem" },
+                color: "#fff !important",
+                lineHeight: 1.2,
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              {t("selectRequirementType")}
+            </DialogTitle>
+
+            <Typography
+              sx={{
+                mt: 0.8,
+                fontSize: "0.84rem",
+                color: "rgba(255,255,255,0.88)",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              Choose the type of requirement you want to post
+            </Typography>
+          </Box>
+
+          <DialogContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 2,
+              mt: 0,
+              px: 3,
+              py: 2.5,
+              background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)",
+            }}
+          >
+            <RadioGroup
+              value={requirementType}
+              onChange={handleRequirementSelect}
+              sx={{ width: "100%", gap: 1.1 }}
+            >
+              {[
+                { label: t("dailyWages"), value: "Daily_Wages" },
+                { label: t("contractBased"), value: "Contract_Based" },
+                { label: t("SupplyBased"), value: "Supply_Based" },
+                { label: t("officeStaff"), value: "Office_Staff" },
+              ].map((option) => (
+                <FormControlLabel
+                  key={option.value}
+                  value={option.value}
+                  control={
+                    <Radio
+                      sx={{
+                        color: "#1976d2",
+                        "&.Mui-checked": {
+                          color: "#1976d2",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <span
+                      style={{
+                        fontSize: "15px",
+                        fontWeight: 700,
+                        color: "#1e293b",
+                      }}
+                    >
+                      {option.label}
+                    </span>
+                  }
+                  sx={{
+                    mx: 0,
+                    borderRadius: "16px",
+                    border:
+                      requirementType === option.value
+                        ? "1.5px solid #1976d2"
+                        : "1px solid #e2e8f0",
+                    background:
+                      requirementType === option.value
+                        ? "linear-gradient(90deg, #eff6ff 0%, #e3f2fd 100%)"
+                        : "#ffffff",
+                    px: 1.8,
+                    py: 0.9,
+                    transition: "all 0.28s ease",
+                    boxShadow:
+                      requirementType === option.value
+                        ? "0 8px 20px rgba(25,118,210,0.12)"
+                        : "0 2px 8px rgba(15,23,42,0.04)",
+                    "&:hover": {
+                      backgroundColor:
+                        requirementType === option.value
+                          ? undefined
+                          : "#f8fafc",
+                      borderColor: "#90caf9",
+                    },
+                  }}
+                />
+              ))}
+            </RadioGroup>
+
+            <Box
+              sx={{
+                mt: 1,
+                p: 2.5,
+                borderRadius: "22px",
+                width: "100%",
+                background: (() => {
+                  switch (requirementType) {
+                    case "Daily_Wages":
+                      return "linear-gradient(135deg, #e3f2fd, #bbdefb)";
+                    case "Contract_Based":
+                      return "linear-gradient(135deg, #fff3e0, #ffe0b2)";
+                    case "Supply_Based":
+                      return "linear-gradient(135deg, #e0f7fa, #b2ebf2)";
+                    case "Office_Staff":
+                      return "linear-gradient(135deg, #ede7f6, #d1c4e9)";
+                    default:
+                      return "linear-gradient(135deg, #f8fafc, #eef2f7)";
+                  }
+                })(),
+                textAlign: "center",
+                minHeight: fullScreen ? 220 : 190,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                transition: "all 0.35s ease",
+                boxShadow: "0 12px 28px rgba(15,23,42,0.10)",
+                border: "1px solid rgba(255,255,255,0.55)",
+              }}
+            >
+              <Box
+                sx={{
+                  mb: 1.2,
+                  fontSize: 60,
+                  lineHeight: 1,
+                  filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.10))",
+                }}
+              >
+                {requirementType === "Daily_Wages" && "💪"}
+                {requirementType === "Contract_Based" && "📄"}
+                {requirementType === "Supply_Based" && "🚚"}
+                {requirementType === "Office_Staff" && "💼"}
+                {!requirementType && "🧠"}
+              </Box>
+
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 800,
+                  color: "#1f2937",
+                  fontSize: { xs: "1rem", sm: "1.08rem" },
+                }}
+              >
+                {requirementType
+                  ? {
+                      Daily_Wages: "Daily Wage Workers",
+                      Contract_Based: "Contract-Based Projects",
+                      Supply_Based: "Supply and Labour Supply",
+                      Office_Staff: "Office & Admin Staff",
+                    }[requirementType]
+                  : "Select Requirement Type"}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  mt: 1,
+                  color: "#475569",
+                  maxWidth: 290,
+                  lineHeight: 1.55,
+                  fontSize: "0.88rem",
+                  fontWeight: 500,
+                }}
+              >
+                {requirementType
+                  ? {
+                      Daily_Wages:
+                        "Hire skilled or unskilled workers for daily site work and short-term labour needs.",
+                      Contract_Based:
+                        "Get manpower teams for time-bound projects, contracts, and planned work execution.",
+                      Supply_Based:
+                        "Connect for worker supply, bulk labour needs, and manpower arrangement support.",
+                      Office_Staff:
+                        "Hire professional office, admin, and support staff for business operations.",
+                    }[requirementType]
+                  : "Choose an option above to see details and continue with the right requirement type."}
+              </Typography>
+            </Box>
+          </DialogContent>
+
+          <DialogActions
+            sx={{
+              justifyContent: "space-between",
+              px: 3,
+              pb: 2.5,
+              pt: 1.2,
+              backgroundColor: "#fff",
+              borderTop: "1px solid #eef2f7",
+            }}
+          >
+            <Button
+              onClick={handleRequirementClose}
+              sx={{
+                color: "#475569",
+                backgroundColor: "#f8fafc",
+                borderRadius: "12px",
+                textTransform: "none",
+                px: 3,
+                py: 1,
+                fontWeight: 700,
+                border: "1px solid #e2e8f0",
+                "&:hover": {
+                  backgroundColor: "#eef2f7",
+                },
+              }}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              onClick={handleConfirmReqType}
+              disabled={!requirementType}
+              variant="contained"
+              sx={{
+                borderRadius: "12px",
+                textTransform: "none",
+                px: 3,
+                py: 1,
+                fontWeight: 800,
+                background: "linear-gradient(90deg, #1976d2 0%, #185a9d 100%)",
+                boxShadow: "0 10px 24px rgba(25,118,210,0.24)",
+                "&:hover": {
+                  background:
+                    "linear-gradient(90deg, #1669bb 0%, #144e87 100%)",
+                },
+              }}
+            >
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
           open={openVerifyDialog}
           onClose={() => setOpenVerifyDialog(false)}
           maxWidth="lg"
@@ -6609,14 +6710,15 @@ ERN નંબર: ${ern}`,
                       }}
                     >
                       <Avatar
-src={
-              user?.profilePhoto
-                ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
-                    /([^:]\/)\/+/g,
-                    "$1"
-                  )
-                : "/usericon.png"
-            }                        sx={{
+                        src={
+                          user?.profilePhoto
+                            ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
+                                /([^:]\/)\/+/g,
+                                "$1",
+                              )
+                            : "/usericon.png"
+                        }
+                        sx={{
                           width: 96,
                           height: 96,
                           border: "4px solid rgba(255,255,255,0.95)",
@@ -6695,22 +6797,22 @@ src={
                       {t("getVerifiedSubtitle")}
                     </Typography>
 
-<Box
-  sx={{
-    mt: 2.5,
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 1,
-    px: 1.5,
-    py: 0.9,
-    borderRadius: "999px",
-    background: "rgba(255,255,255,0.12)",
-    border: "1px solid rgba(255,255,255,0.16)",
-    backdropFilter: "blur(8px)",
-    cursor: isMobile ? "pointer" : "default",
-  }}
-  onClick={() => isMobile && setShowBenefits(!showBenefits)}
->
+                    <Box
+                      sx={{
+                        mt: 2.5,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 1,
+                        px: 1.5,
+                        py: 0.9,
+                        borderRadius: "999px",
+                        background: "rgba(255,255,255,0.12)",
+                        border: "1px solid rgba(255,255,255,0.16)",
+                        backdropFilter: "blur(8px)",
+                        cursor: isMobile ? "pointer" : "default",
+                      }}
+                      onClick={() => isMobile && setShowBenefits(!showBenefits)}
+                    >
                       <Box
                         sx={{
                           width: 10,
@@ -6719,9 +6821,10 @@ src={
                           bgcolor: "#4ade80",
                         }}
                       />
-                    <Typography sx={{ fontSize: ".88rem", fontWeight: 600 }}>
-  {t("whyGetVerified")} {isMobile && (showBenefits ? "▲" : "▼")}
-</Typography>
+                      <Typography sx={{ fontSize: ".88rem", fontWeight: 600 }}>
+                        {t("whyGetVerified")}{" "}
+                        {isMobile && (showBenefits ? "▲" : "▼")}
+                      </Typography>
                     </Box>
                   </Box>
                 </Box>
@@ -6744,164 +6847,161 @@ src={
                   alignItems: "start",
                 }}
               >
-             
-                 
-{isMobile ? (
-  <Collapse in={showBenefits} unmountOnExit>
-    <Box
-      sx={{
-        borderRadius: "22px",
-        border: "1px solid #e2e8f0",
-        background: "#fff",
-        p: 2,
-        boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
-      }}
-    >
-      <Box
-        component="ul"
-        sx={{
-          listStyle: "none",
-          p: 0,
-          m: 0,
-          display: "grid",
-          gap: 1.2,
-        }}
-      >
-        {[
-          t("verifiedBenefits.b1"),
-          t("verifiedBenefits.b2"),
-          t("verifiedBenefits.b5"),
-          t("verifiedBenefits.b6"),
-          t("verifiedBenefits.b7"),
-          t("verifiedBenefits.b8"),
-        ].map((item, index) => (
-          <Box
-            component="li"
-            key={index}
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: 1.2,
-              p: 1.2,
-              borderRadius: "14px",
-              background:
-                "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
-              border: "1px solid #e2e8f0",
-            }}
-          >
-            <Box
-              sx={{
-                minWidth: 24,
-                width: 24,
-                height: 24,
-                borderRadius: "50%",
-                background:
-                  "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
-                color: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 13,
-                fontWeight: 800,
-                mt: "2px",
-                boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
-              }}
-            >
-              ✓
-            </Box>
-            <Typography
-              sx={{
-                color: "#334155",
-                fontSize: ".95rem",
-                lineHeight: 1.55,
-                fontWeight: 500,
-              }}
-            >
-              {item}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-    </Box>
-  </Collapse>
-) : (
-  <Box
-    sx={{
-      borderRadius: "22px",
-      border: "1px solid #e2e8f0",
-      background: "#fff",
-      p: { xs: 2, md: 2.5 },
-      boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
-    }}
-  >
-    <Box
-      component="ul"
-      sx={{
-        listStyle: "none",
-        p: 0,
-        m: 0,
-        display: "grid",
-        gap: 1.2,
-      }}
-    >
-      {[
-        t("verifiedBenefits.b1"),
-        t("verifiedBenefits.b2"),
-        t("verifiedBenefits.b5"),
-        t("verifiedBenefits.b6"),
-        t("verifiedBenefits.b7"),
-        t("verifiedBenefits.b8"),
-      ].map((item, index) => (
-        <Box
-          component="li"
-          key={index}
-          sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 1.2,
-            p: 1.2,
-            borderRadius: "14px",
-            background:
-              "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
-            border: "1px solid #e2e8f0",
-          }}
-        >
-          <Box
-            sx={{
-              minWidth: 24,
-              width: 24,
-              height: 24,
-              borderRadius: "50%",
-              background:
-                "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 13,
-              fontWeight: 800,
-              mt: "2px",
-              boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
-            }}
-          >
-            ✓
-          </Box>
-          <Typography
-            sx={{
-              color: "#334155",
-              fontSize: ".95rem",
-              lineHeight: 1.55,
-              fontWeight: 500,
-            }}
-          >
-            {item}
-          </Typography>
-        </Box>
-      ))}
-    </Box>
-  </Box>
-)}
-               
+                {isMobile ? (
+                  <Collapse in={showBenefits} unmountOnExit>
+                    <Box
+                      sx={{
+                        borderRadius: "22px",
+                        border: "1px solid #e2e8f0",
+                        background: "#fff",
+                        p: 2,
+                        boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+                      }}
+                    >
+                      <Box
+                        component="ul"
+                        sx={{
+                          listStyle: "none",
+                          p: 0,
+                          m: 0,
+                          display: "grid",
+                          gap: 1.2,
+                        }}
+                      >
+                        {[
+                          t("verifiedBenefits.b1"),
+                          t("verifiedBenefits.b2"),
+                          t("verifiedBenefits.b5"),
+                          t("verifiedBenefits.b6"),
+                          t("verifiedBenefits.b7"),
+                          t("verifiedBenefits.b8"),
+                        ].map((item, index) => (
+                          <Box
+                            component="li"
+                            key={index}
+                            sx={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 1.2,
+                              p: 1.2,
+                              borderRadius: "14px",
+                              background:
+                                "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+                              border: "1px solid #e2e8f0",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                minWidth: 24,
+                                width: 24,
+                                height: 24,
+                                borderRadius: "50%",
+                                background:
+                                  "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                                color: "#fff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: 13,
+                                fontWeight: 800,
+                                mt: "2px",
+                                boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
+                              }}
+                            >
+                              ✓
+                            </Box>
+                            <Typography
+                              sx={{
+                                color: "#334155",
+                                fontSize: ".95rem",
+                                lineHeight: 1.55,
+                                fontWeight: 500,
+                              }}
+                            >
+                              {item}
+                            </Typography>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  </Collapse>
+                ) : (
+                  <Box
+                    sx={{
+                      borderRadius: "22px",
+                      border: "1px solid #e2e8f0",
+                      background: "#fff",
+                      p: { xs: 2, md: 2.5 },
+                      boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+                    }}
+                  >
+                    <Box
+                      component="ul"
+                      sx={{
+                        listStyle: "none",
+                        p: 0,
+                        m: 0,
+                        display: "grid",
+                        gap: 1.2,
+                      }}
+                    >
+                      {[
+                        t("verifiedBenefits.b1"),
+                        t("verifiedBenefits.b2"),
+                        t("verifiedBenefits.b5"),
+                        t("verifiedBenefits.b6"),
+                        t("verifiedBenefits.b7"),
+                        t("verifiedBenefits.b8"),
+                      ].map((item, index) => (
+                        <Box
+                          component="li"
+                          key={index}
+                          sx={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 1.2,
+                            p: 1.2,
+                            borderRadius: "14px",
+                            background:
+                              "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
+                            border: "1px solid #e2e8f0",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              minWidth: 24,
+                              width: 24,
+                              height: 24,
+                              borderRadius: "50%",
+                              background:
+                                "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                              color: "#fff",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 13,
+                              fontWeight: 800,
+                              mt: "2px",
+                              boxShadow: "0 6px 14px rgba(34,197,94,0.25)",
+                            }}
+                          >
+                            ✓
+                          </Box>
+                          <Typography
+                            sx={{
+                              color: "#334155",
+                              fontSize: ".95rem",
+                              lineHeight: 1.55,
+                              fontWeight: 500,
+                            }}
+                          >
+                            {item}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                )}
 
                 {/* Price card */}
                 <Box
@@ -6953,97 +7053,97 @@ src={
                       }}
                     >
                       {user?.role === "Agent" ? (
-                      <>
-  {/* Old Price */}
-  <Typography
-    component="span"
-    sx={{
-      textDecoration: "line-through",
-      color: "#94a3b8",
-      fontWeight: 600,
-      fontSize: "1.05rem",
-      mr: 1,
-    }}
-  >
-    ₹499
-  </Typography>
+                        <>
+                          {/* Old Price */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              textDecoration: "line-through",
+                              color: "#94a3b8",
+                              fontWeight: 600,
+                              fontSize: "1.05rem",
+                              mr: 1,
+                            }}
+                          >
+                            ₹499
+                          </Typography>
 
-  {/* New Price */}
-  <Typography
-    component="span"
-    sx={{
-      color: "#15803d",
-      fontWeight: 900,
-      fontSize: { xs: "2rem", md: "2.35rem" },
-      lineHeight: 1,
-      mr: 1,
-    }}
-  >
-    ₹199
-  </Typography>
+                          {/* New Price */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              color: "#15803d",
+                              fontWeight: 900,
+                              fontSize: { xs: "2rem", md: "2.35rem" },
+                              lineHeight: 1,
+                              mr: 1,
+                            }}
+                          >
+                            ₹199
+                          </Typography>
 
-  {/* Discount Badge */}
-  <Typography
-    component="span"
-    sx={{
-      backgroundColor: "#dcfce7",
-      color: "#15803d",
-      fontWeight: 700,
-      fontSize: "0.85rem",
-      px: 1.2,
-      py: 0.3,
-      borderRadius: "999px",
-    }}
-  >
-    60% OFF
-  </Typography>
-</>
+                          {/* Discount Badge */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              backgroundColor: "#dcfce7",
+                              color: "#15803d",
+                              fontWeight: 700,
+                              fontSize: "0.85rem",
+                              px: 1.2,
+                              py: 0.3,
+                              borderRadius: "999px",
+                            }}
+                          >
+                            60% OFF
+                          </Typography>
+                        </>
                       ) : (
-                     <>
-  {/* Old Price */}
-  <Typography
-    component="span"
-    sx={{
-      textDecoration: "line-through",
-      color: "#94a3b8",
-      fontWeight: 600,
-      fontSize: "1.05rem",
-      mr: 1,
-    }}
-  >
-    ₹199
-  </Typography>
+                        <>
+                          {/* Old Price */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              textDecoration: "line-through",
+                              color: "#94a3b8",
+                              fontWeight: 600,
+                              fontSize: "1.05rem",
+                              mr: 1,
+                            }}
+                          >
+                            ₹199
+                          </Typography>
 
-  {/* New Price */}
-  <Typography
-    component="span"
-    sx={{
-      color: "#15803d",
-      fontWeight: 900,
-      fontSize: { xs: "2rem", md: "2.35rem" },
-      lineHeight: 1,
-      mr: 1,
-    }}
-  >
-    ₹49
-  </Typography>
+                          {/* New Price */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              color: "#15803d",
+                              fontWeight: 900,
+                              fontSize: { xs: "2rem", md: "2.35rem" },
+                              lineHeight: 1,
+                              mr: 1,
+                            }}
+                          >
+                            ₹49
+                          </Typography>
 
-  {/* Discount Badge */}
-  <Typography
-    component="span"
-    sx={{
-      backgroundColor: "#dcfce7",
-      color: "#15803d",
-      fontWeight: 700,
-      fontSize: "0.85rem",
-      px: 1.2,
-      py: 0.3,
-      borderRadius: "999px",
-    }}
-  >
-    75% OFF • Save ₹150
-  </Typography>
-</>
+                          {/* Discount Badge */}
+                          <Typography
+                            component="span"
+                            sx={{
+                              backgroundColor: "#dcfce7",
+                              color: "#15803d",
+                              fontWeight: 700,
+                              fontSize: "0.85rem",
+                              px: 1.2,
+                              py: 0.3,
+                              borderRadius: "999px",
+                            }}
+                          >
+                            75% OFF • Save ₹150
+                          </Typography>
+                        </>
                       )}
                     </Box>
 
@@ -7158,18 +7258,18 @@ src={
           open={isCloserModalOpen}
           handleClose={handleCloseCloserModal}
         />
-        <SubscriptionModel
-          employerId={user?._id}
-          pay_request={user?.id}
-          open={subscriptionOpen}
-          handleClose={handleSubscriptionClose}
-        />
+        {user?.role === "Employer" && !user?.isSubscribed && (
+          <EmployerSubscriptionDialog
+            user={user}
+            open={subscriptionOpen}
+            onClose={handleClose}
+          />
+        )}
         <PathLocationModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
           selectedLocation={selectedLocation}
         />
-     
       </Box>
     </>
   );
