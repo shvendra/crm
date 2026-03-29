@@ -20,6 +20,7 @@ import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import CampaignRoundedIcon from "@mui/icons-material/CampaignRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { useNavigate } from "react-router-dom";
+import config from "../../config";
 
 export default function EmployerSubscriptionDialog({
   open,
@@ -31,13 +32,30 @@ export default function EmployerSubscriptionDialog({
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [showBenefits, setShowBenefits] = useState(false);
 
-  const hasActiveSubscription = useMemo(() => {
-    if (!user) return false;
+const [hasActiveSubscription, setHasActiveSubscription] = useState(true);
 
-    return (
-      user?.isSubscribed === false && user?.role ==="Employer"
-    );
-  }, [user]);
+useEffect(() => {
+  // 1. If there's no user yet, we don't need a timer
+  if (!user) {
+    setHasActiveSubscription(false);
+    return;
+  }
+
+  // 2. Set a timer for 10 seconds (10,000 ms)
+  const timer = setTimeout(() => {
+    const isEmployerWithoutSub = user?.isSubscribed === false && user?.role === "Employer";
+    
+    if (isEmployerWithoutSub) {
+      setHasActiveSubscription(false);
+    } else {
+      setHasActiveSubscription(true);
+    }
+  }, 10000);
+
+  // 3. Cleanup: clear the timer if the component unmounts or user changes
+  return () => clearTimeout(timer);
+}, [user]);
+
 
   useEffect(() => {
     if (!isMobile) {
@@ -85,12 +103,12 @@ export default function EmployerSubscriptionDialog({
       subtitle:
         "Boost your employer brand and improve visibility when workers browse opportunities.",
     },
-    {
-      icon: <StarRoundedIcon sx={{ fontSize: 18 }} />,
-      title: "Serious hiring advantage",
-      subtitle:
-        "A subscription signals commitment and improves conversion from enquiry to hiring.",
-    },
+    // {
+    //   icon: <StarRoundedIcon sx={{ fontSize: 18 }} />,
+    //   title: "Serious hiring advantage",
+    //   subtitle:
+    //     "A subscription signals commitment and improves conversion from enquiry to hiring.",
+    // },
   ];
 
   return (
@@ -180,8 +198,14 @@ export default function EmployerSubscriptionDialog({
                   }}
                 >
                   <Avatar
-                    src={user?.profilePhoto || "/usericon.png"}
-                    alt={user?.companyName || user?.name || "Employer"}
+    src={
+              user?.profilePhoto
+                ? `${config.FILE_BASE_URL}/${user.profilePhoto}`.replace(
+                    /([^:]\/)\/+/g,
+                    "$1"
+                  )
+                : ""
+            }                    alt={user?.companyName || user?.name || "Employer"}
                     sx={{
                       width: 96,
                       height: 96,
@@ -558,56 +582,7 @@ export default function EmployerSubscriptionDialog({
               </Box>
 
               <Box sx={{ p: 2.4 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 1.2,
-                    flexWrap: "wrap",
-                    mb: 1.2,
-                  }}
-                >
-                  <Typography
-                    component="span"
-                    sx={{
-                      textDecoration: "line-through",
-                      color: "#94a3b8",
-                      fontWeight: 600,
-                      fontSize: "1.05rem",
-                      mr: 1,
-                    }}
-                  >
-                    ₹999
-                  </Typography>
-
-                  <Typography
-                    component="span"
-                    sx={{
-                      color: "#15803d",
-                      fontWeight: 900,
-                      fontSize: { xs: "2rem", md: "2.35rem" },
-                      lineHeight: 1,
-                      mr: 1,
-                    }}
-                  >
-                    View Plans
-                  </Typography>
-
-                  <Typography
-                    component="span"
-                    sx={{
-                      backgroundColor: "#dcfce7",
-                      color: "#15803d",
-                      fontWeight: 700,
-                      fontSize: "0.85rem",
-                      px: 1.2,
-                      py: 0.3,
-                      borderRadius: "999px",
-                    }}
-                  >
-                    Best value plans
-                  </Typography>
-                </Box>
+              
 
                 <Typography
                   sx={{

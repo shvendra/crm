@@ -272,6 +272,7 @@ ERN નંબર: ${ern}`,
         i18n.changeLanguage("hi");
 
         setOpenVerifyDialog(true);
+        setSubscriptionOpen(true);
         // setPopupLang(i18n.language === "hi" ? "hi" : "en");
       }
     }, 10000); // 10 seconds
@@ -7156,34 +7157,6 @@ ERN નંબર: ${ern}`,
                     >
                       {t("verifiedFeeNote")}
                     </Typography>
-
-                    {/* <Box
-                      sx={{
-                        mt: 2.2,
-                        p: 1.4,
-                        borderRadius: "16px",
-                        background:
-                          "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)",
-                        border: "1px dashed #cbd5e1",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: ".9rem",
-                          color: "#334155",
-                          fontWeight: 600,
-                          mb: 0.6,
-                        }}
-                      >
-                        What you get:
-                      </Typography>
-                      <Typography sx={{ fontSize: ".88rem", color: "#64748b" }}>
-                        Verified badge, better visibility, more trust, stronger
-                        profile impression, and higher chances of getting direct
-                        connections.
-                      </Typography>
-                    </Box> */}
-
                     <Box
                       sx={{
                         display: "flex",
