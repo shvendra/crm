@@ -193,282 +193,409 @@ const handlePayment = async (plan) => {
     }, [isAuthorized, navigateTo]);
     const isExpired = new Date(user?.subscriptionExpiry).getTime() <= Date.now();
 return (
+ <Box
+  sx={{
+    mt: "2px",
+    minHeight: "100vh",
+    background:
+      "linear-gradient(180deg, #f8fbff 0%, #f4f7fb 45%, #eef4ff 100%)",
+    px: { xs: 1.5, sm: 2, md: 3 },
+    py: { xs: 1.5, md: 2.2 },
+  }}
+>
+  {/* Header */}
   <Box
     sx={{
-      minHeight: "100vh",
-      backgroundColor: "#f5f7fb",
-      px: { xs: 1.5, md: 3 },
-      py: 2,
+      position: "sticky",
+      top: 10,
+      zIndex: 100,
+      maxWidth: 1180,
+      mx: "auto",
+      mb: { xs: 2.2, md: 3 },
+      px: { xs: 1.5, md: 2 },
+      py: 1.4,
+      borderRadius: "22px",
+      background: "rgba(255,255,255,0.72)",
+      backdropFilter: "blur(18px)",
+      WebkitBackdropFilter: "blur(18px)",
+      border: "1px solid rgba(226,232,240,0.9)",
+      boxShadow: "0 10px 35px rgba(15, 23, 42, 0.06)",
     }}
   >
-    {/* Header */}
-    <Box
-      sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        backgroundColor: "rgba(245,247,251,0.92)",
-        backdropFilter: "blur(10px)",
-        border: "1px solid #e8edf5",
-        borderRadius: 3,
-        px: 2,
-        py: 1.2,
-        mb: 3,
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-        <Box
-          onClick={() => navigateTo(-1)}
-          sx={{
-            width: 38,
-            height: 38,
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
-            transition: "all 0.2s ease",
-            "&:hover": { backgroundColor: "#f8fafc" },
-          }}
-        >
-          <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#1f2937" }} />
-        </Box>
-
-        <Box>
-          <Typography fontSize={17} fontWeight={800} color="#1f2a44">
-            Pricing Plans
-          </Typography>
-          <Typography fontSize={12} color="#6b7280">
-            Choose a plan to unlock worker contacts
-          </Typography>
-        </Box>
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+      <Box
+        onClick={() => navigateTo(-1)}
+        sx={{
+          width: 42,
+          height: 42,
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          background:
+            "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 4px 14px rgba(15, 23, 42, 0.06)",
+          transition: "all 0.25s ease",
+          "&:hover": {
+            transform: "translateY(-1px)",
+            background:
+              "linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%)",
+            boxShadow: "0 8px 18px rgba(15, 23, 42, 0.09)",
+          },
+        }}
+      >
+        <ArrowBackIosNewIcon sx={{ fontSize: 18, color: "#0f172a" }} />
       </Box>
-    </Box>
 
-    <Box sx={{ maxWidth: 1180, mx: "auto" }}>
-      {/* Hero */}
-      <Box textAlign="center" mb={4.5}>
-        <Chip
-          label="Flexible Pricing Plans"
-          sx={{
-            mb: 1.5,
-            backgroundColor: "#eef2ff",
-            color: "#2563eb",
-            fontWeight: 700,
-            fontSize: "0.7rem",
-            borderRadius: "999px",
-          }}
-        />
-
+      <Box>
         <Typography
           sx={{
-            fontSize: { xs: "2rem", md: "2.8rem" },
-            lineHeight: 1.15,
-            fontWeight: 900,
-            color: "#26323d",
-            maxWidth: 760,
-            mx: "auto",
+            fontSize: { xs: 16, md: 17 },
+            fontWeight: 800,
+            color: "#0f172a",
+            letterSpacing: "-0.02em",
           }}
         >
-          Choose the Right BookMyWorker
-          <br />
-          Plan for Your Hiring Needs
+          Pricing Plans
         </Typography>
-
         <Typography
           sx={{
-            mt: 1.8,
-            maxWidth: 700,
-            mx: "auto",
-            color: "#6b7280",
-            fontSize: { xs: "0.95rem", md: "1rem" },
-            lineHeight: 1.7,
+            fontSize: 12.5,
+            color: "#64748b",
             fontWeight: 500,
           }}
         >
-          Get access to{" "}
-          <Box component="span" sx={{ fontWeight: 800, color: "#1f2937" }}>
-            {highestType === "individual"
-              ? "5 Lakh+ skilled and unskilled workers"
-              : "verified workers across India"}
-          </Box>{" "}
-          with plans built for employers, contractors, agencies, and industries.
-          Discover workforce faster with BookMyWorker support.
+          Choose a plan to unlock worker contacts
         </Typography>
-
-        {user?.isSubscribed && user?.subscriptionExpery && (
-          <Box sx={{ mt: 2 }}>
-            <SubscriptionPatti expiry={user.subscriptionExpery} />
-          </Box>
-        )}
       </Box>
+    </Box>
+  </Box>
 
-      {isLimitExhausted && !isExpired && (
-        <Box sx={{ mb: 3 }}>
-          <PricingBanner userRole={user?.userRole} />
+  <Box sx={{ maxWidth: 1180, mx: "auto" }}>
+    {/* Hero */}
+    <Box
+      sx={{
+        textAlign: "center",
+        mb: { xs: 4, md: 5.5 },
+        px: { xs: 0.5, md: 1 },
+      }}
+    >
+      <Chip
+        label="Flexible Pricing Plans"
+        sx={{
+          mb: 1.8,
+          px: 0.6,
+          height: 34,
+          background:
+            "linear-gradient(135deg, #eef4ff 0%, #f0f9ff 100%)",
+          color: "#2563eb",
+          fontWeight: 800,
+          fontSize: "0.75rem",
+          borderRadius: "999px",
+          border: "1px solid #dbeafe",
+          boxShadow: "0 4px 12px rgba(37, 99, 235, 0.08)",
+        }}
+      />
+
+      <Typography
+        sx={{
+          fontSize: { xs: "2rem", sm: "2.3rem", md: "3rem" },
+          lineHeight: { xs: 1.2, md: 1.1 },
+          fontWeight: 900,
+          color: "#0f172a",
+          maxWidth: 820,
+          mx: "auto",
+          letterSpacing: "-0.04em",
+        }}
+      >
+        Choose the Right BookMyWorker
+        <br />
+        Plan for Your Hiring Needs
+      </Typography>
+
+      <Typography
+        sx={{
+          mt: 2,
+          maxWidth: 760,
+          mx: "auto",
+          color: "#64748b",
+          fontSize: { xs: "0.96rem", md: "1.02rem" },
+          lineHeight: 1.8,
+          fontWeight: 500,
+        }}
+      >
+        Get access to{" "}
+        <Box component="span" sx={{ fontWeight: 800, color: "#0f172a" }}>
+          {highestType === "individual"
+            ? "5 Lakh+ skilled and unskilled workers"
+            : "verified workers across India"}
+        </Box>{" "}
+        with plans built for employers, contractors, agencies, and industries.
+        Discover workforce faster with BookMyWorker support.
+      </Typography>
+
+      {user?.isSubscribed && user?.subscriptionExpery && (
+        <Box sx={{ mt: 2.2 }}>
+          <SubscriptionPatti expiry={user.subscriptionExpery} />
         </Box>
       )}
+    </Box>
 
-      {/* Plans */}
-      <Grid container spacing={3} justifyContent="center">
-        {plans.map((plan) => {
-          const baseAmount = parsePrice(plan.price);
-          const yearlyEquivalent =
-            plan.id === "1m"
-              ? Math.round(baseAmount * 1.5)
-              : plan.id === "6m"
-              ? Math.round(baseAmount * 1.6)
-              : Math.round(baseAmount * 1.5);
+    {isLimitExhausted && !isExpired && (
+      <Box sx={{ mb: 3.2 }}>
+        <PricingBanner userRole={user?.userRole} />
+      </Box>
+    )}
 
-          const discount =
-            plan.id === "1m" ? "30% OFF" : plan.id === "6m" ? "38% OFF" : "33% OFF";
+    {/* Plans */}
+    <Grid container spacing={{ xs: 2.2, md: 3 }} justifyContent="center">
+      {plans.map((plan) => {
+        const baseAmount = parsePrice(plan.price);
+        const yearlyEquivalent =
+          plan.id === "1m"
+            ? Math.round(baseAmount * 1.5)
+            : plan.id === "6m"
+            ? Math.round(baseAmount * 1.6)
+            : Math.round(baseAmount * 1.5);
 
-          const shortDesc =
-            plan.id === "1m"
-              ? "Ideal for employers, contractors, and businesses looking for quick access to BookMyWorker’s workforce network."
-              : plan.id === "6m"
-              ? "Best value for growing businesses that need regular manpower support and wider workforce reach."
-              : "Perfect for businesses with continuous manpower requirements and long-term workforce planning.";
+        const discount =
+          plan.id === "1m"
+            ? "30% OFF"
+            : plan.id === "6m"
+            ? "38% OFF"
+            : "33% OFF";
 
-          return (
-            <Grid item xs={12} md={4} key={plan.id}>
-              <Card
-                sx={{
-                  height: "100%",
-                  minHeight: 520,
-                  borderRadius: "18px",
-                  position: "relative",
-                  backgroundColor: plan.popular ? "#f7fbff" : "#ffffff",
-                  border: plan.popular ? "2px solid #2563eb" : "1px solid #dbe3ef",
+        const shortDesc =
+          plan.id === "1m"
+            ? "Ideal for employers, contractors, and businesses looking for quick access to BookMyWorker’s workforce network."
+            : plan.id === "6m"
+            ? "Best value for growing businesses that need regular manpower support and wider workforce reach."
+            : "Perfect for businesses with continuous manpower requirements and long-term workforce planning.";
+
+        return (
+          <Grid item xs={12} md={4} key={plan.id}>
+            <Card
+              sx={{
+                height: "100%",
+                minHeight: 540,
+                borderRadius: "28px",
+                position: "relative",
+                overflow: "visible",
+                background: plan.popular
+                  ? "linear-gradient(180deg, #ffffff 0%, #f7fbff 100%)"
+                  : "linear-gradient(180deg, #ffffff 0%, #fbfdff 100%)",
+                border: plan.popular
+                  ? "1.5px solid #93c5fd"
+                  : "1px solid #e2e8f0",
+                boxShadow: plan.popular
+                  ? "0 20px 45px rgba(37, 99, 235, 0.12)"
+                  : "0 14px 34px rgba(15, 23, 42, 0.07)",
+                transition: "all 0.28s ease",
+                "&:hover": {
+                  transform: "translateY(-6px)",
                   boxShadow: plan.popular
-                    ? "0 10px 28px rgba(37,99,235,0.10)"
-                    : "0 8px 24px rgba(15,23,42,0.05)",
-                  transition: "transform 0.25s ease, box-shadow 0.25s ease",
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: plan.popular
-                      ? "0 14px 34px rgba(37,99,235,0.14)"
-                      : "0 12px 30px rgba(15,23,42,0.08)",
-                  },
+                    ? "0 24px 50px rgba(37, 99, 235, 0.16)"
+                    : "0 20px 42px rgba(15, 23, 42, 0.10)",
+                },
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 110,
+                  borderRadius: "28px 28px 0 0",
+                  background: plan.popular
+                    ? "linear-gradient(135deg, rgba(219,234,254,0.7) 0%, rgba(236,254,255,0.55) 100%)"
+                    : "linear-gradient(135deg, rgba(248,250,252,0.75) 0%, rgba(255,255,255,0.4) 100%)",
+                  zIndex: 0,
+                },
+              }}
+            >
+              {plan.popular && (
+                <Chip
+                  label="Most Popular"
+                  sx={{
+                    position: "absolute",
+                    top: -14,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background:
+                      "linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)",
+                    color: "#fff",
+                    fontWeight: 800,
+                    fontSize: "0.72rem",
+                    borderRadius: "999px",
+                    px: 0.6,
+                    boxShadow: "0 12px 24px rgba(37, 99, 235, 0.25)",
+                    zIndex: 2,
+                  }}
+                />
+              )}
+
+              <CardContent
+                sx={{
+                  p: 2.7,
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                  position: "relative",
+                  zIndex: 1,
                 }}
               >
-                {plan.popular && (
-                  <Chip
-                    label="Most Popular"
+                <Typography
+                  sx={{
+                    fontSize: "1.25rem",
+                    fontWeight: 800,
+                    color: "#0f172a",
+                    mt: 0.5,
+                  }}
+                >
+                  {plan.id === "1m"
+                    ? "Monthly Plan"
+                    : plan.id === "6m"
+                    ? "Half-Yearly Plan"
+                    : "Yearly Plan"}
+                </Typography>
+
+                <Typography
+                  sx={{
+                    color: "#64748b",
+                    fontSize: "0.84rem",
+                    mt: 0.4,
+                    mb: 2,
+                    fontWeight: 600,
+                  }}
+                >
+                  {plan.duration} Access
+                </Typography>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    mb: 0.9,
+                  }}
+                >
+                  <Typography
                     sx={{
-                      position: "absolute",
-                      top: -12,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      backgroundColor: "#2563eb",
-                      color: "#fff",
+                      color: "#94a3b8",
+                      textDecoration: "line-through",
+                      fontWeight: 700,
+                      fontSize: "0.96rem",
+                    }}
+                  >
+                    ₹{yearlyEquivalent}
+                  </Typography>
+
+                  <Chip
+                    label={discount}
+                    size="small"
+                    sx={{
+                      height: 22,
+                      background:
+                        "linear-gradient(180deg, #ecfdf3 0%, #dcfce7 100%)",
+                      color: "#15803d",
                       fontWeight: 800,
-                      fontSize: "0.72rem",
+                      fontSize: "0.64rem",
                       borderRadius: "999px",
-                      boxShadow: "0 8px 18px rgba(37,99,235,0.25)",
+                      border: "1px solid #bbf7d0",
                     }}
                   />
-                )}
+                </Box>
 
-                <CardContent sx={{ p: 2.5, display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    gap: 0.8,
+                    mb: 2,
+                  }}
+                >
                   <Typography
                     sx={{
-                      fontSize: "1.2rem",
-                      fontWeight: 800,
-                      color: "#26323d",
+                      fontSize: "2.2rem",
+                      fontWeight: 900,
+                      lineHeight: 1,
+                      color: "#0f172a",
+                      letterSpacing: "-0.04em",
                     }}
                   >
-                    {plan.id === "1m"
-                      ? "Monthly Plan"
-                      : plan.id === "6m"
-                      ? "Half-Yearly Plan"
-                      : "Yearly Plan"}
+                    {plan.price}
                   </Typography>
 
                   <Typography
                     sx={{
-                      color: "#7b8794",
                       fontSize: "0.82rem",
-                      mt: 0.4,
-                      mb: 2,
+                      color: "#64748b",
+                      mb: 0.38,
+                      fontWeight: 700,
                     }}
                   >
-                    {plan.duration} Access
+                    starting from
                   </Typography>
+                </Box>
 
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.6 }}>
+                <Typography
+                  sx={{
+                    color: "#64748b",
+                    fontSize: "0.84rem",
+                    lineHeight: 1.8,
+                    minHeight: 72,
+                    mb: 2.2,
+                    fontWeight: 500,
+                  }}
+                >
+                  {shortDesc}
+                </Typography>
+
+                <Box
+                  sx={{
+                    p: 1.6,
+                    mb: 2.5,
+                    borderRadius: "18px",
+                    background:
+                      "linear-gradient(180deg, rgba(248,250,252,0.95) 0%, rgba(241,245,249,0.9) 100%)",
+                    border: "1px solid #e2e8f0",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 1.05,
+                    }}
+                  >
                     <Typography
                       sx={{
-                        color: "#98a2b3",
-                        textDecoration: "line-through",
+                        fontSize: "0.85rem",
+                        color: "#334155",
                         fontWeight: 700,
-                        fontSize: "0.95rem",
                       }}
                     >
-                      ₹{yearlyEquivalent}
-                    </Typography>
-
-                    <Chip
-                      label={discount}
-                      size="small"
-                      sx={{
-                        height: 20,
-                        backgroundColor: "#e7f8ee",
-                        color: "#16a34a",
-                        fontWeight: 800,
-                        fontSize: "0.62rem",
-                        borderRadius: "999px",
-                      }}
-                    />
-                  </Box>
-
-                  <Box sx={{ display: "flex", alignItems: "flex-end", gap: 0.8, mb: 2 }}>
-                    <Typography
-                      sx={{
-                        fontSize: "2rem",
-                        fontWeight: 900,
-                        lineHeight: 1,
-                        color: "#26323d",
-                      }}
-                    >
-                      {plan.price}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "0.8rem",
-                        color: "#7b8794",
-                        mb: 0.35,
-                        fontWeight: 600,
-                      }}
-                    >
-                      starting from
-                    </Typography>
-                  </Box>
-
-                  <Typography
-                    sx={{
-                      color: "#667085",
-                      fontSize: "0.82rem",
-                      lineHeight: 1.7,
-                      minHeight: 68,
-                      mb: 2,
-                    }}
-                  >
-                    {shortDesc}
-                  </Typography>
-
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1.05, mb: 2.5 }}>
-                    <Typography sx={{ fontSize: "0.84rem", color: "#475467", fontWeight: 600 }}>
                       ✔ Access to {plan.workers}+ skilled & unskilled workers
                     </Typography>
 
-                    <Typography sx={{ fontSize: "0.84rem", color: "#475467", fontWeight: 600 }}>
+                    <Typography
+                      sx={{
+                        fontSize: "0.85rem",
+                        color: "#334155",
+                        fontWeight: 700,
+                      }}
+                    >
                       ✔ {plan.posts} requirement posts
                     </Typography>
 
-                    <Typography sx={{ fontSize: "0.84rem", color: "#475467", fontWeight: 600 }}>
+                    <Typography
+                      sx={{
+                        fontSize: "0.85rem",
+                        color: "#334155",
+                        fontWeight: 700,
+                      }}
+                    >
                       ✔ Suitable for Employers, Companies & Contractors
                     </Typography>
 
@@ -476,94 +603,124 @@ return (
                       <Typography
                         key={index}
                         sx={{
-                          fontSize: "0.84rem",
-                          color: "#475467",
-                          fontWeight: 600,
-                          lineHeight: 1.6,
+                          fontSize: "0.85rem",
+                          color: "#334155",
+                          fontWeight: 700,
+                          lineHeight: 1.65,
                         }}
                       >
                         ✔ {benefit}
                       </Typography>
                     ))}
                   </Box>
+                </Box>
 
-                  <Box sx={{ mt: "auto" }}>
-                    <Button
-                      fullWidth
-                      size="large"
-                      disabled={loading}
-                      variant="contained"
-                      onClick={() => handlePayment(plan)}
-                      sx={{
-                        borderRadius: 2.5,
-                        py: 1.35,
-                        fontWeight: 800,
-                        textTransform: "none",
-                        fontSize: "0.95rem",
-                        backgroundColor: plan.popular ? "#2563eb" : "#26343f",
+                <Box sx={{ mt: "auto" }}>
+                  <Button
+                    fullWidth
+                    size="large"
+                    disabled={loading}
+                    variant="contained"
+                    onClick={() => handlePayment(plan)}
+                    sx={{
+                      borderRadius: "16px",
+                      py: 1.45,
+                      fontWeight: 800,
+                      textTransform: "none",
+                      fontSize: "0.96rem",
+                      background: plan.popular
+                        ? "linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)"
+                        : "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
+                      boxShadow: plan.popular
+                        ? "0 14px 28px rgba(37,99,235,0.22)"
+                        : "0 14px 28px rgba(15,23,42,0.14)",
+                      "&:hover": {
+                        background: plan.popular
+                          ? "linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)"
+                          : "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+                        boxShadow: plan.popular
+                          ? "0 16px 30px rgba(37,99,235,0.26)"
+                          : "0 16px 30px rgba(15,23,42,0.18)",
+                      },
+                      "&.Mui-disabled": {
+                        background: "#cbd5e1",
+                        color: "#ffffff",
                         boxShadow: "none",
-                        "&:hover": {
-                          backgroundColor: plan.popular ? "#1d4ed8" : "#1f2a33",
-                          boxShadow: "none",
-                        },
-                        "&.Mui-disabled": {
-                          backgroundColor: "#cbd5e1",
-                          color: "#fff",
-                        },
-                      }}
-                    >
-                      {loading ? "Processing..." : "Get Started"}
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
+                      },
+                    }}
+                  >
+                    {loading ? "Processing..." : "Get Started"}
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        );
+      })}
+    </Grid>
 
-      {/* Employer Type Label */}
-      <Box sx={{ textAlign: "center", mt: 3 }}>
-        <Chip
-          label={pricingLabel}
-          sx={{
-            backgroundColor: "#eef2ff",
-            color: "#2563eb",
-            fontWeight: 700,
-            borderRadius: "999px",
-          }}
-        />
-      </Box>
+    {/* Employer Type Label */}
+    <Box sx={{ textAlign: "center", mt: 3.5 }}>
+      <Chip
+        label={pricingLabel}
+        sx={{
+          height: 34,
+          background:
+            "linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%)",
+          color: "#2563eb",
+          fontWeight: 800,
+          borderRadius: "999px",
+          border: "1px solid #dbeafe",
+          boxShadow: "0 4px 12px rgba(37,99,235,0.08)",
+        }}
+      />
+    </Box>
 
-      {/* Footer Note */}
-     
+    {/* Support Contact */}
+    <Box
+      sx={{
+        textAlign: "center",
+        mt: 4,
+        mb: 8,
+        maxWidth: 480,
+        mx: "auto",
+        p: { xs: 2, md: 2.3 },
+        borderRadius: "22px",
+        background: "rgba(255,255,255,0.72)",
+        backdropFilter: "blur(14px)",
+        border: "1px solid #e2e8f0",
+        boxShadow: "0 12px 30px rgba(15, 23, 42, 0.05)",
+      }}
+    >
+      <Typography
+        variant="body2"
+        sx={{
+          color: "#334155",
+          fontSize: "0.95rem",
+          fontWeight: 700,
+          lineHeight: 1.7,
+        }}
+      >
+        {t("contactsupport")}
+      </Typography>
 
-      {/* Support Contact */}
-      <Box sx={{ textAlign: "center", mt: 3, mb: 8, maxWidth: 420, mx: "auto" }}>
-        <Typography
-          variant="body2"
-          sx={{
-            color: "#334155",
-            fontSize: "0.92rem",
-            fontWeight: 600,
-            lineHeight: 1.6,
-          }}
-        >
-          {t("contactsupport")}
-        </Typography>
-
-        <Typography
-          variant="body2"
-          sx={{ color: "#667085", fontSize: "0.85rem", mt: 0.7 }}
-        >
-          Email:{" "}
-          <Box component="span" sx={{ color: "#2563eb", fontWeight: 800 }}>
-            support@bookmyworkers.com
-          </Box>
-        </Typography>
-      </Box>
+      <Typography
+        variant="body2"
+        sx={{
+          color: "#64748b",
+          fontSize: "0.86rem",
+          mt: 0.8,
+          lineHeight: 1.7,
+        }}
+      >
+        Email:{" "}
+        <Box component="span" sx={{ color: "#2563eb", fontWeight: 800 }}>
+          support@bookmyworkers.com
+        </Box>
+      </Typography>
     </Box>
   </Box>
+</Box>
 );
 };
 

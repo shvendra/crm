@@ -1664,160 +1664,185 @@ ERN નંબર: ${ern}`,
                                   </Box>
                                 )}
 
-                                {displayedAgents.map((agent, idx) => (
-                                  <Box
-                                    key={idx}
-                                    onClick={() =>
-                                      navigate("/verified-agents", {
-                                        state: {
-                                          agentId: agent._id,
-                                          source: "verified_agents",
-                                        },
-                                      })
-                                    }
-                                    sx={{
-                                      cursor: "pointer",
-                                      borderRadius: "20px",
-                                      p: { xs: 1, sm: 1.2 },
-                                      background: "#fff",
-                                      border: "1px solid #e2e8f0",
-                                      boxShadow:
-                                        "0 8px 22px rgba(15, 23, 42, 0.06)",
-                                      transition: "all 0.25s ease",
-                                      textAlign: "center",
-                                      "&:hover": {
-                                        transform: "translateY(-4px)",
-                                        boxShadow:
-                                          "0 16px 32px rgba(37, 99, 235, 0.16)",
-                                        borderColor: "#93c5fd",
-                                      },
-                                    }}
-                                  >
-                                    <Stack
-                                      alignItems="center"
-                                      spacing={0.9}
-                                      sx={{ position: "relative" }}
-                                    >
-                                      <Box sx={{ position: "relative" }}>
-                                        <Avatar
-                                          src={
-                                            agent?.profilePhoto
-                                              ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
-                                                  /([^:]\/)\/+/g,
-                                                  "$1",
-                                                )
-                                              : "/usericon.png"
-                                          }
-                                          alt={agent.name}
-                                          sx={{
-                                            width: { xs: 54, sm: 60 },
-                                            height: { xs: 54, sm: 60 },
-                                            border: "3px solid #2563eb",
-                                            boxShadow:
-                                              "0 10px 24px rgba(37, 99, 235, 0.18)",
-                                          }}
-                                        />
+                              {displayedAgents.map((agent, idx) => {
+  const formattedFirstName = agent?.name
+    ? agent.name
+        .trim()
+        .split(" ")[0]
+        .slice(0, 8)
+        .charAt(0)
+        .toUpperCase() +
+      agent.name
+        .trim()
+        .split(" ")[0]
+        .slice(0, 8)
+        .slice(1)
+        .toLowerCase()
+    : "-";
 
-                                        <Box
-                                          sx={{
-                                            position: "absolute",
-                                            bottom: -3,
-                                            right: -3,
-                                            background:
-                                              "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-                                            borderRadius: "50%",
-                                            width: 22,
-                                            height: 22,
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            border: "2px solid white",
-                                            boxShadow:
-                                              "0 4px 10px rgba(0,0,0,0.25)",
-                                            color: "#fff",
-                                            fontSize: 13,
-                                            fontWeight: 800,
-                                          }}
-                                        >
-                                          ✔
-                                        </Box>
-                                      </Box>
+  return (
+    <Box
+      key={idx}
+      onClick={() =>
+        navigate("/verified-agents", {
+          state: {
+            agentId: agent._id,
+            source: "verified_agents",
+          },
+        })
+      }
+      sx={{
+        cursor: "pointer",
+        borderRadius: "22px",
+        p: { xs: 1, sm: 1.2 },
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(243,248,255,0.95) 100%)",
+        border: "1px solid #dbe4f0",
+        boxShadow: "0 12px 28px rgba(15, 23, 42, 0.08)",
+        transition: "all 0.28s ease",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 58,
+          background:
+            "linear-gradient(135deg, rgba(219,234,254,0.75) 0%, rgba(236,254,255,0.45) 100%)",
+          borderRadius: "22px 22px 0 0",
+          zIndex: 0,
+        },
+        "&:hover": {
+          transform: "translateY(-5px)",
+          boxShadow: "0 18px 36px rgba(37, 99, 235, 0.16)",
+          borderColor: "#93c5fd",
+        },
+      }}
+    >
+      <Stack
+        alignItems="center"
+        spacing={0.9}
+        sx={{ position: "relative", zIndex: 1 }}
+      >
+        <Box sx={{ position: "relative" }}>
+          <Avatar
+            src={
+              agent?.profilePhoto
+                ? `${config.FILE_BASE_URL}/${agent?.profilePhoto}`.replace(
+                    /([^:]\/)\/+/g,
+                    "$1",
+                  )
+                : "/usericon.png"
+            }
+            alt={agent.name}
+            sx={{
+              width: { xs: 54, sm: 60 },
+              height: { xs: 54, sm: 60 },
+              border: "3px solid #2563eb",
+              boxShadow: "0 12px 28px rgba(37, 99, 235, 0.2)",
+              backgroundColor: "#fff",
+            }}
+          />
 
-                                      <Typography
-                                        variant="body2"
-                                        fontWeight={800}
-                                        noWrap
-                                        sx={{
-                                          color: "#166534",
-                                          fontSize: {
-                                            xs: "0.72rem",
-                                            sm: "0.76rem",
-                                          },
-                                          maxWidth: "100%",
-                                        }}
-                                      >
-                                        {agent.name
-                                          ?.split(" ")[0]
-                                          ?.slice(0, 8) || "-"}
-                                      </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: -3,
+              right: -3,
+              background:
+                "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+              borderRadius: "50%",
+              width: 22,
+              height: 22,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "2px solid white",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+              color: "#fff",
+              fontSize: 13,
+              fontWeight: 800,
+            }}
+          >
+            ✔
+          </Box>
+        </Box>
 
-                                      <Typography
-                                        variant="caption"
-                                        sx={{
-                                          color: "#2563eb",
-                                          fontSize: {
-                                            xs: "0.66rem",
-                                            sm: "0.7rem",
-                                          },
-                                          wordBreak: "break-word",
-                                          fontWeight: 700,
-                                        }}
-                                      >
-                                        {getRandom10DigitNumber()}
-                                      </Typography>
+        <Typography
+          noWrap
+          sx={{
+            color: "#0f172a",
+            fontSize: {
+              xs: "0.72rem",
+              sm: "0.78rem",
+            },
+            fontWeight: 800,
+            maxWidth: "100%",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {formattedFirstName}
+        </Typography>
 
-                                      <Box
-                                        mt={0.2}
-                                        display="flex"
-                                        justifyContent="center"
-                                        sx={{
-                                          px: 0.8,
-                                          py: 0.4,
-                                          borderRadius: "999px",
-                                          bgcolor: "#f8fafc",
-                                          border: "1px solid #e2e8f0",
-                                        }}
-                                      >
-                                        {Array.from({ length: 5 }, (_, i) => {
-                                          const rating = +(
-                                            4 + Math.random()
-                                          ).toFixed(1);
-                                          const fullStar =
-                                            i + 1 <= Math.floor(rating);
-                                          const halfStar =
-                                            rating % 1 !== 0 &&
-                                            i + 1 === Math.ceil(rating);
+        <Typography
+          variant="caption"
+          sx={{
+            color: "#2563eb",
+            fontSize: {
+              xs: "0.66rem",
+              sm: "0.7rem",
+            },
+            wordBreak: "break-word",
+            fontWeight: 700,
+          }}
+        >
+          {getRandom10DigitNumber()}
+        </Typography>
 
-                                          return (
-                                            <StarIcon
-                                              key={i}
-                                              sx={{
-                                                fontSize: "12px",
-                                                color: fullStar
-                                                  ? rating >= 4
-                                                    ? "#22c55e"
-                                                    : "#f59e0b"
-                                                  : halfStar
-                                                    ? "#fbbf24"
-                                                    : "#e5e7eb",
-                                              }}
-                                            />
-                                          );
-                                        })}
-                                      </Box>
-                                    </Stack>
-                                  </Box>
-                                ))}
+        <Box
+          mt={0.2}
+          display="flex"
+          justifyContent="center"
+          sx={{
+            px: 0.8,
+            py: 0.4,
+            borderRadius: "999px",
+            background:
+              "linear-gradient(180deg, rgba(248,250,252,0.98) 0%, rgba(241,245,249,0.98) 100%)",
+            border: "1px solid #e2e8f0",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
+          }}
+        >
+          {Array.from({ length: 5 }, (_, i) => {
+            const rating = +(4 + Math.random()).toFixed(1);
+            const fullStar = i + 1 <= Math.floor(rating);
+            const halfStar =
+              rating % 1 !== 0 && i + 1 === Math.ceil(rating);
+
+            return (
+              <StarIcon
+                key={i}
+                sx={{
+                  fontSize: "12px",
+                  color: fullStar
+                    ? rating >= 4
+                      ? "#22c55e"
+                      : "#f59e0b"
+                    : halfStar
+                      ? "#fbbf24"
+                      : "#e5e7eb",
+                }}
+              />
+            );
+          })}
+        </Box>
+      </Stack>
+    </Box>
+  );
+})}
 
                                 {!showAll && verifiedAgents.length > 20 && (
                                   <Box

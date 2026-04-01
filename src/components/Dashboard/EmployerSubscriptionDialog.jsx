@@ -553,6 +553,11 @@ useEffect(() => {
               }}
             >
               <Box
+  sx={{
+    display: { xs: "none", sm: "none", md: "none", lg: "block" }, // 👈 hide till laptop
+  }}
+>
+              <Box
                 sx={{
                   p: 2.2,
                   background:
@@ -580,10 +585,14 @@ useEffect(() => {
                   Unlock premium employer benefits and move serious hiring faster.
                 </Typography>
               </Box>
-
+</Box>
               <Box sx={{ p: 2.4 }}>
               
-
+            <Box
+  sx={{
+    display: { xs: "none", sm: "none", md: "none", lg: "block" }, // 👈 hide till laptop
+  }}
+>
                 <Typography
                   sx={{
                     color: "#475569",
@@ -594,7 +603,12 @@ useEffect(() => {
                   Choose the best plan from the pricing page and start getting
                   stronger visibility, more trust, and better hiring performance.
                 </Typography>
-
+                </Box>
+<Box
+  sx={{
+    display: { xs: "none", sm: "none", md: "none", lg: "block" }, // 👈 hide till laptop
+  }}
+>
                 <Box
                   sx={{
                     mt: 2.2,
@@ -628,7 +642,7 @@ useEffect(() => {
                     </Typography>
                   </Box>
                 </Box>
-
+</Box>
                 <Box
                   sx={{
                     display: "flex",
